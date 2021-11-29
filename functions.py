@@ -1,6 +1,7 @@
 from tkinter import *
 from functools import partial
 from database import database_connection
+
 import tkinter as tk
 
 
@@ -14,6 +15,7 @@ def popupmsg(msg):
 
 
 root = Tk()
+
 
 
 class User:
@@ -129,7 +131,7 @@ def signUp(a):
     text_lastName.place(x=240, y=160)
 
     label_id = Label(tktk, text="Id", width=20, font=("bold", 10))
-    label_id.place(x=68, y=190)
+    label_id.place(x=100, y=190)
 
     def idChecker(var):
         content = var.get()
@@ -143,36 +145,36 @@ def signUp(a):
     text_id.place(x=240, y=190)
 
     label_email = Label(tktk, text="Email", width=20, font=("bold", 10))
-    label_email.place(x=68, y=210)
+    label_email.place(x=100, y=220)
 
     text_email = Entry(tktk)
-    text_email.place(x=240, y=210)
+    text_email.place(x=240, y=220)
 
     label_password = Label(tktk, text="Password", width=20, font=("bold", 10))
-    label_password.place(x=68, y=230)
+    label_password.place(x=100, y=250)
 
     text_password = Entry(tktk)
-    text_password.place(x=240, y=230)
+    text_password.place(x=240, y=250)
 
     label_gender = Label(tktk, text="Gender", width=20, font=("bold", 10))
-    label_gender.place(x=70, y=250)
+    label_gender.place(x=100, y=280)
     var = IntVar()
     Radiobutton(tktk, text="Male", padx=5, variable=var,
-                value=1).place(x=235, y=250)
+                value=1).place(x=235, y=280)
     Radiobutton(tktk, text="Female", padx=20,
-                variable=var, value=2).place(x=290, y=250)
+                variable=var, value=2).place(x=290, y=280)
 
     label_age = Label(tktk, text="Age:", width=20, font=("bold", 10))
-    label_age.place(x=70, y=300)
+    label_age.place(x=100, y=310)
 
     entry_age = Entry(tktk)
-    entry_age.place(x=240, y=300)
+    entry_age.place(x=240, y=310)
 
     label_phone = Label(tktk, text="Phone Number", width=20, font=("bold", 10))
-    label_phone.place(x=68, y=330)
+    label_phone.place(x=100, y=340)
 
     text_phone = Entry(tktk)
-    text_phone.place(x=240, y=330)
+    text_phone.place(x=240, y=340)
 
     def buttonClick():
         flag = True
