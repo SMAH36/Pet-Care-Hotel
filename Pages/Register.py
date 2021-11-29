@@ -57,22 +57,23 @@ def phoneCheck(phonenumber):
     for i in range(len(phonenumber)):
         if(phonenumber[i]>='0' and phonenumber[i]<='9'):
             digits+=1
+            print(i)
         else:
             flag=0
-        if digits==10 and flag==1:
+    if digits==10 and flag==1:
             return True
-        return False
+    return False
 
 # def digitsOnly(input):
-      
+    
 #     if input.isdigit():
 #         print(input)
 #         return True
-                          
+                        
 #     elif input is "":
 #         print(input)
 #         return True
-  
+
 #     else:
 #         print(input)
 #         return False
@@ -161,7 +162,6 @@ def popupmsg(msg):
 
 
 def buttonClick():
-    print(entry_age)
     flag=True
     if len(text_name.get()) < 3:
         flag=False
@@ -185,14 +185,16 @@ def buttonClick():
     if(phoneCheck(text_phone.get())==False):
         flag=False
         popupmsg('incorect phone number (must be 10 digits!)')
+    elif(flag==1):
+        popupmsg('You have been successfuly registered :)')
 
 
     
     
-   
+
 
 x = Button(root, command=buttonClick, text='Submit', width=20, bg='brown',
-           fg='white').place(x=180, y=380)
+        fg='white').place(x=180, y=380)
 
 # it is use for display the registration form on the window
 root.mainloop()
