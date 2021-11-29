@@ -10,6 +10,7 @@ class User:
     def checkRank(self):
         return self.rank
 USER=User("None","None")
+
 def idVaildetor(id):
     #ID check
     b = int(id)
@@ -245,7 +246,7 @@ def login(a):
     def afterlogin():
         #DAta base<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         USER=User("admen","saher")
-        tkWindow.destroy()
+        # tkWindow.destroy()
         
 
 
