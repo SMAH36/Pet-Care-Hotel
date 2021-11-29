@@ -18,29 +18,57 @@ label_lastName.place(x=80, y=160)
 text_lastName = Entry(root)
 text_lastName.place(x=240, y=160)
 
+label_id = Label(root, text="Id", width=20, font=("bold", 10))
+label_id.place(x=68, y=190)
+
+text_id = Entry(root)
+text_id.place(x=240, y=190)
+
 label_email = Label(root, text="Email", width=20, font=("bold", 10))
 label_email.place(x=68, y=210)
 
 text_email = Entry(root)
 text_email.place(x=240, y=210)
 
-label_3 = Label(root, text="Gender", width=20, font=("bold", 10))
-label_3.place(x=70, y=230)
+label_password = Label(root, text="Password", width=20, font=("bold", 10))
+label_password.place(x=68, y=230)
+
+text_password = Entry(root)
+text_password.place(x=240, y=230)
+
+label_gender = Label(root, text="Gender", width=20, font=("bold", 10))
+label_gender.place(x=70, y=250)
 var = IntVar()
 Radiobutton(root, text="Male", padx=5, variable=var,
-            value=1).place(x=235, y=230)
+            value=1).place(x=235, y=250)
 Radiobutton(root, text="Female", padx=20,
-            variable=var, value=2).place(x=290, y=230)
+            variable=var, value=2).place(x=290, y=250)
 
-label_4 = Label(root, text="Age:", width=20, font=("bold", 10))
-label_4.place(x=70, y=280)
+label_age = Label(root, text="Age:", width=20, font=("bold", 10))
+label_age.place(x=70, y=300)
 
 
-entry_2 = Entry(root)
-entry_2.place(x=240, y=280)
+entry_age = Entry(root)
+entry_age.place(x=240, y=300)
 
 Button(root, text='Submit', width=20, bg='brown',
        fg='white').place(x=180, y=380)
 # it is use for display the registration form on the window
 root.mainloop()
 print("registration form  seccussfully created...")
+
+
+def idVaildetor(id):
+    b = id
+    id = str(id)
+    if(len(id) != 9 and b.isnumeric()):
+        return False
+    sum, x, counter = 0, 0, 0
+    for i in id:
+        x = int(i) * ((counter % 2)+1)
+        counter += 1
+        if x > 9:
+            sum += x-9
+        else:
+            sum += x
+    return sum % 10 == 0
