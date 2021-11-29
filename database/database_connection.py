@@ -41,13 +41,14 @@ def addToUserInfo(userId, firstName, lastName, age, gender, personalId, rank):
     connection.commit()
     if (connection):
         cursor.close()
-        connection.close()
     return(record)
 
 
 def register(email, phoneNumber, password, firstName, lastName, age, gender, personalId, rank='customer'):
     userId = addToUserAuth(email, phoneNumber, password)
+    print(userId)
     addToUserInfo(userId, firstName, lastName, age, gender, personalId, rank)
+    
 
 
 def getUserInfo(userId):
@@ -80,8 +81,7 @@ def signIn(mailOrPhone, password):
 def checkIfUserExist(mailOrPhone):
     connection = connectToDb()
     cursor = connection.cursor()
-    cursor.execute(
-        'SELECT * FROM user_auth WHERE (email = %s) OR (phone_number = %s)', (mailOrPhone, mailOrPhone))
+    cursor.execute('SELECT * FROM user_auth WHERE (email = %s) OR (phone_number = %s)', (mailOrPhone, mailOrPhone))
     # record = cursor.fetchall()
     record = cursor.rowcount
     if (connection):
@@ -92,6 +92,5 @@ def checkIfUserExist(mailOrPhone):
 
 # print(signIn('0165592825', 'ADMSiho2dsa'))
 # print(signIn('admin', 'admin'))
-# register('admin', '0000000', 'admin',
-#          'saher', 'bdsa', 18, 'Male', '999999', 'admin')
-print(checkIfUserExist('admijnkn'))
+# register('dddddddd@.', '325235235', 'admin','saher', 'bdsa', 18, 'Male', '999999', 'admin')
+
