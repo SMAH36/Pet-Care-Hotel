@@ -1,4 +1,22 @@
 from tkinter import*
+
+
+def idVaildetor(id):
+    b = int(id)
+    id = str(id)
+    if(len(id) != 9 and b.isnumeric()):
+        return False
+    sum, x, counter = 0, 0, 0
+    for i in id:
+        x = int(i) * ((counter % 2)+1)
+        counter += 1
+        if x > 9:
+            sum += x-9
+        else:
+            sum += x
+    return sum % 10 == 0
+
+
 root = Tk()
 root.geometry('500x500')
 root.title("Registration Form")
@@ -21,7 +39,17 @@ text_lastName.place(x=240, y=160)
 label_id = Label(root, text="Id", width=20, font=("bold", 10))
 label_id.place(x=68, y=190)
 
-text_id = Entry(root)
+
+def idChecker(var):
+    content = var.get()
+    if len(content) == 9:
+        print(idVaildetor(content))
+
+
+var = StringVar()
+var.trace("w", lambda name, index, mode, var=var: idChecker(var))
+text_id = Entry(root, textvariable=var)
+text_id.pack()
 text_id.place(x=240, y=190)
 
 label_email = Label(root, text="Email", width=20, font=("bold", 10))
@@ -51,24 +79,18 @@ label_age.place(x=70, y=300)
 entry_age = Entry(root)
 entry_age.place(x=240, y=300)
 
-Button(root, text='Submit', width=20, bg='brown',
-       fg='white').place(x=180, y=380)
+
+def buttonClick():
+    if len(text_name.get()) >= 3:
+        print(True)
+    else:
+        print(False)
+
+
+x = Button(root, command=buttonClick, text='Submit', width=20, bg='brown',
+           fg='white').place(x=180, y=380)
+
+
 # it is use for display the registration form on the window
 root.mainloop()
 print("registration form  seccussfully created...")
-
-
-def idVaildetor(id):
-    b = id
-    id = str(id)
-    if(len(id) != 9 and b.isnumeric()):
-        return False
-    sum, x, counter = 0, 0, 0
-    for i in id:
-        x = int(i) * ((counter % 2)+1)
-        counter += 1
-        if x > 9:
-            sum += x-9
-        else:
-            sum += x
-    return sum % 10 == 0
