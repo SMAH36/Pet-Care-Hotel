@@ -242,15 +242,15 @@ def AddWorkerPage():
             flag = False
             popupmsg('Phone Number not Exist!')
         elif(flag == True):
-            #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Add user
-            popupmsg('You have added'+ text_email.get() + 'successfuly to workers')
+            database_connection.userPromotion(text_email.get())
+            popupmsg('You have added '+ text_email.get() + 'successfuly to workers')
 
     Button(AddWorker, command=buttonClick, text='Submit', width=20, bg='brown',
     fg='white').place(x=90, y=120)
 
 def DeleteWorkerPage():
     DeleteWorker = Toplevel(root)
-    DeleteWorker.title("Add Worker")
+    DeleteWorker.title("Delete Worker")
     DeleteWorker.geometry("500x500")
     Button(DeleteWorker, text="Quit", command=DeleteWorker.destroy).grid(column=0, row=0)
     label_email = Label(DeleteWorker, text="Email or Phone", width=20, font=("bold", 10))
@@ -266,8 +266,8 @@ def DeleteWorkerPage():
             flag = False
             popupmsg('Phone Number not Exist!')
         elif(flag == True):
-            #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<remove user
-            popupmsg('You have removed'+ text_email.get() + 'successfuly from workers')
+            database_connection.removeUser(text_email.get())
+            popupmsg('You have removed '+ text_email.get() + 'successfuly from workers')
             
 
     Button(DeleteWorker, command=buttonClick, text='Submit', width=20, bg='brown',
@@ -313,18 +313,22 @@ def login(a):
 
     def afterlogin():
         userinfo=database_connection.signIn(username.get(),password.get())
-        USER=User(userinfo[7],userinfo[2])
-        tkWindow.destroy()
-        if(USER.rank=='admin'):
-                #refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            homepageADMIN()
-        if(USER.rank=='customer'):
-                #refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            homepageCUSTOMER()
-        if(USER.rank=='worker'):
-                #refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            homepageWORKER()  
-        
+        if(userinfo!=False):
+            USER=User(userinfo[7],userinfo[2])
+            tkWindow.destroy()
+            if(USER.rank=='admin'):
+                    #refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                homepageADMIN()
+            if(USER.rank=='customer'):
+                    #refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                homepageCUSTOMER()
+            if(USER.rank=='worker'):
+                    #refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                homepageWORKER()  
+        else:
+            popupmsg('incorrect email/phone number/password')
+
+            
 
     #login button
     loginButton = Button(tkWindow, text="Login", command=afterlogin).grid(row=17, column=13)  
