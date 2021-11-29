@@ -78,5 +78,6 @@ def signIn(mailOrPhone, password):
 
 # print(signIn('0165592825', 'ADMSiho2dsa'))
 # print(signIn('admin', 'admin'))
-# register('admin', '0000000', 'admin',
-#          'saher', 'bdsa', 18, 'Male', '999999', 'admin')
+            # email, phoneNumber, password, firstName, lastName, age, gender, personalId, rank='customer'):
+# register('worker', '22222', 'worker','ayal', 'bdsa', 18, 'Male', '999999', 'worker')
+# print(signIn('worker','worker'))

@@ -220,6 +220,30 @@ def signUp(a):
     # it is use for display the registration form on the window
     tktk.mainloop()
     print("registration form  seccussfully created...")
+def signOut(x):
+    Button(x, text="Sign Out", command=x.destroy).grid(column=1, row=0)
+    USER=None
+
+def homepageADMIN():
+    adminHomePage = Toplevel(root)
+    adminHomePage.title("Home Page")
+    adminHomePage.geometry("200x200")
+    Button(adminHomePage, text="Quit", command=root.destroy).grid(column=0, row=0)
+    signOut(adminHomePage)
+
+def homepageCUSTOMER():
+    CustomerHomePage = Toplevel(root)
+    CustomerHomePage.title("Home Page")
+    CustomerHomePage.geometry("200x200")
+    Button(CustomerHomePage, text="Quit", command=root.destroy).grid(column=0, row=0)
+    signOut(CustomerHomePage)
+def homepageWORKER():
+    workerHomePage = Toplevel(root)
+    workerHomePage.title("Home Page")
+    workerHomePage.geometry("200x200")
+    Button(workerHomePage, text="Quit", command=root.destroy).grid(column=0, row=0)
+    signOut(workerHomePage)
+
 def login(a):
     print(f"{a}")
     tkWindow = Toplevel(root)
@@ -238,8 +262,16 @@ def login(a):
     def afterlogin():
         userinfo=database_connection.signIn(username.get(),password.get())
         USER=User(userinfo[7],userinfo[2])
-        print(USER.name)
         tkWindow.destroy()
+        if(USER.rank=='admin'):
+                #refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            homepageADMIN()
+        if(USER.rank=='customer'):
+                #refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            homepageCUSTOMER()
+        if(USER.rank=='worker'):
+                #refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+            homepageWORKER()  
         
 
     #login button
