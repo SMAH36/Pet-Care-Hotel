@@ -27,7 +27,6 @@ def addToUserAuth(email, phoneNumber, password):
     if (connection):
         cursor.close()
         connection.close()
-        print("PostgreSQL connection is closed")
     return(record[0])
 
 
@@ -42,7 +41,6 @@ def addToUserInfo(userId, firstName, lastName, age, gender, personalId, rank):
     if (connection):
         cursor.close()
         connection.close()
-        print("PostgreSQL connection is closed")
     return(record)
 
 
@@ -60,7 +58,6 @@ def getUserInfo(userId):
     if (connection):
         cursor.close()
         connection.close()
-        print("PostgreSQL connection is closed")
     return(record)
 
 
@@ -69,14 +66,13 @@ def signIn(mailOrPhone, password):
     cursor = connection.cursor()
     cursor.execute(
         'SELECT * FROM user_auth WHERE (email = %s) OR (phone_number = %s)', (mailOrPhone, mailOrPhone))
-    record = cursor.fetchall()
-    userInfo = None
+    record = cursor.fetchall()  
+    userInfo=None
     if password == record[0][3]:
         userInfo = getUserInfo(record[0][0])
     if (connection):
         cursor.close()
         connection.close()
-        print("PostgreSQL connection is closed")
     return(userInfo)
 
 

@@ -1,5 +1,6 @@
 from tkinter import *
 from functools import partial
+from database import database_connection
 root = Tk()
 
 class User:
@@ -225,7 +226,7 @@ def login(a):
     tkWindow.title("Log in")
     tkWindow.geometry('400x150')  
     #username label and text entry box
-    usernameLabel = Label(tkWindow, text="User Name").grid(row=10, column=10)
+    usernameLabel = Label(tkWindow, text="Email / Phone Number").grid(row=10, column=10)
     username = StringVar()
     usernameEntry = Entry(tkWindow, textvariable=username).grid(row=10, column=13)  
 
@@ -235,15 +236,14 @@ def login(a):
     passwordEntry = Entry(tkWindow, textvariable=password, show='*').grid(row=14, column=13)  
 
     def afterlogin():
-        #DAta base<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        USER=User("admen","saher")
+        userinfo=database_connection.signIn(username.get(),password.get())
+        USER=User(userinfo[7],userinfo[2])
+        print(USER.name)
         tkWindow.destroy()
         
-
 
     #login button
     loginButton = Button(tkWindow, text="Login", command=afterlogin).grid(row=17, column=13)  
 
     tkWindow.mainloop()
 
-print("a")
