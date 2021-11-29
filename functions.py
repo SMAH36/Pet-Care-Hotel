@@ -219,15 +219,6 @@ def signUp(a):
     # it is use for display the registration form on the window
     tktk.mainloop()
     print("registration form  seccussfully created...")
-
-
-
-
-
-
-
-
-
 def login(a):
     print(f"{a}")
     tkWindow = Toplevel(root)
@@ -246,7 +237,7 @@ def login(a):
     def afterlogin():
         #DAta base<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         USER=User("admen","saher")
-        # tkWindow.destroy()
+        tkWindow.destroy()
         
 
 
@@ -255,3 +246,4 @@ def login(a):
 
     tkWindow.mainloop()
 
+print("a")
