@@ -31,6 +31,18 @@ def addToUserAuth(email, phoneNumber, password):
     return(record[0])
 
 
+def getUserIdByEmail(mailOrPhone):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        'SELECT * FROM user_auth WHERE (email = %s) OR (phone_number = %s)', (mailOrPhone, mailOrPhone))
+    record = cursor.fetchone()
+    if (connection):
+        cursor.close()
+        connection.close()
+    return(record[0])
+
+
 def addToUserInfo(userId, firstName, lastName, age, gender, personalId, rank):
     connection = connectToDb()
     cursor = connection.cursor()
@@ -43,11 +55,6 @@ def addToUserInfo(userId, firstName, lastName, age, gender, personalId, rank):
         cursor.close()
         connection.close()
     return(record)
-
-
-def register(email, phoneNumber, password, firstName, lastName, age, gender, personalId, rank='customer'):
-    userId = addToUserAuth(email, phoneNumber, password)
-    addToUserInfo(userId, firstName, lastName, age, gender, personalId, rank)
 
 
 def getUserInfo(userId):
@@ -82,7 +89,6 @@ def checkIfUserExist(mailOrPhone):
     cursor = connection.cursor()
     cursor.execute(
         'SELECT * FROM user_auth WHERE (email = %s) OR (phone_number = %s)', (mailOrPhone, mailOrPhone))
-    # record = cursor.fetchall()
     record = cursor.rowcount
     if (connection):
         cursor.close()
@@ -90,8 +96,64 @@ def checkIfUserExist(mailOrPhone):
     return(record)
 
 
+def register(email, phoneNumber, password, firstName, lastName, age, gender, personalId, rank='customer'):
+    if checkIfUserExist == 0:
+        userId = addToUserAuth(email, phoneNumber, password)
+        addToUserInfo(userId, firstName, lastName,
+                      age, gender, personalId, rank)
+        return True
+    return False
+
+
+def removeUser(mailOrPhone):
+    if checkIfUserExist(mailOrPhone) == 1:
+        userId = getUserIdByEmail(mailOrPhone)
+        connection = connectToDb()
+        cursor = connection.cursor()
+        try:
+            cursor.execute("BEGIN")
+            cursor.execute(f"DELETE FROM user_auth WHERE id = '{userId}'")
+            cursor.execute(f"DELETE FROM user_info WHERE user_id = '{userId}'")
+            cursor.execute("COMMIT")
+            if (connection):
+                cursor.close()
+                connection.close()
+            return True
+        except:
+            cursor.execute("ROLLBACK")
+            if (connection):
+                cursor.close()
+                connection.close()
+            return False
+    return False
+
+
+def userPromotion(mailOrPhone, rank='worker'):
+    if checkIfUserExist(mailOrPhone) == 1:
+        userId = getUserIdByEmail(mailOrPhone)
+        connection = connectToDb()
+        cursor = connection.cursor()
+        try:
+            cursor.execute("BEGIN")
+            cursor.execute(
+                f"UPDATE user_info SET rank = '{rank}' WHERE user_id = '{userId}'")
+            cursor.execute("COMMIT")
+            if (connection):
+                cursor.close()
+                connection.close()
+            return True
+        except:
+            cursor.execute("ROLLBACK")
+            if (connection):
+                cursor.close()
+                connection.close()
+            return False
+    return False
+
+
 # print(signIn('0165592825', 'ADMSiho2dsa'))
 # print(signIn('admin', 'admin'))
 # register('admin', '0000000', 'admin',
 #          'saher', 'bdsa', 18, 'Male', '999999', 'admin')
-print(checkIfUserExist('admijnkn'))
+# print(removeUser('aaaaaaaa@.'))
+# print(userPromotion('dddddddd@.'))
