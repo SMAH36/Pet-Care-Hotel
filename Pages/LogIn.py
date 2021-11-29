@@ -7,7 +7,7 @@ def validateLogin(username, password):
 	return
 
 #window
-tkWindow = Tk()  
+tkWindow = Tk() 
 tkWindow.geometry('400x150')  
 tkWindow.title('Log in')
 
@@ -25,5 +25,10 @@ validateLogin = partial(validateLogin, username, password)
 
 #login button
 loginButton = Button(tkWindow, text="Login", command=validateLogin).grid(row=17, column=13)  
+
+
+#check user and password
+
+
 
 tkWindow.mainloop()
