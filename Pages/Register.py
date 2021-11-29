@@ -1,4 +1,4 @@
-import database
+
 import tkinter as tk
 from tkinter import*
 
@@ -9,7 +9,8 @@ current_dir = os.path.dirname(os.path.abspath(
     inspect.getfile(inspect.currentframe())))
 parent_dir = os.path.dirname(current_dir)
 sys.path.insert(0, parent_dir)
-
+import database
+from database import database_connection
 
 def idVaildetor(id):
     b = int(id)
@@ -71,7 +72,6 @@ def phoneCheck(phonenumber):
     for i in range(len(phonenumber)):
         if(phonenumber[i] >= '0' and phonenumber[i] <= '9'):
             digits += 1
-            print(i)
         else:
             flag = 0
     if digits == 10 and flag == 1:
@@ -182,10 +182,10 @@ def buttonClick():
     if(phoneCheck(text_phone.get()) == False and flag == True):
         flag = False
         popupmsg('incorect phone number (must be 10 digits!)')
-    if (flag == True and checkIfUserExist(text_email.get()) == 1):
+    if (flag == True and database_connection.checkIfUserExist(text_email.get()) == 1):
         flag = False
         popupmsg('Email Address Already Exist!')
-    if (flag == True and checkIfUserExist(text_phone.get()) == 1):
+    if (flag == True and database_connection.checkIfUserExist(text_phone.get()) == 1):
         flag = False
         popupmsg('Phone Number Already Exist!')
     elif(flag == True):
