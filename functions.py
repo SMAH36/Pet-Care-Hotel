@@ -1,6 +1,17 @@
 from tkinter import *
 from functools import partial
 from database import database_connection
+import tkinter as tk
+
+    
+
+def popupmsg(msg):
+    popup = tk.Toplevel()
+    popup.title("!")
+    label = tk.Label(popup, text=msg) #Can add a font arg here
+    label.pack(side="top", fill="x", pady=10)
+    B1 = tk.Button(popup, text="Okay", command = popup.destroy)
+    B1.pack()
 root = Tk()
 
 class User:
@@ -168,17 +179,7 @@ def signUp(a):
     text_phone = Entry(tktk)
     text_phone.place(x=240, y=330)
 
-    import tkinter as tk
-
     
-
-    def popupmsg(msg):
-        popup = tk.Toplevel()
-        popup.title("!")
-        label = tk.Label(popup, text=msg) #Can add a font arg here
-        label.pack(side="top", fill="x", pady=10)
-        B1 = tk.Button(popup, text="Okay", command = popup.destroy)
-        B1.pack()
         
 
 
@@ -223,6 +224,55 @@ def signUp(a):
 def signOut(x):
     Button(x, text="Sign Out", command=x.destroy).grid(column=1, row=0)
     USER=None
+def AddWorkerPage():
+    AddWorker = Toplevel(root)
+    AddWorker.title("Add Worker")
+    AddWorker.geometry("500x500")
+    Button(AddWorker, text="Quit", command=AddWorker.destroy).grid(column=0, row=0)
+    label_email = Label(AddWorker, text="Email or Phone", width=20, font=("bold", 10))
+    label_email.place(x=0, y=100)
+    text_email = Entry(AddWorker)
+    text_email.place(x=200, y=100)
+    def buttonClick():
+        flag=True
+        if (flag == True and database_connection.checkIfUserExist(text_email.get()) == 0):
+            flag = False
+            popupmsg('Email Address not Exist!')
+        if (flag == True and database_connection.checkIfUserExist(text_email.get()) == 0):
+            flag = False
+            popupmsg('Phone Number not Exist!')
+        elif(flag == True):
+            #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Add user
+            popupmsg('You have added'+ text_email.get() + 'successfuly to workers')
+
+    Button(AddWorker, command=buttonClick, text='Submit', width=20, bg='brown',
+    fg='white').place(x=90, y=120)
+
+def DeleteWorkerPage():
+    DeleteWorker = Toplevel(root)
+    DeleteWorker.title("Add Worker")
+    DeleteWorker.geometry("500x500")
+    Button(DeleteWorker, text="Quit", command=DeleteWorker.destroy).grid(column=0, row=0)
+    label_email = Label(DeleteWorker, text="Email or Phone", width=20, font=("bold", 10))
+    label_email.place(x=0, y=100)
+    text_email = Entry(DeleteWorker)
+    text_email.place(x=200, y=100)
+    def buttonClick():
+        flag=True
+        if (flag == True and database_connection.checkIfUserExist(text_email.get()) == 0):
+            flag = False
+            popupmsg('Email Address not Exist!')
+        if (flag == True and database_connection.checkIfUserExist(text_email.get()) == 0):
+            flag = False
+            popupmsg('Phone Number not Exist!')
+        elif(flag == True):
+            #<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<remove user
+            popupmsg('You have removed'+ text_email.get() + 'successfuly from workers')
+            
+
+    Button(DeleteWorker, command=buttonClick, text='Submit', width=20, bg='brown',
+    fg='white').place(x=90, y=120)
+
 
 def homepageADMIN():
     adminHomePage = Toplevel(root)
@@ -230,13 +280,15 @@ def homepageADMIN():
     adminHomePage.geometry("200x200")
     Button(adminHomePage, text="Quit", command=root.destroy).grid(column=0, row=0)
     signOut(adminHomePage)
-
+    Button(adminHomePage, text="AddWorker", command=AddWorkerPage).grid(column=0, row=1)
+    Button(adminHomePage, text="DeleteWorker", command=DeleteWorkerPage).grid(column=1, row=1)
 def homepageCUSTOMER():
     CustomerHomePage = Toplevel(root)
     CustomerHomePage.title("Home Page")
     CustomerHomePage.geometry("200x200")
     Button(CustomerHomePage, text="Quit", command=root.destroy).grid(column=0, row=0)
     signOut(CustomerHomePage)
+
 def homepageWORKER():
     workerHomePage = Toplevel(root)
     workerHomePage.title("Home Page")
