@@ -101,7 +101,7 @@ def signIn(mailOrPhone, password):
     return(userInfo)
 
 def register(email, phoneNumber, password, firstName, lastName, age, gender, personalId, rank='customer'):
-    if checkIfUserExist == 0:
+    if checkIfUserExist(email) == 0 or checkIfUserExist(phoneNumber)==0:
         userId = addToUserAuth(email, phoneNumber, password)
         addToUserInfo(userId, firstName, lastName,
                       age, gender, personalId, rank)
@@ -110,7 +110,7 @@ def register(email, phoneNumber, password, firstName, lastName, age, gender, per
 
 
 def removeUser(mailOrPhone):
-    if checkIfUserExist(mailOrPhone) == 1:
+    if checkIfUserExist(mailOrPhone) == 1 :
         userId = getUserIdByEmail(mailOrPhone)
         connection = connectToDb()
         cursor = connection.cursor()
