@@ -24,12 +24,8 @@ CREATE TABLE "user_info" (
   "age" varchar(255) NOT NULL,
   "gender" varchar(255) NOT NULL,
   "personal_id" varchar(255) NOT NULL,
+  "rank" varchar(255) DEFAULT 'customer',
   "created_at" timestamptz NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE "user_status" (
-  "id" SERIAL PRIMARY KEY,
-  "user_id" uuid NOT NULL UNIQUE,
-  "rank" varchar(255) DEFAULT 'customer'
-);
 COMMIT;
