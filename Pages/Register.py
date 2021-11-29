@@ -1,6 +1,14 @@
-from tkinter import*
+import database
 import tkinter as tk
-from database import database_connection
+from tkinter import*
+
+import os
+import sys
+import inspect
+current_dir = os.path.dirname(os.path.abspath(
+    inspect.getfile(inspect.currentframe())))
+parent_dir = os.path.dirname(current_dir)
+sys.path.insert(0, parent_dir)
 
 
 def idVaildetor(id):
@@ -154,27 +162,33 @@ def buttonClick():
     if len(text_name.get()) < 3:
         flag = False
         popupmsg('Name must be at least 3 letters . . . ')
-    if len(text_lastName.get()) < 3:
+    if len(text_lastName.get()) < 3 and flag == True:
         flag = False
         popupmsg('Lastname must be at least 3 letters . . . ')
-    if(Emailvaildetor(text_email.get()) == False):
+    if(Emailvaildetor(text_email.get()) == False and flag == True):
         # data base<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         flag = False
         popupmsg('invaild email ! ! !')
-    if (Passwordvaildetor(text_password.get()) == False):
+    if (Passwordvaildetor(text_password.get()) == False and flag == True):
         popupmsg(
             'Password must include at least 1 (Bigletter,Smallletter,digit) and 8 letters at least ')
         flag = False
-    if(var.get() == 0):
+    if(var.get() == 0 and flag == True):
         flag = False
         popupmsg('Must choose gender ! ! !')
-    if(agevaildetor(entry_age.get()) == False):
+    if(agevaildetor(entry_age.get()) == False and flag == True):
         flag = False
         popupmsg('Must fill age (at least 18)! ! !')
-    if(phoneCheck(text_phone.get()) == False):
+    if(phoneCheck(text_phone.get()) == False and flag == True):
         flag = False
         popupmsg('incorect phone number (must be 10 digits!)')
-    elif(flag == 1):
+    if (flag == True and checkIfUserExist(text_email.get()) == 1):
+        flag = False
+        popupmsg('Email Address Already Exist!')
+    if (flag == True and checkIfUserExist(text_phone.get()) == 1):
+        flag = False
+        popupmsg('Phone Number Already Exist!')
+    elif(flag == True):
         popupmsg('You have been successfuly registered :)')
 
 
