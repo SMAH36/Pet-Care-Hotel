@@ -313,18 +313,22 @@ def login(a):
 
     def afterlogin():
         userinfo=database_connection.signIn(username.get(),password.get())
-        USER=User(userinfo[7],userinfo[2])
-        tkWindow.destroy()
-        if(USER.rank=='admin'):
-                #refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            homepageADMIN()
-        if(USER.rank=='customer'):
-                #refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            homepageCUSTOMER()
-        if(USER.rank=='worker'):
-                #refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            homepageWORKER()  
-        
+        if(userinfo!=False):
+            USER=User(userinfo[7],userinfo[2])
+            tkWindow.destroy()
+            if(USER.rank=='admin'):
+                    #refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                homepageADMIN()
+            if(USER.rank=='customer'):
+                    #refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                homepageCUSTOMER()
+            if(USER.rank=='worker'):
+                    #refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                homepageWORKER()  
+        else:
+            popupmsg('incorrect email/phone number/password')
+
+            
 
     #login button
     loginButton = Button(tkWindow, text="Login", command=afterlogin).grid(row=17, column=13)  

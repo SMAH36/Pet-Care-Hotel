@@ -69,19 +69,6 @@ def getUserInfo(userId):
     return(record)
 
 
-def signIn(mailOrPhone, password):
-    connection = connectToDb()
-    cursor = connection.cursor()
-    cursor.execute(
-        'SELECT * FROM user_auth WHERE (email = %s) OR (phone_number = %s)', (mailOrPhone, mailOrPhone))
-    record = cursor.fetchall()
-    userInfo = None
-    if password == record[0][3]:
-        userInfo = getUserInfo(record[0][0])
-    if (connection):
-        cursor.close()
-        connection.close()
-    return(userInfo)
 
 
 def checkIfUserExist(mailOrPhone):
@@ -95,6 +82,23 @@ def checkIfUserExist(mailOrPhone):
         connection.close()
     return(record)
 
+def signIn(mailOrPhone, password):
+    if(checkIfUserExist(mailOrPhone)==0):
+        return False
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        'SELECT * FROM user_auth WHERE (email = %s) OR (phone_number = %s)', (mailOrPhone, mailOrPhone))
+    record = cursor.fetchall()
+    userInfo = None
+    if password == record[0][3]:
+        userInfo = getUserInfo(record[0][0])
+    else:
+        userInfo=False
+    if (connection):
+        cursor.close()
+        connection.close()
+    return(userInfo)
 
 def register(email, phoneNumber, password, firstName, lastName, age, gender, personalId, rank='customer'):
     if checkIfUserExist == 0:
