@@ -1,3 +1,4 @@
+from typing import Coroutine
 import psycopg2
 from psycopg2 import Error
 
@@ -66,8 +67,8 @@ def signIn(mailOrPhone, password):
     cursor = connection.cursor()
     cursor.execute(
         'SELECT * FROM user_auth WHERE (email = %s) OR (phone_number = %s)', (mailOrPhone, mailOrPhone))
-    record = cursor.fetchall()  
-    userInfo=None
+    record = cursor.fetchall()
+    userInfo = None
     if password == record[0][3]:
         userInfo = getUserInfo(record[0][0])
     if (connection):
@@ -76,8 +77,21 @@ def signIn(mailOrPhone, password):
     return(userInfo)
 
 
+def checkIfUserExist(mailOrPhone):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        'SELECT * FROM user_auth WHERE (email = %s) OR (phone_number = %s)', (mailOrPhone, mailOrPhone))
+    # record = cursor.fetchall()
+    record = cursor.rowcount
+    if (connection):
+        cursor.close()
+        connection.close()
+    return(record)
+
+
 # print(signIn('0165592825', 'ADMSiho2dsa'))
 # print(signIn('admin', 'admin'))
-            # email, phoneNumber, password, firstName, lastName, age, gender, personalId, rank='customer'):
-# register('worker', '22222', 'worker','ayal', 'bdsa', 18, 'Male', '999999', 'worker')
-# print(signIn('worker','worker'))
+# register('admin', '0000000', 'admin',
+#          'saher', 'bdsa', 18, 'Male', '999999', 'admin')
+print(checkIfUserExist('admijnkn'))
