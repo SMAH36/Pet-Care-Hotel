@@ -119,19 +119,23 @@ def signUp(a):
     tktk.geometry("500x500")
 
     label_name = Label(tktk, text="Name", width=20, font=("bold", 10))
-    label_name.place(x=80, y=130)
+    label_name.place(x=100, y=130)
 
     text_name = Entry(tktk)
     text_name.place(x=240, y=130)
 
     label_lastName = Label(tktk, text="Last Name", width=20, font=("bold", 10))
-    label_lastName.place(x=80, y=160)
+    label_lastName.place(x=100, y=160)
 
     text_lastName = Entry(tktk)
     text_lastName.place(x=240, y=160)
 
     label_id = Label(tktk, text="Id", width=20, font=("bold", 10))
     label_id.place(x=100, y=190)
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
     def idChecker(var):
         content = var.get()
@@ -159,6 +163,7 @@ def signUp(a):
     label_gender = Label(tktk, text="Gender", width=20, font=("bold", 10))
     label_gender.place(x=100, y=280)
     var = IntVar()
+<<<<<<< Updated upstream
     Radiobutton(tktk, text="Male", padx=5, variable=var,
                 value=1).place(x=235, y=280)
     Radiobutton(tktk, text="Female", padx=20,
@@ -166,6 +171,14 @@ def signUp(a):
 
     label_age = Label(tktk, text="Age:", width=20, font=("bold", 10))
     label_age.place(x=100, y=310)
+=======
+    Radiobutton(tktk, text="Male", padx=5, variable=var,value=1).place(x=235, y=280)
+    Radiobutton(tktk, text="Female", padx=20,variable=var, value=2).place(x=290, y=280)
+
+    label_age = Label(tktk, text="Age:", width=20, font=("bold", 10))
+    label_age.place(x=100, y=310)
+
+>>>>>>> Stashed changes
 
     entry_age = Entry(tktk)
     entry_age.place(x=240, y=310)
@@ -175,6 +188,13 @@ def signUp(a):
 
     text_phone = Entry(tktk)
     text_phone.place(x=240, y=340)
+<<<<<<< Updated upstream
+=======
+
+    
+        
+
+>>>>>>> Stashed changes
 
     def buttonClick():
         flag = True

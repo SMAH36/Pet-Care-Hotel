@@ -18,7 +18,7 @@ def idVaildetor(id):
     if(len(id) != 9 and b.isnumeric()):
         return False
     sum, x, counter = 0, 0, 0
-    for i in id:
+    for d in id:
         x = int(i) * ((counter % 2)+1)
         counter += 1
         if x > 9:
