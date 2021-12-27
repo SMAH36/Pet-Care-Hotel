@@ -2,12 +2,15 @@ from tkinter import *
 from functools import partial
 from database import database_connection
 import tkinter as tk
+from tkinter import ttk
 from functions import *
 from HomePageADMIN import *
 from HomePageCUSTOMER import *
 from HomePageWORKER import *
+
+
 def login():
-    
+
     tkWindow = Toplevel(root)
     tkWindow.title("Log in")
     tkWindow.geometry('400x150')
@@ -27,7 +30,7 @@ def login():
     def afterlogin():
         userinfo = database_connection.signIn(username.get(), password.get())
         if(userinfo != False):
-            USER = User(userinfo[7], userinfo[2],userinfo[1])
+            USER = User(userinfo[7], userinfo[2], userinfo[1])
             tkWindow.destroy()
             if(USER.rank == 'admin'):
                 # refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -46,3 +49,16 @@ def login():
                          command=afterlogin).grid(row=17, column=13)
 
     tkWindow.mainloop()
+
+
+def showMyPets():
+    # root = Tk()
+    # frm = ttk.Frame(root, padding=100)
+    # frm.grid()
+    tktk = Toplevel(root)
+    tktk.title("AddPetPage")
+    tktk.geometry("500x500")
+    tktk.mainloop()
+
+
+showMyPets()
