@@ -2,7 +2,6 @@ from tkinter import *
 from functools import partial
 from database import database_connection
 import tkinter as tk
-from tkinter import ttk
 from functions import *
 from HomePageADMIN import *
 from HomePageCUSTOMER import *
@@ -49,16 +48,3 @@ def login():
                          command=afterlogin).grid(row=17, column=13)
 
     tkWindow.mainloop()
-
-
-def showMyPets():
-    # root = Tk()
-    # frm = ttk.Frame(root, padding=100)
-    # frm.grid()
-    tktk = Toplevel(root)
-    tktk.title("AddPetPage")
-    tktk.geometry("500x500")
-    tktk.mainloop()
-
-
-showMyPets()
