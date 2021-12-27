@@ -237,8 +237,7 @@ def signUp(a):
 
 def signOut(x):
     Button(x, text="Sign Out", command=x.destroy).grid(column=1, row=0)
-    USER = None
-
+    USER = User("None", "None")
 
 def AddWorkerPage():
     AddWorker = Toplevel(root)
