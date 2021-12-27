@@ -186,14 +186,49 @@ def reservedRoomsByDate(startDate, endDate):
     return(record)
 
 
-def reserveRoom():
-    pass
+def reserveRoom(roomNumber, petId, startDate, endDate):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    insert_script = """INSERT INTO room_reservation (room_number, pet_id, start_date, end_date) VALUES(%s, %s, %s,%s)"""
+    insert_value = (roomNumber, petId, startDate, endDate)
+    cursor.execute(insert_script, insert_value)
+    connection.commit()
+    try:
+        cursor.execute(insert_script, insert_value)
+        connection.commit()
+        record = cursor.fetchall()
+        if (connection):
+            cursor.close()
+            connection.close()
+        return(True)
+    except:
+        if (connection):
+            cursor.close()
+            connection.close()
+        return(False)
 
-    # print(signIn('0165592825', 'ADMSiho2dsa'))
-    # print(signIn('admin', 'admin'))
-    # register('admin', '0000000', 'admin',
-    #          'saher', 'bdsa', 18, 'Male', '999999', 'admin')
-    # print(removeUser('aaaaaaaa@.'))
-    # print(userPromotion('dddddddd@.'))
-    # print('addingPet:', addPet('a3cc2fa0-8392-44ca-bdd4-525e2d54975f',
-    #       'sami', 'Dog', '6', 'Male', '165018488'))
+
+def getPetsByUSERid(userId):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        f"SELECT (pet_name,pet_type,id) FROM pets_info WHERE user_id = '{userId}'")
+    record = cursor.fetchall()
+    if (connection):
+        cursor.close()
+        connection.close()
+    return(record)
+
+
+# print(getPetsByUSERid('44d97319-5b1d-4e8d-a493-5c709d77c288'))
+# print(register('customer', '2312131', '123', 'eyal', 'bta', 18, 'Male', '321312'))
+# print(reserveRoom('1', '51695236-ef84-4060-a5c7-2b6aa0783aa6', '10/16/21', '10/20/21'))
+
+# print(signIn('0165592825', 'ADMSiho2dsa'))
+# print(signIn('admin', 'admin'))
+# register('admin', '0000000', 'admin',
+#          'saher', 'bdsa', 18, 'Male', '999999', 'admin')
+# print(removeUser('aaaaaaaa@.'))
+# print(userPromotion('dddddddd@.'))
+# print('addingPet:', addPet('a3cc2fa0-8392-44ca-bdd4-525e2d54975f',
+#       'sami', 'Dog', '6', 'Male', '165018488'))

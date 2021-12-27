@@ -5,9 +5,12 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 DROP TABLE IF EXISTS "user_auth" CASCADE;
 DROP TABLE IF EXISTS "user_info" CASCADE;
 DROP TABLE IF EXISTS "user_status" CASCADE;
+DROP TABLE IF EXISTS "pets_info" CASCADE;
+DROP TABLE IF EXISTS "room_reservation" CASCADE;
 
 SET CLIENT_ENCODING TO 'utf8';
 SET timezone = 'Israel';
+SET datestyle = mdy;
 
 CREATE TABLE "user_auth" (
 "id" uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -41,7 +44,7 @@ CREATE TABLE "pets_info" (
 
 CREATE TABLE "room_reservation" (
   "room_number" varchar(255) NOT NULL,
-  "pet_id" uuid UNIQUE NOT NULL,
+  "pet_id" uuid NOT NULL,
   "start_date" date NOT NULL,
   "end_date" date NOT NULL
 );
