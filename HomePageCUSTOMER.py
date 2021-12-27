@@ -2,6 +2,7 @@ from tkinter import *
 from tkcalendar import *
 from functools import partial
 from database import database_connection
+from database.database_connection import *
 import tkinter as tk
 from functions import *
 from SignIn import *
@@ -63,12 +64,26 @@ def Reservation(USER):
               if tkvar.get()=='None':
                      popupmsg('You have to choose one of your pets to continue')
               else:
+                     ReservedRooms=tuple(map(lambda x:int(x[0]),database_connection.reservedRoomsByDate(cal1.get_date(),cal2.get_date())))
+                     flag=True
+                     for i in range(1,78):
+                            flag=False
+                            if i not in ReservedRooms:
+                                   if(reserveRoom(i, dec[tkvar.get()], cal1.get_date(), cal2.get_date())):
+                                          tktk.destroy()
+                                          popupmsg("Your reservation has been succseffuly submited ;)")
+                                          flag=True
+                                          break
+
+                     if flag==False:
+                            popupmsg("Your reservation has been failed please select another date")
+
                      
                      
 
               
 
-       Button(tktk, command=, text='Submit', width=20, bg='brown', fg='white').place(x=180, y=380)
+       Button(tktk, command=ReservePage, text='Submit', width=20, bg='brown', fg='white').place(x=180, y=380)
 
 def AddPetPage(USER):
        # Dictionary with options
