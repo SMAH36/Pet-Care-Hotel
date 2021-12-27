@@ -178,7 +178,7 @@ def reservedRoomsByDate(startDate, endDate):
     connection = connectToDb()
     cursor = connection.cursor()
     cursor.execute(
-        'SELECT * FROM room_reservation WHERE (start_date = %s) OR (end_date = %s) RETURING room_number', (startDate, endDate))
+        'SELECT (room_number) FROM room_reservation WHERE (start_date = %s) AND (end_date = %s)', (startDate, endDate))
     record = cursor.fetchall()
     if (connection):
         cursor.close()
@@ -191,12 +191,9 @@ def reserveRoom(roomNumber, petId, startDate, endDate):
     cursor = connection.cursor()
     insert_script = """INSERT INTO room_reservation (room_number, pet_id, start_date, end_date) VALUES(%s, %s, %s,%s)"""
     insert_value = (roomNumber, petId, startDate, endDate)
-    cursor.execute(insert_script, insert_value)
-    connection.commit()
     try:
         cursor.execute(insert_script, insert_value)
         connection.commit()
-        record = cursor.fetchall()
         if (connection):
             cursor.close()
             connection.close()
@@ -220,10 +217,11 @@ def getPetsByUSERid(userId):
     return(record)
 
 
-# print(getPetsByUSERid('44d97319-5b1d-4e8d-a493-5c709d77c288'))
-# print(register('customer', '2312131', '123', 'eyal', 'bta', 18, 'Male', '321312'))
-# print(reserveRoom('1', '51695236-ef84-4060-a5c7-2b6aa0783aa6', '10/16/21', '10/20/21'))
-
+# print(getPetsByUSERid('1309daf1-70c7-4e60-8a52-3866203824a5'))
+# 1309daf1-70c7-4e60-8a52-3866203824a5
+# print(register('a', 'a', '1293', 'eyal', 'bta', 18, 'Male', '3271312'))
+# print(reserveRoom('2', 'e63a2dd6-719c-4366-a103-0f162f16776e', '10/10/21', '10/12/21'))
+# print(reservedRoomsByDate('10/10/21', '10/12/21'))
 # print(signIn('0165592825', 'ADMSiho2dsa'))
 # print(signIn('admin', 'admin'))
 # register('admin', '0000000', 'admin',
