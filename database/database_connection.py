@@ -69,8 +69,6 @@ def getUserInfo(userId):
     return(record)
 
 
-
-
 def checkIfUserExist(mailOrPhone):
     connection = connectToDb()
     cursor = connection.cursor()
@@ -82,8 +80,9 @@ def checkIfUserExist(mailOrPhone):
         connection.close()
     return(record)
 
+
 def signIn(mailOrPhone, password):
-    if(checkIfUserExist(mailOrPhone)==0):
+    if(checkIfUserExist(mailOrPhone) == 0):
         return False
     connection = connectToDb()
     cursor = connection.cursor()
@@ -94,14 +93,15 @@ def signIn(mailOrPhone, password):
     if password == record[0][3]:
         userInfo = getUserInfo(record[0][0])
     else:
-        userInfo=False
+        userInfo = False
     if (connection):
         cursor.close()
         connection.close()
     return(userInfo)
 
+
 def register(email, phoneNumber, password, firstName, lastName, age, gender, personalId, rank='customer'):
-    if checkIfUserExist(email) == 0 or checkIfUserExist(phoneNumber)==0:
+    if checkIfUserExist(email) == 0 or checkIfUserExist(phoneNumber) == 0:
         userId = addToUserAuth(email, phoneNumber, password)
         addToUserInfo(userId, firstName, lastName,
                       age, gender, personalId, rank)
@@ -110,7 +110,7 @@ def register(email, phoneNumber, password, firstName, lastName, age, gender, per
 
 
 def removeUser(mailOrPhone):
-    if checkIfUserExist(mailOrPhone) == 1 :
+    if checkIfUserExist(mailOrPhone) == 1:
         userId = getUserIdByEmail(mailOrPhone)
         connection = connectToDb()
         cursor = connection.cursor()
@@ -155,9 +155,45 @@ def userPromotion(mailOrPhone, rank='worker'):
     return False
 
 
-# print(signIn('0165592825', 'ADMSiho2dsa'))
-# print(signIn('admin', 'admin'))
-# register('admin', '0000000', 'admin',
-#          'saher', 'bdsa', 18, 'Male', '999999', 'admin')
-# print(removeUser('aaaaaaaa@.'))
-# print(userPromotion('dddddddd@.'))
+def addPet(userId, petName, petType, age, gender, petPersonalId):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    insert_script = """INSERT INTO pets_info (user_id, pet_name, pet_type, age, gender ,pet_personal_id) VALUES(%s, %s, %s,%s,%s,%s)"""
+    insert_value = (userId, petName, petType, age, gender, petPersonalId)
+    try:
+        cursor.execute(insert_script, insert_value)
+        connection.commit()
+        if (connection):
+            cursor.close()
+            connection.close()
+        return(True)
+    except:
+        if (connection):
+            cursor.close()
+            connection.close()
+        return(False)
+
+
+def reservedRoomsByDate(startDate, endDate):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        'SELECT * FROM room_reservation WHERE (start_date = %s) OR (end_date = %s) RETURING room_number', (startDate, endDate))
+    record = cursor.fetchall()
+    if (connection):
+        cursor.close()
+        connection.close()
+    return(record)
+
+
+def reserveRoom():
+    pass
+
+    # print(signIn('0165592825', 'ADMSiho2dsa'))
+    # print(signIn('admin', 'admin'))
+    # register('admin', '0000000', 'admin',
+    #          'saher', 'bdsa', 18, 'Male', '999999', 'admin')
+    # print(removeUser('aaaaaaaa@.'))
+    # print(userPromotion('dddddddd@.'))
+    # print('addingPet:', addPet('a3cc2fa0-8392-44ca-bdd4-525e2d54975f',
+    #       'sami', 'Dog', '6', 'Male', '165018488'))
