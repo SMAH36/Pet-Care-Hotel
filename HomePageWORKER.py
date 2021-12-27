@@ -3,7 +3,7 @@ from functools import partial
 from database import database_connection
 import tkinter as tk
 from functions import *
-def homepageWORKER():
+def homepageWORKER(USER):
     workerHomePage = Toplevel(root)
     workerHomePage.title("Home Page")
     workerHomePage.geometry("200x200")

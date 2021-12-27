@@ -3,7 +3,7 @@ from functools import partial
 from database import database_connection
 import tkinter as tk
 from functions import *
-def homepageADMIN():
+def homepageADMIN(USER):
     adminHomePage = Toplevel(root)
     adminHomePage.title("Home Page")
     adminHomePage.geometry("200x200")

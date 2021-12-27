@@ -3,13 +3,25 @@ from functools import partial
 from database import database_connection
 import tkinter as tk
 from functions import *
+from SignIn import *
 def PetAgeVaildetor(x):
        count=0
        for i in range (len(x)):
               if(x[i]>'9' or x[i]<'0'):
                      return False
        return True
-def AddPetPage():
+def Reservation(USER):
+       Pets=getPetsByUSERid(USER.userID)
+       dec=[]
+       for p in range(len(Pets)):
+              dec[Pets[p][0]+'('+Pets[p][1]+')']=Pets[p][2]
+       tkvar = StringVar(root)
+       tkvar.set('Dog') # set the default option
+       # on change dropdown value
+       def change_dropdown(*args):
+              print( tkvar.get() )
+
+def AddPetPage(USER):
        # Dictionary with options
        PetsTypes = {
        'Dog',
@@ -70,7 +82,7 @@ def AddPetPage():
               if(var.get() == 0 and flag == True):
                      flag = False
                      popupmsg('Must choose gender ! ! !')
-              if( PetAgeVaildetor(entry_age.get()==False)and flag == True):
+              if( PetAgeVaildetor(entry_age.get())==False and flag == True):
                      flag = False
                      popupmsg('>> age must contain only numbers <<')
               if (PetAgeVaildetor(text_id.get()) == False):
@@ -81,8 +93,9 @@ def AddPetPage():
                             gender = 'male'
                      else:
                             gender = 'female'
-                     if(database_connection.register(USER.userID, text_name.get(), tkvar.get(), entry_age.get(), gender,text_id.get())==True):
-                            popupmsg('You have been successfuly registered :)')
+                     if(database_connection.addPet(USER.userID, text_name.get(), tkvar.get(), entry_age.get(), gender,text_id.get())==True):
+                            popupmsg('Your pet has been successfuly added :)')
+                            tktk.destroy()
                      else:
                             popupmsg('Pet"s ID already exist')
 
@@ -93,10 +106,11 @@ def AddPetPage():
     # it is use for display the registration form on the window
        tktk.mainloop()
        print("registration form  seccussfully created...")
-def homepageCUSTOMER():
+def homepageCUSTOMER(USER):
     CustomerHomePage = Toplevel(root)
     CustomerHomePage.title("Home Page")
     CustomerHomePage.geometry("200x200")
-    Button(CustomerHomePage, text="AddPet",command=AddPetPage).grid(column=0, row=1)
+    Button(CustomerHomePage, text="Reservation",command=lambda : AddPetPage(USER)).grid(column=0, row=1)
+    Button(CustomerHomePage, text="AddPet",command=lambda : AddPetPage(USER)).grid(column=2, row=0)
     Button(CustomerHomePage, text="Quit",command=root.destroy).grid(column=0, row=0)
     signOut(CustomerHomePage)

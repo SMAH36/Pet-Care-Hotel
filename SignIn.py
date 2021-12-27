@@ -34,7 +34,7 @@ def login():
                 homepageADMIN()
             if(USER.rank == 'customer'):
                 # refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                homepageCUSTOMER()
+                homepageCUSTOMER(USER)
             if(USER.rank == 'worker'):
                 # refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                 homepageWORKER()
