@@ -178,7 +178,10 @@ def reservedRoomsByDate(startDate, endDate):
     connection = connectToDb()
     cursor = connection.cursor()
     cursor.execute(
-        'SELECT (room_number) FROM room_reservation WHERE (start_date = %s) AND (end_date = %s)', (startDate, endDate))
+        f"""SELECT (room_number) FROM room_reservation WHERE 
+        (end_date >= '{startDate}' AND start_date <= '{startDate}') 
+        OR (start_date <= '{endDate}' AND end_date >= '{endDate}')
+        OR (start_date >= '{startDate}' AND end_date <= '{endDate}')""")
     record = cursor.fetchall()
     if (connection):
         cursor.close()
@@ -209,7 +212,7 @@ def getPetsByUSERid(userId):
     connection = connectToDb()
     cursor = connection.cursor()
     cursor.execute(
-        f"SELECT (pet_name,pet_type,id) FROM pets_info WHERE user_id = '{userId}'")
+        f"SELECT (pet_name,pet_type,id,age,gender,pet_personal_id) FROM pets_info WHERE user_id = '{userId}'")
     record = cursor.fetchall()
     if (connection):
         cursor.close()
@@ -221,7 +224,7 @@ def getPetsByUSERid(userId):
 # 1309daf1-70c7-4e60-8a52-3866203824a5
 # print(register('a', 'a', '1293', 'eyal', 'bta', 18, 'Male', '3271312'))
 # print(reserveRoom('2', 'e63a2dd6-719c-4366-a103-0f162f16776e', '10/10/21', '10/12/21'))
-# print(reservedRoomsByDate('10/10/21', '10/12/21'))
+# print(reservedRoomsByDate('10/9/21', '10/13/21'))
 # print(signIn('0165592825', 'ADMSiho2dsa'))
 # print(signIn('admin', 'admin'))
 # register('admin', '0000000', 'admin',
