@@ -197,7 +197,6 @@ def signUp(a):
             flag = False
             popupmsg('Lastname must be at least 3 letters . . . ')
         if(Emailvaildetor(text_email.get()) == False and flag == True):
-            # data base<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
             flag = False
             popupmsg('invaild email ! ! !')
         if (Passwordvaildetor(text_password.get()) == False and flag == True):
