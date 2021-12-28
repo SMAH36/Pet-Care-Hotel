@@ -33,13 +33,13 @@ def login():
             tkWindow.destroy()
             if(USER.rank == 'admin'):
                 # refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                homepageADMIN()
+                homepageADMIN(USER)
             if(USER.rank == 'customer'):
                 # refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                 homepageCUSTOMER(USER)
             if(USER.rank == 'worker'):
                 # refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                homepageWORKER()
+                homepageWORKER(USER)
         else:
             popupmsg('incorrect email/phone number/password')
 

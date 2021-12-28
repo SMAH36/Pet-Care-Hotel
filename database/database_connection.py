@@ -220,9 +220,23 @@ def getPetsByUSERid(userId):
     return(record)
 
 
+def getAllWorkers():
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        f"SELECT (user_id,first_name) FROM user_info WHERE rank = 'worker'")
+    record = cursor.fetchall()
+    if (connection):
+        cursor.close()
+        connection.close()
+    return(record)
+
+
+# print(getAllWorkers())
 # print(getPetsByUSERid('1309daf1-70c7-4e60-8a52-3866203824a5'))
 # 1309daf1-70c7-4e60-8a52-3866203824a5
-# print(register('a', 'a', '1293', 'eyal', 'bta', 18, 'Male', '3271312'))
+# print(register('admin', '312111', 'a', 'eyal',
+#       'bta', 18, 'Male', '3271312', 'admin'))
 # print(reserveRoom('2', 'e63a2dd6-719c-4366-a103-0f162f16776e', '10/10/21', '10/12/21'))
 # print(reservedRoomsByDate('10/9/21', '10/13/21'))
 # print(signIn('0165592825', 'ADMSiho2dsa'))
