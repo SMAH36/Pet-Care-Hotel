@@ -189,11 +189,11 @@ def reservedRoomsByDate(startDate, endDate):
     return(record)
 
 
-def reserveRoom(roomNumber, petId, startDate, endDate):
+def reserveRoom(roomNumber, petId, userId, startDate, endDate):
     connection = connectToDb()
     cursor = connection.cursor()
-    insert_script = """INSERT INTO room_reservation (room_number, pet_id, start_date, end_date) VALUES(%s, %s, %s,%s)"""
-    insert_value = (roomNumber, petId, startDate, endDate)
+    insert_script = """INSERT INTO room_reservation (room_number, pet_id, user_id, start_date, end_date) VALUES(%s, %s, %s,%s,%s)"""
+    insert_value = (roomNumber, petId, userId, startDate, endDate)
     try:
         cursor.execute(insert_script, insert_value)
         connection.commit()
@@ -262,6 +262,16 @@ def setWorkerToRoom(date, roomNumber, userId):
         return(False)
 
 
+def getCustomerResarvations(userId):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        f"""SELECT (room_number) FROM room_reservation WHERE user_id = '{userId}'""")
+    record = cursor.fetchall()
+    if (connection):
+        cursor.close()
+        connection.close()
+    return(record)
 # print(setWorkerToRoom('12/28/21', 1, '7859f3b9-e14e-47da-b1f5-7caa5f260b04'))
 # print(getAllRoomsWorkers('12/28/21'))
 # print(getAllWorkers())

@@ -46,6 +46,7 @@ CREATE TABLE "pets_info" (
 CREATE TABLE "room_reservation" (
   "room_number" varchar(255) NOT NULL,
   "pet_id" uuid NOT NULL,
+  "user_id" uuid NOT NULL,
   "start_date" date NOT NULL,
   "end_date" date NOT NULL
 );
