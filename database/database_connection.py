@@ -261,6 +261,8 @@ def setWorkerToRoom(date, roomNumber, userId):
             connection.close()
         return(False)
 
+# didnt check it yet
+
 
 def getCustomerResarvations(userId):
     connection = connectToDb()
@@ -272,6 +274,27 @@ def getCustomerResarvations(userId):
         cursor.close()
         connection.close()
     return(record)
+
+
+def deleteResarvation(userId, petId, startDate, endDate):
+    # delete reseved room if not assiegnd yet to worker
+    # didnt start the date yet
+    connection = connectToDb()
+    cursor = connection.cursor()
+    try:
+        cursor.execute(
+            f"DELETE FROM room_reservation WHERE user_id = '{userId}' AND pet_id = '{petId}' AND start_date = '{startDate} AND end_date= '{endDate}' ")
+        if (connection):
+            cursor.close()
+            connection.close()
+        return True
+    except:
+        if (connection):
+            cursor.close()
+            connection.close()
+        return False
+
+
 # print(setWorkerToRoom('12/28/21', 1, '7859f3b9-e14e-47da-b1f5-7caa5f260b04'))
 # print(getAllRoomsWorkers('12/28/21'))
 # print(getAllWorkers())
