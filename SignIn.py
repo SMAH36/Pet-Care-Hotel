@@ -6,6 +6,8 @@ from functions import *
 from HomePageADMIN import *
 from HomePageCUSTOMER import *
 from HomePageWORKER import *
+
+
 def login():
     tkWindow = Toplevel(root)
     tkWindow.title("Log in")
@@ -26,7 +28,7 @@ def login():
     def afterlogin():
         userinfo = database_connection.signIn(username.get(), password.get())
         if(userinfo != False):
-            USER = User(userinfo[7], userinfo[2],userinfo[1])
+            USER = User(userinfo[7], userinfo[2], userinfo[1])
             tkWindow.destroy()
             if(USER.rank == 'admin'):
                 # refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -41,6 +43,7 @@ def login():
             popupmsg('incorrect email/phone number/password')
 
     # login button
-    loginButton = Button(tkWindow, text="Login",command=afterlogin).grid(row=17, column=13)
+    loginButton = Button(tkWindow, text="Login",
+                         command=afterlogin).grid(row=17, column=13)
 
     tkWindow.mainloop()
