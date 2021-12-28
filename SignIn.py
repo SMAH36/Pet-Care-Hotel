@@ -7,7 +7,6 @@ from HomePageADMIN import *
 from HomePageCUSTOMER import *
 from HomePageWORKER import *
 def login():
-    
     tkWindow = Toplevel(root)
     tkWindow.title("Log in")
     tkWindow.geometry('400x150')
@@ -31,18 +30,17 @@ def login():
             tkWindow.destroy()
             if(USER.rank == 'admin'):
                 # refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                homepageADMIN()
+                homepageADMIN(USER)
             if(USER.rank == 'customer'):
                 # refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                 homepageCUSTOMER(USER)
             if(USER.rank == 'worker'):
                 # refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-                homepageWORKER()
+                homepageWORKER(USER)
         else:
             popupmsg('incorrect email/phone number/password')
 
     # login button
-    loginButton = Button(tkWindow, text="Login",
-                         command=afterlogin).grid(row=17, column=13)
+    loginButton = Button(tkWindow, text="Login",command=afterlogin).grid(row=17, column=13)
 
     tkWindow.mainloop()
