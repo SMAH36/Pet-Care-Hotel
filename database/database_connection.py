@@ -224,7 +224,7 @@ def getAllWorkers():
     connection = connectToDb()
     cursor = connection.cursor()
     cursor.execute(
-        f"SELECT (user_id,first_name) FROM user_info WHERE rank = 'worker'")
+        f"SELECT (user_id,first_name,personal_id) FROM user_info WHERE rank = 'worker'")
     record = cursor.fetchall()
     if (connection):
         cursor.close()
@@ -232,11 +232,43 @@ def getAllWorkers():
     return(record)
 
 
+def getAllRoomsWorkers(date):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        f"SELECT (room_number) FROM rooms_workers WHERE date = '{date}'")
+    record = cursor.fetchall()
+    if (connection):
+        cursor.close()
+        connection.close()
+    return(record)
+
+
+def setWorkerToRoom(date, roomNumber, userId):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    try:
+        cursor.execute(
+            f"""INSERT INTO rooms_workers (date, room_number, user_id) VALUES('{date}','{roomNumber}','{userId}')""")
+        connection.commit()
+        if (connection):
+            cursor.close()
+            connection.close()
+        return(True)
+    except:
+        if (connection):
+            cursor.close()
+            connection.close()
+        return(False)
+
+
+# print(setWorkerToRoom('12/28/21', 1, '7859f3b9-e14e-47da-b1f5-7caa5f260b04'))
+# print(getAllRoomsWorkers('12/28/21'))
 # print(getAllWorkers())
 # print(getPetsByUSERid('1309daf1-70c7-4e60-8a52-3866203824a5'))
 # 1309daf1-70c7-4e60-8a52-3866203824a5
-# print(register('admin', '312111', 'a', 'eyal',
-#       'bta', 18, 'Male', '3271312', 'admin'))
+# print(register('w1', '11511811', 'w1', 'malak',
+#                'bta', 18, 'Male', '315112128', 'worker'))
 # print(reserveRoom('2', 'e63a2dd6-719c-4366-a103-0f162f16776e', '10/10/21', '10/12/21'))
 # print(reservedRoomsByDate('10/9/21', '10/13/21'))
 # print(signIn('0165592825', 'ADMSiho2dsa'))

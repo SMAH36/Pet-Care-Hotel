@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS "user_info" CASCADE;
 DROP TABLE IF EXISTS "user_status" CASCADE;
 DROP TABLE IF EXISTS "pets_info" CASCADE;
 DROP TABLE IF EXISTS "room_reservation" CASCADE;
+DROP TABLE IF EXISTS "rooms_workers" CASCADE;
 
 SET CLIENT_ENCODING TO 'utf8';
 SET timezone = 'Israel';
@@ -26,7 +27,7 @@ CREATE TABLE "user_info" (
   "last_name" varchar(255) NOT NULL,
   "age" varchar(255) NOT NULL,
   "gender" varchar(255) NOT NULL,
-  "personal_id" varchar(255) NOT NULL,
+  "personal_id" varchar(255) NOT NULL UNIQUE,
   "rank" varchar(255) DEFAULT 'customer',
   "created_at" timestamptz NOT NULL DEFAULT NOW()
 );
@@ -49,4 +50,9 @@ CREATE TABLE "room_reservation" (
   "end_date" date NOT NULL
 );
 
+CREATE TABLE "rooms_workers"(
+  "date" date NOT NULL,
+  "room_number" varchar(255) NOT NULL,
+  "user_id" uuid NOT NULL
+);
 COMMIT;

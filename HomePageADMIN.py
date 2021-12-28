@@ -3,6 +3,8 @@ from functools import partial
 from database import database_connection
 import tkinter as tk
 from functions import *
+from tkinter import ttk
+from datetime import date
 # ADD WORKER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
@@ -67,18 +69,27 @@ def DeleteWorkerPage():
 def chooseWorkerRoom():
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
-    Label(newWindow, text="HIIIIIIIIIII").pack()
-    listOfWorker = []
+    dec = {}
     for w in database_connection.getAllWorkers():
-        worker = User('worker', w[0].replace('(', '').replace(')', '').split(
-            ',')[1], w[0].replace('(', '').replace(')', '').split(',')[0])
-        listOfWorker.append(worker)
-    PetsTypes = {'Dog',
-                 'Cat',
-                 'Bird',
-                 'Fish',
-                 'Snake',
-                 'Hamester'}
+        name = w[0].replace('(', '').replace(')', '').split(',')[1]
+        pId = w[0].replace('(', '').replace(')', '').split(',')[2]
+        user_id = w[0].replace('(', '').replace(')', '').split(',')[0]
+        dec[f'{name}-{pId}'] = user_id
+    listOfWorker = dec.keys()
+
+    today = date.today()
+    todayDate = f'{today.month}/{today.day}/{today.year}'
+    listOfResRooms = []
+    for rooms in tuple(map(lambda x: int(x[0]), database_connection.reservedRoomsByDate(todayDate, todayDate))):
+        listOfResRooms.append(rooms)
+
+    listOfWorkersRooms = []
+    for rooms in tuple(map(lambda x: int(x[0]), database_connection.getAllRoomsWorkers(todayDate))):
+        listOfWorkersRooms.append(rooms)
+
+    relaventList = list(
+        filter(lambda x: x not in listOfWorkersRooms, listOfResRooms))
+
     tkvar = StringVar(root)
     tkvar.set('Choose Worker')
 
@@ -86,8 +97,43 @@ def chooseWorkerRoom():
         print(tkvar.get())
     tkvar.trace('w', change_dropdown)
 
-    text_Type = OptionMenu(newWindow, tkvar, *listOfWorker.name)
+    text_Type = OptionMenu(newWindow, tkvar, *listOfWorker)
     text_Type.place(x=240, y=160)
+
+    # scrollbar
+    game_scroll = Scrollbar(newWindow)
+    game_scroll.pack(side=RIGHT, fill=Y)
+
+    game_scroll = Scrollbar(newWindow, orient='horizontal')
+    game_scroll.pack(side=BOTTOM, fill=X)
+
+    my_game = ttk.Treeview(
+        newWindow, yscrollcommand=game_scroll.set, xscrollcommand=game_scroll.set)
+
+    my_game.pack()
+
+    game_scroll.config(command=my_game.yview)
+    game_scroll.config(command=my_game.xview)
+
+    # define our column
+
+    my_game['columns'] = ('room_number')
+
+    # format our column
+    my_game.column("#0", width=0,  stretch=NO)
+    my_game.column("room_number", anchor=CENTER, width=80)
+
+    # Create Headings
+    my_game.heading("#0", text="", anchor=CENTER)
+    my_game.heading("room_number", text="Room Number", anchor=CENTER)
+
+    # add data
+    counter = 0
+    for room in relaventList:
+        my_game.insert(parent='', index='end', iid=counter, text='',
+                       values=(room))
+        counter = counter + 1
+    my_game.pack()
 
 
 def homepageADMIN(USER):
