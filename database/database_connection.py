@@ -300,9 +300,10 @@ def deleteResarvation(userId, petId, startDate, endDate):
 # print(getAllWorkers())
 # print(getPetsByUSERid('1309daf1-70c7-4e60-8a52-3866203824a5'))
 # 1309daf1-70c7-4e60-8a52-3866203824a5
-# print(register('w1', '11511811', 'w1', 'malak',
-#                'bta', 18, 'Male', '315112128', 'worker'))
-# print(reserveRoom('2', 'e63a2dd6-719c-4366-a103-0f162f16776e', '10/10/21', '10/12/21'))
+# print(register('w', '1151158111', 'w', 'malak',
+#     'bta', 18, 'Male', '31511122128', 'worker'))
+# print(reserveRoom('3', 'ba8beb62-5eb4-4f93-a2a0-657ba7d2a419',
+#       'e8c6d15d-b029-4ff2-90cb-b0de8a2ec38c', '10/10/21', '10/12/21'))
 # print(reservedRoomsByDate('10/9/21', '10/13/21'))
 # print(signIn('0165592825', 'ADMSiho2dsa'))
 # print(signIn('admin', 'admin'))
