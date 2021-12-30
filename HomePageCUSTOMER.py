@@ -9,6 +9,8 @@ import tkinter as tk
 from functions import *
 from SignIn import *
 import datetime
+# def deletePet():
+
 def ShowmeMyPets(USER):
        Pets=getPetsByUSERid(USER.userID)
        PetsList=[]
@@ -18,16 +20,7 @@ def ShowmeMyPets(USER):
               tktk = Toplevel(root)
               tktk.title("AddPetPage")
               tktk.state("zoomed")
-              for p in Pets:
-                     PetsList.append(p[0].replace('(','').replace(')','').split(','))
-              dec={}
-              # for i in range(len(Pets)):
-
-              # Pets={}
-              # Pets=dec.keys()
-              # print(Pets)
               #scrollbar
-
               Pets_scroll= Scrollbar(tktk)
               Pets_scroll.pack(side=RIGHT, fill=Y)
 
@@ -61,6 +54,23 @@ def ShowmeMyPets(USER):
               my_game.heading("Type",text="Type",anchor=CENTER)
               my_game.heading("Gender",text="Gender",anchor=CENTER)
               my_game.heading("Age",text="Age",anchor=CENTER)
+              iidd=0
+              def addData(ID,PetName,Type,Gender,Age):
+                     nonlocal iidd
+                     my_game.insert(parent='',index='end',iid=iidd,text='',values=(ID,PetName,Type,Gender,Age))
+                     iidd+=1
+
+              for p in Pets:
+                     PetsList.append(p[0].replace('(','').replace(')','').split(','))
+              
+              print(Pets)
+              for i in PetsList:
+                     print(i)
+                     addData(i[5],i[0],i[1],i[4],i[3])
+              Button(tktk, text = "close",command = tktk.destroy).pack(pady = 20)
+              tktk.mainloop()
+
+
 def popupPricemsg(f,date1,date2,tkvar):
        if tkvar=='None':
                      popupmsg('You have to choose one of your pets to continue')
