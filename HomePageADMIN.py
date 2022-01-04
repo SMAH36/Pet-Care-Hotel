@@ -13,7 +13,7 @@ def ApproveTask(USER):
        newWindow.state('zoomed')
        today = date.today()
        todayDate = f'{today.month}/{today.day}/{today.year}'
-       rooms = list(map(lambda x:x[0],list(getUnapprovedCompletedTasks(todayDate, USER.userID))))
+       rooms = list(map(lambda x:x[0],list(getUnapprovedCompletedTasks(todayDate))))
        print(rooms)
        # scrollbar
        game_scroll = Scrollbar(newWindow)
@@ -347,6 +347,7 @@ def homepageADMIN(USER):
     Button(adminHomePage, text="Delete Worker",
            command=DeleteWorkerPage).grid(column=1, row=1)
     Button(adminHomePage, text="choose worker room",
-           command=chooseWorkerRoom).grid(column=1, row=1)
-    Button(adminHomePage, text="Show customers",
-           command=showCustomers).grid(column=2, row=1)
+           command=chooseWorkerRoom).grid(column=2, row=1)
+    Button(adminHomePage, text="Show customers",command=showCustomers).grid(column=1, row=2)
+    Button(adminHomePage, text="Approve completed tasks",command=lambda :ApproveTask(USER)).grid(column=0, row=2)
+

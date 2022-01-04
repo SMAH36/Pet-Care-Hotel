@@ -12,7 +12,7 @@ def CompleteTask(USER):
        newWindow.state('zoomed')
        today = date.today()
        todayDate = f'{today.month}/{today.day}/{today.year}'
-       rooms = list(map(lambda x:x[0],list(getWorkerRoomsByDate(todayDate, USER.userID))))#=>getWorkerRoomsByDate====>getUncompletedTasks***************************************
+       rooms = list(map(lambda x:x[0],list(getUncompletedTasks(todayDate, USER.userID))))
        print(rooms)
        # scrollbar
        game_scroll = Scrollbar(newWindow)
