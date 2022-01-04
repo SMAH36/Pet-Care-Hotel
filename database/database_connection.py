@@ -220,6 +220,18 @@ def getPetsByUSERid(userId):
     return(record)
 
 
+def getPetInfoByPetId(petId):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        f"SELECT (pet_name,pet_type,id,age,gender,pet_personal_id) FROM pets_info WHERE id = '{petId}'")
+    record = cursor.fetchone()
+    if (connection):
+        cursor.close()
+        connection.close()
+    return(record[0])
+
+
 def getAllWorkers():
     connection = connectToDb()
     cursor = connection.cursor()
@@ -298,12 +310,31 @@ def deleteResarvation(userId, petId, startDate, endDate):
         return False
 
 
-def getWorkerRoomsByDate(userId, date):
-    pass
+def getWorkerRoomsByDate(date, userId):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        f"SELECT (room_number) FROM rooms_workers WHERE date = '{date}' AND user_id= '{userId}'")
+    record = cursor.fetchall()
+    if (connection):
+        cursor.close()
+        connection.close()
+    return(record)
 
 
 def getPetInfoByRoomNumber(date, roomNumber):
-    pass
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        f"""
+        SELECT (pet_id) FROM room_reservation WHERE room_number = '{roomNumber}' AND 
+        (end_date >= '{date}' AND start_date <= '{date}')
+        """)
+    record = cursor.fetchone()
+    if (connection):
+        cursor.close()
+        connection.close()
+    return(getPetInfoByPetId(record[0]))
 
 
 def changeWorkerRoom(date, roomNumber, newUserId):
@@ -325,6 +356,8 @@ def changeWorkerRoom(date, roomNumber, newUserId):
             connection.close()
         return False
 
+
+# print(getPetInfoByRoomNumber("1/4/22", 2))
 # print(setWorkerToRoom('12/28/21', 1, '7859f3b9-e14e-47da-b1f5-7caa5f260b04'))
 # print(getAllRoomsWorkers('12/28/21'))
 # print(getAllWorkers())
