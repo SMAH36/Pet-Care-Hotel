@@ -357,13 +357,14 @@ def changeWorkerRoom(date, roomNumber, newUserId):
         return False
 
 
-def completedTask(date, roomNumber, userId):
+def completeTask(date, roomNumbers, userId):
     connection = connectToDb()
     cursor = connection.cursor()
     try:
         cursor.execute("BEGIN")
-        cursor.execute(
-            f"UPDATE rooms_workers SET task_completed = TRUE WHERE date = '{date}' AND room_number= '{roomNumber}' AND user_id = '{userId}'")
+        for room in roomNumbers:
+            cursor.execute(
+                f"UPDATE rooms_workers SET task_completed = TRUE WHERE date = '{date}' AND room_number= '{room}' AND user_id = '{userId}'")
         cursor.execute("COMMIT")
         if (connection):
             cursor.close()
@@ -377,13 +378,14 @@ def completedTask(date, roomNumber, userId):
         return False
 
 
-def approveTask(date, roomNumber, userId):
+def approveTask(date, roomNumbers, userId):
     connection = connectToDb()
     cursor = connection.cursor()
     try:
         cursor.execute("BEGIN")
-        cursor.execute(
-            f"UPDATE rooms_workers SET approved = TRUE WHERE date = '{date}' AND room_number= '{roomNumber}' AND user_id = '{userId}'")
+        for room in roomNumbers:
+            cursor.execute(
+                f"UPDATE rooms_workers SET approved = TRUE WHERE date = '{date}' AND room_number= '{room}' AND user_id = '{userId}'")
         cursor.execute("COMMIT")
         if (connection):
             cursor.close()
@@ -401,12 +403,39 @@ def getUnapprovedCompletedTasks(date):
     connection = connectToDb()
     cursor = connection.cursor()
     cursor.execute(
-        f"SELECT (room_number) FROM rooms_workers WHERE date = '{date}' AND approved = FALSE AND task_completed = TRUE ")
+        f"SELECT (room_number) FROM rooms_workers WHERE date = '{date}' AND approved = 'FALSE' AND task_completed = 'TRUE'")
     record = cursor.fetchall()
     if (connection):
         cursor.close()
         connection.close()
     return(record)
+
+
+def getUncompletedTasks(date, userId):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        f"SELECT (room_number) FROM rooms_workers WHERE date = '{date}' AND user_id= '{userId}' AND approved = 'FALSE' AND task_completed = 'FALSE'")
+    record = cursor.fetchall()
+    if (connection):
+        cursor.close()
+        connection.close()
+    return(record)
+
+
+def getAllCustomers():
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        f"SELECT (first_name,last_name,age,gender,personal_id) FROM user_info WHERE rank = 'customer'")
+    record = cursor.fetchall()
+    if (connection):
+        cursor.close()
+        connection.close()
+    return(record)
+
+
+# print(getAllCustomers())
 
 # print(getWorkerRoomsByDate("1/4/22", '8d6ad7c9-7a1a-42fb-bfee-2ad508749225'))
 # print(getPetInfoByRoomNumber("1/4/22", 2))
@@ -415,8 +444,8 @@ def getUnapprovedCompletedTasks(date):
 # print(getAllWorkers())
 # print(getPetsByUSERid('1309daf1-70c7-4e60-8a52-3866203824a5'))
 # 1309daf1-70c7-4e60-8a52-3866203824a5
-# print(register('w', '1151158111', 'w', 'malak',
-#     'bta', 18, 'Male', '31511122128', 'worker'))
+# print(register('c1', '1151111', 'c', 'heba',
+#                'bta', 18, 'Male', '511122128', 'customer'))
 # print(reserveRoom('3', 'ba8beb62-5eb4-4f93-a2a0-657ba7d2a419',
 #       'e8c6d15d-b029-4ff2-90cb-b0de8a2ec38c', '10/10/21', '10/12/21'))
 # print(reservedRoomsByDate('10/9/21', '10/13/21'))
