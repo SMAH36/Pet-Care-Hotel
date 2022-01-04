@@ -8,7 +8,59 @@ from tkinter import ttk
 from datetime import date
 # ADD WORKER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
+def ApproveTask(USER):
+       newWindow = Toplevel(root)
+       newWindow.state('zoomed')
+       today = date.today()
+       todayDate = f'{today.month}/{today.day}/{today.year}'
+       rooms = list(map(lambda x:x[0],list(getUnapprovedCompletedTasks(todayDate, USER.userID))))
+       print(rooms)
+       # scrollbar
+       game_scroll = Scrollbar(newWindow)
+       game_scroll.pack(side=RIGHT, fill=Y)
 
+       game_scroll = Scrollbar(newWindow, orient='horizontal')
+       game_scroll.pack(side=BOTTOM, fill=X)
+
+       my_game = ttk.Treeview(newWindow, yscrollcommand=game_scroll.set, xscrollcommand=game_scroll.set)
+
+       my_game.pack()
+
+       game_scroll.config(command=my_game.yview)
+       game_scroll.config(command=my_game.xview)
+
+       # define our column
+
+       my_game['columns'] = ('room_number')
+
+       # format our column
+       my_game.column("#0", width=0,  stretch=NO)
+       my_game.column("room_number", anchor=CENTER, width=80)
+
+       # Create Headings
+       my_game.heading("#0", text="", anchor=CENTER)
+       my_game.heading("room_number", text="Room Number", anchor=CENTER)
+
+       # add data
+       counter = 0
+       for room in rooms:
+              my_game.insert(parent='', index='end', iid=counter, text='',values=(room))
+              counter = counter + 1
+       label_rooms = Label(newWindow, text="Choose rooms:",width=20, font=("bold", 10))
+       label_rooms.place(x=0, y=100)
+       text_rooms = Entry(newWindow)
+       text_rooms.place(x=200, y=100)
+       def buttonHandler():
+              if (approveTask(todayDate,text_rooms.get(),USER.userID)):      
+                     popupmsg("Your request has been succsefully sent")
+                     newWindow.destroy()
+              else:
+                     popupmsg("Falied to send your request ! ! !")  
+              
+
+       Button(newWindow, command=buttonHandler, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=200)
+       Button(newWindow, text="Quit", command=newWindow.destroy).grid(column=0, row=0)
+   
 def AddWorkerPage():
     AddWorker = Toplevel(root)
     AddWorker.title("Add Worker")
@@ -137,8 +189,8 @@ def chooseWorkerRoom():
     text_rooms.place(x=200, y=100)
     def buttonHandler():
         rooms=list(text_rooms.get().split(',')) 
-        print(relaventList,rooms)
-        print(list(filter(lambda x:x in relaventList,rooms)))
+        # print(relaventList,rooms)
+        # print(list(filter(lambda x:x in relaventList,rooms)))
         if (setWorkerToRoom(todayDate, list(filter(lambda x:x in relaventList,rooms)), dec[tkvar.get()])):
             popupmsg("Rooms has been succsefully seted")
             newWindow.destroy()
@@ -185,8 +237,7 @@ def ChangeWorkerRoom():
     game_scroll = Scrollbar(newWindow, orient='horizontal')
     game_scroll.pack(side=BOTTOM, fill=X)
 
-    my_game = ttk.Treeview(
-        newWindow, yscrollcommand=game_scroll.set, xscrollcommand=game_scroll.set)
+    my_game = ttk.Treeview(newWindow, yscrollcommand=game_scroll.set, xscrollcommand=game_scroll.set)
 
     my_game.pack()
 
