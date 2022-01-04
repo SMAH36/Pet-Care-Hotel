@@ -34,8 +34,7 @@ def AddWorkerPage():
             popupmsg('You have added ' + text_email.get() +
                      'successfuly to workers')
 
-    Button(AddWorker, command=buttonClick, text='Submit', width=20, bg='brown',
-           fg='white').place(x=90, y=120)
+    Button(AddWorker, command=buttonClick, text='Submit', width=20, bg='brown',fg='white').place(x=90, y=120)
 
 
 def DeleteWorkerPage():
@@ -208,6 +207,7 @@ def ChangeWorkerRoom():
 
     # add data
     counter = 0
+    print(listOfWorkersRooms)
     for room in listOfWorkersRooms:
         my_game.insert(parent='', index='end', iid=counter, text='',values=(room))
         counter = counter + 1
@@ -215,16 +215,16 @@ def ChangeWorkerRoom():
     label_rooms.place(x=0, y=100)
     text_rooms = Entry(newWindow)
     text_rooms.place(x=200, y=100)
-    # def buttonHandler():
-    #     if (setWorkerToRoom(todayDate, ,text_rooms.get(), dec[tkvar.get()]):      ** data base func
-    #         popupmsg("Room's worker has been succsefully changed")
-    #         newWindow.destroy()
-    #     else:
-    #         popupmsg("Falied to change worker ! ! !")  
+    def buttonHandler():
+        if (changeWorkerRoom(todayDate,text_rooms.get(), dec[tkvar.get()])):      
+            popupmsg("Room's worker has been succsefully changed")
+            newWindow.destroy()
+        else:
+            popupmsg("Falied to change worker ! ! !")  
     
 
-    # Button(newWindow, command=buttonHandler, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=200)
-    # Button(newWindow, text="Quit", command=newWindow.destroy).grid(column=0, row=0)
+    Button(newWindow, command=buttonHandler, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=200)
+    Button(newWindow, text="Quit", command=newWindow.destroy).grid(column=0, row=0)
    
 
 def homepageADMIN(USER):
@@ -237,5 +237,5 @@ def homepageADMIN(USER):
     Button(adminHomePage, text="Add Worker",command=AddWorkerPage).grid(column=0, row=1)
     Button(adminHomePage, text="Delete Worker",command=DeleteWorkerPage).grid(column=1, row=0)
     Button(adminHomePage, text="Choose worker room",command=chooseWorkerRoom).grid(column=1, row=1)
-    Button(adminHomePage, text="Change room's worker",command=chooseWorkerRoom).grid(column=0, row=2)
+    Button(adminHomePage, text="Change room's worker",command=ChangeWorkerRoom).grid(column=0, row=2)
 
