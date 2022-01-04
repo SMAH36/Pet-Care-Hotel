@@ -12,7 +12,7 @@ def AddWorkerPage():
     AddWorker = Toplevel(root)
     AddWorker.title("Add Worker")
     AddWorker.geometry("500x500")
-    Button(AddWorker, text="Quit", command=AddWorker.destroy).grid(
+    Button(AddWorker, text="Back", command=AddWorker.destroy).grid(
         column=0, row=0)
     label_email = Label(AddWorker, text="Email or Phone",
                         width=20, font=("bold", 10))
@@ -87,8 +87,7 @@ def chooseWorkerRoom():
     for rooms in tuple(map(lambda x: int(x[0]), database_connection.getAllRoomsWorkers(todayDate))):
         listOfWorkersRooms.append(rooms)
 
-    relaventList = list(
-        filter(lambda x: x not in listOfWorkersRooms, listOfResRooms))
+    relaventList = list(filter(lambda x: x not in listOfWorkersRooms, listOfResRooms))
 
     tkvar = StringVar(root)
     tkvar.set('Choose Worker')
@@ -130,9 +129,20 @@ def chooseWorkerRoom():
     # add data
     counter = 0
     for room in relaventList:
-        my_game.insert(parent='', index='end', iid=counter, text='',
-                       values=(room))
+        my_game.insert(parent='', index='end', iid=counter, text='',values=(room))
         counter = counter + 1
+    label_rooms = Label(newWindow, text="Choose rooms:",width=20, font=("bold", 10))
+    label_rooms.place(x=0, y=100)
+    text_rooms = Entry(newWindow)
+    text_rooms.place(x=200, y=100)
+    def buttonHandler():
+        rooms=list(text_rooms.get().split(',')) 
+        print(rooms)
+        
+
+
+    Button(newWindow, command=buttonHandler, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=200)
+    Button(newWindow, text="Quit", command=newWindow.destroy).grid(column=0, row=0)
     my_game.pack()
 
 

@@ -160,7 +160,7 @@ def Reservation(USER):
               for i in range(1,78):
                      flag=False
                      if i not in ReservedRooms:
-                            if(reserveRoom(i, dec[tkvar.get()], cal1.get_date(), cal2.get_date())):
+                            if(reserveRoom(i, dec[tkvar.get()],USER.userID, cal1.get_date(), cal2.get_date())):
                                    tktk.destroy()
                                    popupmsg("Your reservation has been succseffuly submited ;)")
                                    flag=True
