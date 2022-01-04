@@ -298,6 +298,33 @@ def deleteResarvation(userId, petId, startDate, endDate):
         return False
 
 
+def getWorkerRoomsByDate(userId, date):
+    pass
+
+
+def getPetInfoByRoomNumber(date, roomNumber):
+    pass
+
+
+def changeWorkerRoom(date, roomNumber, newUserId):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    try:
+        cursor.execute("BEGIN")
+        cursor.execute(
+            f"UPDATE rooms_workers SET user_id = '{newUserId}' WHERE date = '{date}' AND room_number= '{roomNumber}'")
+        cursor.execute("COMMIT")
+        if (connection):
+            cursor.close()
+            connection.close()
+        return True
+    except:
+        cursor.execute("ROLLBACK")
+        if (connection):
+            cursor.close()
+            connection.close()
+        return False
+
 # print(setWorkerToRoom('12/28/21', 1, '7859f3b9-e14e-47da-b1f5-7caa5f260b04'))
 # print(getAllRoomsWorkers('12/28/21'))
 # print(getAllWorkers())
