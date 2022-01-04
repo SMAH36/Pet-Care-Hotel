@@ -54,6 +54,8 @@ CREATE TABLE "room_reservation" (
 CREATE TABLE "rooms_workers"(
   "date" date NOT NULL,
   "room_number" varchar(255) NOT NULL,
-  "user_id" uuid NOT NULL
+  "user_id" uuid NOT NULL,
+  "task_completed" BOOLEAN DEFAULT 'FALSE',
+  "approved" BOOLEAN DEFAULT 'FALSE'
 );
 COMMIT;

@@ -244,18 +244,21 @@ def getAllRoomsWorkers(date):
     return(record)
 
 
-def setWorkerToRoom(date, roomNumber, userId):
+def setWorkerToRoom(date, roomNumbers, userId):
     connection = connectToDb()
     cursor = connection.cursor()
     try:
-        cursor.execute(
-            f"""INSERT INTO rooms_workers (date, room_number, user_id) VALUES('{date}','{roomNumber}','{userId}')""")
-        connection.commit()
+        cursor.execute("BEGIN")
+        for room in roomNumbers:
+            cursor.execute(
+                f"""INSERT INTO rooms_workers (date, room_number, user_id) VALUES('{date}','{room}','{userId}')""")
+        cursor.execute("COMMIT")
         if (connection):
             cursor.close()
             connection.close()
         return(True)
     except:
+        cursor.execute("ROLLBACK")
         if (connection):
             cursor.close()
             connection.close()
