@@ -10,20 +10,24 @@ from HomePageWORKER import *
 
 def login():
     tkWindow = Toplevel(root)
-    tkWindow.title("Log in")
-    tkWindow.geometry('400x150')
+    tkWindow.title("Sign In")
+    tkWindow.state('zoomed')
+    tkWindow.configure(background='#E9E9E5')
     # username label and text entry box
     usernameLabel = Label(
-        tkWindow, text="Email / Phone Number").grid(row=10, column=10)
+        tkWindow, text="Email / Phone Number",width=20,bg='#E9E9E5',fg='black', font=("bold", 12)).place(x=400, y=250)
+    usernameLabel= Label(tkWindow, text="Login",width=20,bg='#E9E9E5',fg='black', font=("Elephant", 17)).place(x=430, y=170)
+    usernameLabel= Label(tkWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    usernameLabel= Label(tkWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
     username = StringVar()
     usernameEntry = Entry(
-        tkWindow, textvariable=username).grid(row=10, column=13)
+        tkWindow, textvariable=username,width=20, font=("", 15)).place(x=600, y=250)
 
     # password label and password entry box
-    passwordLabel = Label(tkWindow, text="Password").grid(row=14, column=10)
+    passwordLabel = Label(tkWindow, text="Password",width=20,bg='#E9E9E5',fg='black', font=("bold", 12)).place(x=357, y=300)
     password = StringVar()
-    passwordEntry = Entry(tkWindow, textvariable=password,
-                          show='*').grid(row=14, column=13)
+    passwordEntry = Entry(tkWindow, textvariable=password,width=20, font=("", 15),
+                          show='*').place(x=600, y=300)
 
     def afterlogin():
         userinfo = database_connection.signIn(username.get(), password.get())
@@ -40,10 +44,9 @@ def login():
                 # refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                 homepageWORKER(USER)
         else:
-            popupmsg('incorrect email/phone number/password')
+            popupmsg('Incorrect email/phone number/password')
 
     # login button
-    loginButton = Button(tkWindow, text="Login",
-                         command=afterlogin).grid(row=17, column=13)
+    loginButton = Button(tkWindow, text="Login",width=10,bg='#5C715E',fg='white', font=("bold", 12), command=afterlogin).place(x=700, y=400)
 
     tkWindow.mainloop()

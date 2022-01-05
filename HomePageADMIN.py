@@ -65,13 +65,16 @@ def AddWorkerPage():
     AddWorker = Toplevel(root)
     AddWorker.title("Add Worker")
     AddWorker.geometry("500x500")
-    Button(AddWorker, text="Back", command=AddWorker.destroy).grid(
-        column=0, row=0)
-    label_email = Label(AddWorker, text="Email or Phone",
-                        width=20, font=("bold", 10))
-    label_email.place(x=0, y=100)
-    text_email = Entry(AddWorker)
-    text_email.place(x=200, y=100)
+    AddWorker.configure(background='#E9E9E5')
+    usernameLabel= Label(AddWorker, text="To add the worker...\n Please enter his Email or phone number",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=60, y=120)
+    usernameLabel= Label(AddWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    usernameLabel= Label(AddWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+    Button(AddWorker, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12), command=AddWorker.destroy).grid(column=0, row=0)
+    label_email = Label(AddWorker, text="Email or Phone",bg='#E9E9E5',fg='black', 
+                        width=16, font=("bold", 16))
+    label_email.place(x=430, y=300)
+    text_email = Entry(AddWorker,width=20, font=("", 16))
+    text_email.place(x=630, y=300)
 
     def buttonClick():
         flag = True
@@ -86,13 +89,13 @@ def AddWorkerPage():
             popupmsg('You have added ' + text_email.get() +
                      'successfuly to workers')
 
-    Button(AddWorker, command=buttonClick, text='Submit', width=20, bg='brown',fg='white').place(x=90, y=120)
+    Button(AddWorker, command=buttonClick, text='Add Worker', width=18, bg='#5C715E',fg='white', font=("", 11)).place(x=660, y=370)
 
 
 def DeleteWorkerPage():
     DeleteWorker = Toplevel(root)
     DeleteWorker.title("Delete Worker")
-    DeleteWorker.geometry("500x500")
+    DeleteWorker.geometry("zoomed")
     Button(DeleteWorker, text="Quit",
            command=DeleteWorker.destroy).grid(column=0, row=0)
     label_email = Label(DeleteWorker, text="Email or Phone",
@@ -281,6 +284,7 @@ def ChangeWorkerRoom():
 def showCustomers():
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
+    newWindow.configure(background='#E9E9E5')
     customerList = []
     for c in database_connection.getAllCustomers():
         firstName = c[0].replace('(', '').replace(')', '').split(',')[0]
@@ -339,15 +343,18 @@ def homepageADMIN(USER):
     adminHomePage = Toplevel(root)
     adminHomePage.title("Home Page")
     adminHomePage.state('zoomed')
-    
-    Button(adminHomePage, text="Quit",command=root.destroy).grid(column=0, row=0)
+    adminHomePage.configure(background='#E9E9E5')
+    usernameLabel= Label(adminHomePage, text="Admin Home Page:",width=20,bg='#E9E9E5',fg='black', font=("Elephant", 20)).place(x=80, y=140)
+    usernameLabel= Label(adminHomePage,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    usernameLabel= Label(adminHomePage,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+    Button(adminHomePage, text="Quit",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=root.destroy).place(x=450, y=410)
     signOut(adminHomePage)
-    Button(adminHomePage, text="Add Worker",
-           command=AddWorkerPage).grid(column=0, row=1)
-    Button(adminHomePage, text="Delete Worker",
-           command=DeleteWorkerPage).grid(column=1, row=1)
-    Button(adminHomePage, text="choose worker room",
-           command=chooseWorkerRoom).grid(column=2, row=1)
-    Button(adminHomePage, text="Show customers",command=showCustomers).grid(column=1, row=2)
-    Button(adminHomePage, text="Approve completed tasks",command=lambda :ApproveTask(USER)).grid(column=0, row=2)
+    Button(adminHomePage, text="Add Worker",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),
+           command=AddWorkerPage).place(x=450, y=200)
+    Button(adminHomePage, text="Delete Worker",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),
+           command=DeleteWorkerPage).place(x=450, y=240)
+    Button(adminHomePage, text="Choose Worker Room",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),
+           command=chooseWorkerRoom).place(x=450, y=290)
+    Button(adminHomePage, text="Show Customers",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=showCustomers).place(x=450, y=330)
+    Button(adminHomePage, text="Approve Completed Tasks",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=lambda :ApproveTask(USER)).place(x=450, y=370)
 
