@@ -469,7 +469,7 @@ def getReservationInfoByRoomNumber(date, roomNumber):
     return res
 
 
-print(getReservationInfoByRoomNumber('1/5/22', 1))
+# print(getReservationInfoByRoomNumber('1/5/22', 1))
 
 # print(getAllCustomers())
 

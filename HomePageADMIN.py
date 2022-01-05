@@ -6,6 +6,8 @@ import tkinter as tk
 from functions import *
 from tkinter import ttk
 from datetime import date
+import datetime
+
 # ADD WORKER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 def showReservationDetailsByRoomNum():
     newWindow = Toplevel(root)
@@ -17,7 +19,32 @@ def showReservationDetailsByRoomNum():
     text_room = Entry(newWindow)
     text_room.place(x=200, y=100)
     def ReservationDetails():
-        
+        # ('(fff,Fish,33911706-c7b9-4451-9201-a1b8a1f5dac0,2,female,1231)', 
+        # (2, 'e8c6d15d-b029-4ff2-90cb-b0de8a2ec38c', 'malak', 'bta', '18', 'Male', '3151112128', 'customer'),
+        #  , '2022-01-04', '2022-01-05')
+        listall=getReservationInfoByRoomNumber(todayDate,text_room.get())
+        print(listall)
+        if(listall):
+            pet=list(listall[0].replace('(','').replace(')','').split(','))
+            print(pet)
+            customer=listall[1]
+            firstDate=listall[2]
+            lastDate=listall[3]
+            D1=tuple(map(lambda x:int(x),list(firstDate.split('-'))))
+            D2=tuple(map(lambda x:int(x),list(lastDate.split('-'))))
+            d1=datetime.datetime(D1[0],D1[1],D1[2])
+            d2=datetime.datetime(D2[0],D2[1],D2[2])
+            price=((d2-d1).days+1)*77
+            text="{0} reservation details: ".format(text_room.get())
+            text+=' Customer full name: '+str(customer[2]) + ' '+ str(customer[3])+ ' | ID: '+str(customer[6]) + '\n'
+            text+='Start -- End date  : '+firstDate +' -- '+lastDate +'\n'
+            text+='Pet name: '+pet[0] +' | Pet type: '+pet[1]+' | Pet ID: '+pet[5]
+            text+='\nTotal paid : ' + str(price)
+            popupmsg(text)
+            newWindow.destroy()
+        else:
+            popupmsg('the room number ! ! !')
+
 
     Button(newWindow, command=ReservationDetails, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=200)
     
@@ -422,4 +449,5 @@ def homepageADMIN(USER):
     Button(adminHomePage, text="Show customers",command=showCustomers).grid(column=1, row=2)
     Button(adminHomePage, text="Approve completed tasks",command=lambda :ApproveTask(USER)).grid(column=0, row=2)
     Button(adminHomePage, text="Show Workers",command=showWorkers).grid(column=0, row=3)
+    Button(adminHomePage, text="Details by Room Number",command=showReservationDetailsByRoomNum).grid(column=1, row=3)
 
