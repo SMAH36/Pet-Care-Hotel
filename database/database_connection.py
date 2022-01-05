@@ -515,6 +515,26 @@ def getRoomHistory(roomNumber):
     return result
 
 
+def getCustomerHistory(userId):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        f"""
+        SELECT (room_number,start_date,end_date) FROM room_reservation WHERE user_id = '{userId}'
+        """)
+    records = cursor.fetchall()
+    result = []
+    for record in records:
+        record = record[0].replace('(', '').replace(')', '').split(',')
+        result.append(
+            {'room_number': record[0], 'start_date': record[1], 'end_date': record[2]})
+    if (connection):
+        cursor.close()
+        connection.close()
+    return result
+
+
+print(getCustomerHistory('e8c6d15d-b029-4ff2-90cb-b0de8a2ec38c'))
 # print(getReservationInfoByRoomNumber('1/5/22', 1))
 # print(getAllReservations('1/5/22'))
 
