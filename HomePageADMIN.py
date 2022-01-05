@@ -7,6 +7,77 @@ from functions import *
 from tkinter import ttk
 from datetime import date
 # ADD WORKER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+def showReservationDetailsByRoomNum():
+    newWindow = Toplevel(root)
+    newWindow.state('zoomed')
+    today = date.today()
+    todayDate = f'{today.month}/{today.day}/{today.year}'
+    label_room = Label(newWindow, text="Enter room number:",width=20, font=("bold", 10))
+    label_room.place(x=0, y=100)
+    text_room = Entry(newWindow)
+    text_room.place(x=200, y=100)
+    def ReservationDetails():
+        
+
+    Button(newWindow, command=ReservationDetails, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=200)
+    
+
+
+def showWorkers():
+    newWindow = Toplevel(root)
+    newWindow.state('zoomed')
+    customerList = []
+    for c in database_connection.getAllWorkers1():
+        firstName = c[0].replace('(', '').replace(')', '').split(',')[0]
+        lastName = c[0].replace('(', '').replace(')', '').split(',')[1]
+        age = c[0].replace('(', '').replace(')', '').split(',')[2]
+        gender = c[0].replace('(', '').replace(')', '').split(',')[3]
+        id = c[0].replace('(', '').replace(')', '').split(',')[4]
+        customerList.append((firstName, lastName, age, gender, id))
+
+    # scrollbar
+    game_scroll = Scrollbar(newWindow)
+    game_scroll.pack(side=RIGHT, fill=Y)
+
+    game_scroll = Scrollbar(newWindow, orient='horizontal')
+    game_scroll.pack(side=BOTTOM, fill=X)
+
+    my_game = ttk.Treeview(
+        newWindow, yscrollcommand=game_scroll.set, xscrollcommand=game_scroll.set)
+
+    my_game.pack()
+
+    game_scroll.config(command=my_game.yview)
+    game_scroll.config(command=my_game.xview)
+
+    # define our column
+
+    my_game['columns'] = ('firstName', 'lastName',
+                          'age', 'gender', 'personalId')
+
+    # format our column
+    my_game.column("#0", width=0,  stretch=NO)
+    my_game.column("firstName", anchor=CENTER, width=80)
+    my_game.column("lastName", anchor=CENTER, width=80)
+    my_game.column("age", anchor=CENTER, width=80)
+    my_game.column("gender", anchor=CENTER, width=80)
+    my_game.column("personalId", anchor=CENTER, width=80)
+
+    # Create Headings
+    my_game.heading("#0", text="", anchor=CENTER)
+    my_game.heading("firstName", text="First Name", anchor=CENTER)
+    my_game.heading("lastName", text="Last Name", anchor=CENTER)
+    my_game.heading("age", text="Age", anchor=CENTER)
+    my_game.heading("gender", text="Gender", anchor=CENTER)
+    my_game.heading("personalId", text="Personal Id", anchor=CENTER)
+
+    # add data
+    counter = 0
+    for customer in customerList:
+        my_game.insert(parent='', index='end', iid=counter, text='',
+                       values=(customer))
+        counter = counter + 1
+    my_game.pack()
 
 def ApproveTask(USER):
        newWindow = Toplevel(root)
@@ -350,4 +421,5 @@ def homepageADMIN(USER):
            command=chooseWorkerRoom).grid(column=2, row=1)
     Button(adminHomePage, text="Show customers",command=showCustomers).grid(column=1, row=2)
     Button(adminHomePage, text="Approve completed tasks",command=lambda :ApproveTask(USER)).grid(column=0, row=2)
+    Button(adminHomePage, text="Show Workers",command=showWorkers).grid(column=0, row=3)
 
