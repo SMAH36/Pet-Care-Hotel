@@ -1,3 +1,4 @@
+from tkinter.constants import NONE
 from typing import Coroutine
 import psycopg2
 from psycopg2 import Error
@@ -178,8 +179,8 @@ def reservedRoomsByDate(startDate, endDate):
     connection = connectToDb()
     cursor = connection.cursor()
     cursor.execute(
-        f"""SELECT (room_number) FROM room_reservation WHERE 
-        (end_date >= '{startDate}' AND start_date <= '{startDate}') 
+        f"""SELECT (room_number) FROM room_reservation WHERE
+        (end_date >= '{startDate}' AND start_date <= '{startDate}')
         OR (start_date <= '{endDate}' AND end_date >= '{endDate}')
         OR (start_date >= '{startDate}' AND end_date <= '{endDate}')""")
     record = cursor.fetchall()
@@ -327,7 +328,7 @@ def getPetInfoByRoomNumber(date, roomNumber):
     cursor = connection.cursor()
     cursor.execute(
         f"""
-        SELECT (pet_id) FROM room_reservation WHERE room_number = '{roomNumber}' AND 
+        SELECT (pet_id) FROM room_reservation WHERE room_number = '{roomNumber}' AND
         (end_date >= '{date}' AND start_date <= '{date}')
         """)
     record = cursor.fetchone()
@@ -493,11 +494,25 @@ def getRoomHistory(roomNumber):
         f"""
         SELECT (room_number,user_id,start_date,end_date) FROM room_reservation WHERE room_number = '{roomNumber}'
         """)
-    record = cursor.fetchall()
+    records = cursor.fetchall()
+    result = []
+    for record in records:
+        record = record[0].replace('(', '').replace(')', '').split(',')
+        cursor = connection.cursor()
+        cursor.execute(
+            f"""
+        SELECT (first_name,last_name,personal_id) FROM user_info WHERE user_id = '{record[1]}'
+        """)
+        userInfo = cursor.fetchone()[0].replace(
+            '(', '').replace(')', '').split(',')
+        dec = {'room_number': record[0], 'start_date': record[2],
+               'end_date': record[3], 'user': [userInfo[0], userInfo[1], userInfo[2]]}
+        result.append(dec)
+
     if (connection):
         cursor.close()
         connection.close()
-    return record
+    return result
 
 
 # print(getRoomHistory('1/5/22', 1))
