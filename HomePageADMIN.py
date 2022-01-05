@@ -7,6 +7,65 @@ from functions import *
 from tkinter import ttk
 from datetime import date
 import datetime
+def showAllroomHistory():
+    newWindow = Toplevel(root)
+    newWindow.state('zoomed')
+    today = date.today()
+    todayDate = f'{today.month}/{today.day}/{today.year}'
+    label_room = Label(newWindow, text="Enter room number:",width=20, font=("bold", 10))
+    label_room.place(x=0, y=100)
+
+    text_room = Entry(newWindow)
+    text_room.place(x=200, y=100)
+
+    Pets_scroll= Scrollbar(newWindow)
+    Pets_scroll.pack(side=RIGHT, fill=Y)
+
+    Pets_scroll = Scrollbar(newWindow,orient='horizontal')
+    Pets_scroll.pack(side= BOTTOM,fill=X)
+
+    my_game = ttk.Treeview(newWindow,yscrollcommand=Pets_scroll.set, xscrollcommand =Pets_scroll.set)
+    my_game.pack()
+
+    Pets_scroll.config(command=my_game.yview)
+    Pets_scroll.config(command=my_game.xview)
+
+    #define our column
+
+    my_game['columns'] = ('Room number', 'First data', 'Last date','Customer name','Customer lastname','Customer ID')
+
+    # format our column
+    my_game.column("#0", width=0,  stretch=NO)
+    my_game.column("Room number",anchor=CENTER, width=80)
+    my_game.column("Checkin date",anchor=CENTER,width=80)
+    my_game.column("Checkout date",anchor=CENTER,width=80)
+    my_game.column("Customer name",anchor=CENTER, width=80)
+    my_game.column("Customer lastname",anchor=CENTER,width=80)
+    my_game.column("Customer ID",anchor=CENTER,width=80)
+
+    #Create Headings 
+    my_game.heading("#0",text="",anchor=CENTER)
+    my_game.heading("Room number",text="Room number",anchor=CENTER)
+    my_game.heading("First data",text="First date",anchor=CENTER)
+    my_game.heading("Last date",text="Last date",anchor=CENTER)
+    my_game.heading("Customer name",text="Room number",anchor=CENTER)
+    my_game.heading("Customer lastname",text="First date",anchor=CENTER)
+    my_game.heading("Customer ID",text="Last date",anchor=CENTER)
+    
+    iidd=0
+    Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='brown',fg='white').grid(column=0, row=3)
+    def ReservationsDetails():
+        def addData(RoomNumber,Firstdate,Lastdate,Customername,Customerlastname,CustomerID):
+                nonlocal iidd
+                my_game.insert(parent='',index='end',iid=iidd,text='',values=(RoomNumber,Firstdate,Lastdate,Customername,Customerlastname,CustomerID))
+                iidd+=1
+        Reserevations=getRoomHistory(text_room.get())
+        print(Reserevations)
+        for i in Reserevations:
+                print(i)
+                addData(i['room_number'],i['start_date'],i['end_date'],i['user'][0],i['user'][1],i['user'][2])
+    
+    Button(newWindow, command=ReservationsDetails, text='Submit', width=20, bg='brown',fg='white').grid(column=0, row=4)
 
 def showAllTodayReservation():
     # [('(1,2022-01-04,2022-01-05)',), ('(3,2022-01-04,2022-01-05)',), 
@@ -500,5 +559,7 @@ def homepageADMIN(USER):
     Button(adminHomePage, text="Approve completed tasks",command=lambda :ApproveTask(USER)).grid(column=0, row=2)
     Button(adminHomePage, text="Show Workers",command=showWorkers).grid(column=0, row=3)
     Button(adminHomePage, text="Details by Room Number",command=showReservationDetailsByRoomNum).grid(column=1, row=3)
-    Button(adminHomePage, text="Show booked rooms",command=showAllTodayReservation).grid(column=1, row=3)
+    Button(adminHomePage, text="Show booked rooms",command=showAllTodayReservation).grid(column=2, row=3)
+    Button(adminHomePage, text="Room history",command=showAllroomHistory).grid(column=3, row=3)
+
 
