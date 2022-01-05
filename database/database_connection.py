@@ -446,6 +446,31 @@ def getAllWorkers1():
     return(record)
 
 
+def getReservationInfoByRoomNumber(date, roomNumber):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        f"""
+        SELECT (pet_id,user_id,start_date,end_date) FROM room_reservation WHERE room_number = '{roomNumber}' AND
+        (end_date >= '{date}' AND start_date <= '{date}')
+        """)
+    record = cursor.fetchone()
+    res = False
+    if (connection):
+        cursor.close()
+        connection.close()
+    if record != None:
+        petInfo = getPetInfoByPetId(record[0].replace(
+            '(', '').replace(')', '').split(',')[0])
+        userInfo = getUserInfo(record[0].replace(
+            '(', '').replace(')', '').split(',')[1])
+        res = petInfo, userInfo, record[0].replace('(', '').replace(')', '').split(
+            ',')[2], record[0].replace('(', '').replace(')', '').split(',')[3]
+    return res
+
+
+print(getReservationInfoByRoomNumber('1/5/22', 1))
+
 # print(getAllCustomers())
 
 # print(getWorkerRoomsByDate("1/4/22", '8d6ad7c9-7a1a-42fb-bfee-2ad508749225'))
