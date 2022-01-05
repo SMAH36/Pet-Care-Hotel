@@ -6,7 +6,105 @@ import tkinter as tk
 from functions import *
 from tkinter import ttk
 from datetime import date
+import datetime
+
 # ADD WORKER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+def showReservationDetailsByRoomNum():
+    newWindow = Toplevel(root)
+    newWindow.state('zoomed')
+    today = date.today()
+    todayDate = f'{today.month}/{today.day}/{today.year}'
+    label_room = Label(newWindow, text="Enter room number:",width=20, font=("bold", 10))
+    label_room.place(x=0, y=100)
+    text_room = Entry(newWindow)
+    text_room.place(x=200, y=100)
+    def ReservationDetails():
+        # ('(fff,Fish,33911706-c7b9-4451-9201-a1b8a1f5dac0,2,female,1231)', 
+        # (2, 'e8c6d15d-b029-4ff2-90cb-b0de8a2ec38c', 'malak', 'bta', '18', 'Male', '3151112128', 'customer'),
+        #  , '2022-01-04', '2022-01-05')
+        listall=getReservationInfoByRoomNumber(todayDate,text_room.get())
+        print(listall)
+        if(listall):
+            pet=list(listall[0].replace('(','').replace(')','').split(','))
+            print(pet)
+            customer=listall[1]
+            firstDate=listall[2]
+            lastDate=listall[3]
+            D1=tuple(map(lambda x:int(x),list(firstDate.split('-'))))
+            D2=tuple(map(lambda x:int(x),list(lastDate.split('-'))))
+            d1=datetime.datetime(D1[0],D1[1],D1[2])
+            d2=datetime.datetime(D2[0],D2[1],D2[2])
+            price=((d2-d1).days+1)*77
+            text="{0} reservation details: ".format(text_room.get())
+            text+=' Customer full name: '+str(customer[2]) + ' '+ str(customer[3])+ ' | ID: '+str(customer[6]) + '\n'
+            text+='Start -- End date  : '+firstDate +' -- '+lastDate +'\n'
+            text+='Pet name: '+pet[0] +' | Pet type: '+pet[1]+' | Pet ID: '+pet[5]
+            text+='\nTotal paid : ' + str(price)
+            popupmsg(text)
+            newWindow.destroy()
+        else:
+            popupmsg('the room number ! ! !')
+
+
+    Button(newWindow, command=ReservationDetails, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=200)
+    
+
+
+def showWorkers():
+    newWindow = Toplevel(root)
+    newWindow.state('zoomed')
+    customerList = []
+    for c in database_connection.getAllWorkers1():
+        firstName = c[0].replace('(', '').replace(')', '').split(',')[0]
+        lastName = c[0].replace('(', '').replace(')', '').split(',')[1]
+        age = c[0].replace('(', '').replace(')', '').split(',')[2]
+        gender = c[0].replace('(', '').replace(')', '').split(',')[3]
+        id = c[0].replace('(', '').replace(')', '').split(',')[4]
+        customerList.append((firstName, lastName, age, gender, id))
+
+    # scrollbar
+    game_scroll = Scrollbar(newWindow)
+    game_scroll.pack(side=RIGHT, fill=Y)
+
+    game_scroll = Scrollbar(newWindow, orient='horizontal')
+    game_scroll.pack(side=BOTTOM, fill=X)
+
+    my_game = ttk.Treeview(
+        newWindow, yscrollcommand=game_scroll.set, xscrollcommand=game_scroll.set)
+
+    my_game.pack()
+
+    game_scroll.config(command=my_game.yview)
+    game_scroll.config(command=my_game.xview)
+
+    # define our column
+
+    my_game['columns'] = ('firstName', 'lastName',
+                          'age', 'gender', 'personalId')
+
+    # format our column
+    my_game.column("#0", width=0,  stretch=NO)
+    my_game.column("firstName", anchor=CENTER, width=80)
+    my_game.column("lastName", anchor=CENTER, width=80)
+    my_game.column("age", anchor=CENTER, width=80)
+    my_game.column("gender", anchor=CENTER, width=80)
+    my_game.column("personalId", anchor=CENTER, width=80)
+
+    # Create Headings
+    my_game.heading("#0", text="", anchor=CENTER)
+    my_game.heading("firstName", text="First Name", anchor=CENTER)
+    my_game.heading("lastName", text="Last Name", anchor=CENTER)
+    my_game.heading("age", text="Age", anchor=CENTER)
+    my_game.heading("gender", text="Gender", anchor=CENTER)
+    my_game.heading("personalId", text="Personal Id", anchor=CENTER)
+
+    # add data
+    counter = 0
+    for customer in customerList:
+        my_game.insert(parent='', index='end', iid=counter, text='',
+                       values=(customer))
+        counter = counter + 1
+    my_game.pack()
 
 def ApproveTask(USER):
        newWindow = Toplevel(root)
@@ -350,4 +448,6 @@ def homepageADMIN(USER):
            command=chooseWorkerRoom).grid(column=2, row=1)
     Button(adminHomePage, text="Show customers",command=showCustomers).grid(column=1, row=2)
     Button(adminHomePage, text="Approve completed tasks",command=lambda :ApproveTask(USER)).grid(column=0, row=2)
+    Button(adminHomePage, text="Show Workers",command=showWorkers).grid(column=0, row=3)
+    Button(adminHomePage, text="Details by Room Number",command=showReservationDetailsByRoomNum).grid(column=1, row=3)
 

@@ -434,6 +434,17 @@ def getAllCustomers():
         connection.close()
     return(record)
 
+def getAllWorkers1():
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        f"SELECT (first_name,last_name,age,gender,personal_id) FROM user_info WHERE rank = 'worker'")
+    record = cursor.fetchall()
+    if (connection):
+        cursor.close()
+        connection.close()
+    return(record)
+
 
 def getReservationInfoByRoomNumber(date, roomNumber):
     connection = connectToDb()
