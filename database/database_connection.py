@@ -458,7 +458,40 @@ def getReservationInfoByRoomNumber(date, roomNumber):
     return res
 
 
-print(getReservationInfoByRoomNumber('1/5/22', 1))
+def getAllReservations(date):
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        f"""
+        SELECT (room_number,start_date,end_date) FROM room_reservation WHERE end_date >= '{date}' AND start_date <= '{date}'
+        """)
+    record = cursor.fetchall()
+    if (connection):
+        cursor.close()
+        connection.close()
+    return record
+
+# room history
+
+
+def getRoomHistory(roomNumber):
+    # w8
+    connection = connectToDb()
+    cursor = connection.cursor()
+    cursor.execute(
+        f"""
+        SELECT (room_number,user_id,start_date,end_date) FROM room_reservation WHERE room_number = '{roomNumber}'
+        """)
+    record = cursor.fetchall()
+    if (connection):
+        cursor.close()
+        connection.close()
+    return record
+
+
+print(getRoomHistory('1/5/22', 1))
+# print(getReservationInfoByRoomNumber('1/5/22', 1))
+# print(getAllReservations('1/5/22'))
 
 # print(getAllCustomers())
 
