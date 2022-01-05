@@ -8,7 +8,7 @@ from tkinter import ttk
 from datetime import date
 import datetime
 
-def showAllroomHistory():
+def showAllroomHistory(USER):
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
     today = date.today()
@@ -56,18 +56,17 @@ def showAllroomHistory():
     iidd=0
     Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='brown',fg='white').place(x=100, y=200)
     def addData(RoomNumber,Firstdate,Lastdate,Customername,Customerlastname,CustomerID):
-                nonlocal iidd
-                my_game.insert(parent='',index='end',iid=iidd,text='',values=(RoomNumber,Firstdate,Lastdate,Customername,Customerlastname,CustomerID))
-                iidd+=1
+                    nonlocal iidd
+                    my_game.insert(parent='',index='end',iid=iidd,text='',values=(RoomNumber,Firstdate,Lastdate,Customername,Customerlastname,CustomerID))
+                    iidd+=1
     def ReservationsDetails():
-        Reserevations=getRoomHistory(text_room.get())
-        print(Reserevations)
-        for i in Reserevations:
-                print(i)
-                addData(i['room_number'],i['start_date'],i['end_date'],i['user'][0],i['user'][1],i['user'][2])
+            Reserevations=getRoomHistory(text_room.get())
+            print(Reserevations)
+            for i in Reserevations:
+                    print(i)
+                    addData(i['room_number'],i['start_date'],i['end_date'],i['user'][0],i['user'][1],i['user'][2])
     
     Button(newWindow, command=ReservationsDetails, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=300)
-
 def showAllTodayReservation():
     # [('(1,2022-01-04,2022-01-05)',), ('(3,2022-01-04,2022-01-05)',), 
     # ('(2,2022-01-05,2022-01-05)',), ('(4,2022-01-05,2022-01-06)',), ('(5,2022-01-03,2022-01-21)',)] 
