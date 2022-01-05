@@ -8,7 +8,57 @@ from tkinter import ttk
 from datetime import date
 import datetime
 
-# ADD WORKER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+def showAllTodayReservation():
+    # [('(1,2022-01-04,2022-01-05)',), ('(3,2022-01-04,2022-01-05)',), 
+    # ('(2,2022-01-05,2022-01-05)',), ('(4,2022-01-05,2022-01-06)',), ('(5,2022-01-03,2022-01-21)',)] 
+    newWindow = Toplevel(root)
+    newWindow.state('zoomed')
+    today = date.today()
+    todayDate = f'{today.month}/{today.day}/{today.year}'
+    rooms=list(map(lambda x:list(x.replace('(','').replace(')','').split(',')),(map(lambda x:x[0],getAllReservations(todayDate)))))
+    Pets_scroll= Scrollbar(newWindow)
+    Pets_scroll.pack(side=RIGHT, fill=Y)
+
+    Pets_scroll = Scrollbar(newWindow,orient='horizontal')
+    Pets_scroll.pack(side= BOTTOM,fill=X)
+
+    my_game = ttk.Treeview(newWindow,yscrollcommand=Pets_scroll.set, xscrollcommand =Pets_scroll.set)
+
+
+    my_game.pack()
+
+    Pets_scroll.config(command=my_game.yview)
+    Pets_scroll.config(command=my_game.xview)
+
+    #define our column
+    
+    my_game['columns'] = ('Room number', 'First data', 'Last date')
+
+    # format our column
+    my_game.column("#0", width=0,  stretch=NO)
+    my_game.column("Room number",anchor=CENTER, width=80)
+    my_game.column("First data",anchor=CENTER,width=80)
+    my_game.column("Last date",anchor=CENTER,width=80)
+
+    #Create Headings 
+    my_game.heading("#0",text="",anchor=CENTER)
+    my_game.heading("Room number",text="Room number",anchor=CENTER)
+    my_game.heading("First data",text="First date",anchor=CENTER)
+    my_game.heading("Last date",text="Last date",anchor=CENTER)
+    
+    iidd=0
+    def addData(RoomNumber,Firstdate,Lastdate):
+            nonlocal iidd
+            my_game.insert(parent='',index='end',iid=iidd,text='',values=(RoomNumber,Firstdate,Lastdate))
+            iidd+=1
+    
+    print(rooms)
+    for i in rooms:
+            print(i)
+            addData(i[0],i[1],i[2])
+    Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='brown',fg='white').place(x=100, y=200)
+    
+
 def showReservationDetailsByRoomNum():
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
@@ -450,4 +500,5 @@ def homepageADMIN(USER):
     Button(adminHomePage, text="Approve completed tasks",command=lambda :ApproveTask(USER)).grid(column=0, row=2)
     Button(adminHomePage, text="Show Workers",command=showWorkers).grid(column=0, row=3)
     Button(adminHomePage, text="Details by Room Number",command=showReservationDetailsByRoomNum).grid(column=1, row=3)
+    Button(adminHomePage, text="Show booked rooms",command=showAllTodayReservation).grid(column=1, row=3)
 

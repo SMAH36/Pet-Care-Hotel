@@ -500,9 +500,9 @@ def getRoomHistory(roomNumber):
     return record
 
 
-print(getRoomHistory('1/5/22', 1))
+# print(getRoomHistory('1/5/22', 1))
 # print(getReservationInfoByRoomNumber('1/5/22', 1))
-# print(getAllReservations('1/5/22'))
+print(getAllReservations('1/5/22'))
 
 # print(getAllCustomers())
 

@@ -267,5 +267,5 @@ def homepageCUSTOMER(USER):
     Button(CustomerHomePage, text="My pets",command=lambda : ShowmeMyPets(USER)).grid(column=0, row=2)
     Button(CustomerHomePage, text="Reservation",command=lambda : Reservation(USER)).grid(column=0, row=1)
     Button(CustomerHomePage, text="AddPet",command=lambda : AddPetPage(USER)).grid(column=2, row=0)
-    Button(CustomerHomePage, text="Quit",command=root.destroy).grid(column=0, row=0)
+    Button(CustomerHomePage, text="Quit",command=root.destroy).grid(column=3, row=0)
     signOut(CustomerHomePage)
