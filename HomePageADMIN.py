@@ -7,6 +7,7 @@ from functions import *
 from tkinter import ttk
 from datetime import date
 import datetime
+
 def showAllroomHistory():
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
@@ -32,7 +33,7 @@ def showAllroomHistory():
 
     #define our column
 
-    my_game['columns'] = ('Room number', 'First data', 'Last date','Customer name','Customer lastname','Customer ID')
+    my_game['columns'] = ('Room number', 'Checkin date', 'Checkout date','Customer name','Customer lastname','Customer ID')
 
     # format our column
     my_game.column("#0", width=0,  stretch=NO)
@@ -46,26 +47,26 @@ def showAllroomHistory():
     #Create Headings 
     my_game.heading("#0",text="",anchor=CENTER)
     my_game.heading("Room number",text="Room number",anchor=CENTER)
-    my_game.heading("First data",text="First date",anchor=CENTER)
-    my_game.heading("Last date",text="Last date",anchor=CENTER)
+    my_game.heading("Checkin date",text="First date",anchor=CENTER)
+    my_game.heading("Checkout date",text="Last date",anchor=CENTER)
     my_game.heading("Customer name",text="Room number",anchor=CENTER)
     my_game.heading("Customer lastname",text="First date",anchor=CENTER)
     my_game.heading("Customer ID",text="Last date",anchor=CENTER)
     
     iidd=0
-    Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='brown',fg='white').grid(column=0, row=3)
-    def ReservationsDetails():
-        def addData(RoomNumber,Firstdate,Lastdate,Customername,Customerlastname,CustomerID):
+    Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='brown',fg='white').place(x=100, y=200)
+    def addData(RoomNumber,Firstdate,Lastdate,Customername,Customerlastname,CustomerID):
                 nonlocal iidd
                 my_game.insert(parent='',index='end',iid=iidd,text='',values=(RoomNumber,Firstdate,Lastdate,Customername,Customerlastname,CustomerID))
                 iidd+=1
+    def ReservationsDetails():
         Reserevations=getRoomHistory(text_room.get())
         print(Reserevations)
         for i in Reserevations:
                 print(i)
                 addData(i['room_number'],i['start_date'],i['end_date'],i['user'][0],i['user'][1],i['user'][2])
     
-    Button(newWindow, command=ReservationsDetails, text='Submit', width=20, bg='brown',fg='white').grid(column=0, row=4)
+    Button(newWindow, command=ReservationsDetails, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=300)
 
 def showAllTodayReservation():
     # [('(1,2022-01-04,2022-01-05)',), ('(3,2022-01-04,2022-01-05)',), 
