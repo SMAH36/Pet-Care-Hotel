@@ -27,8 +27,10 @@ def login():
 
     def afterlogin():
         userinfo = database_connection.signIn(username.get(), password.get())
+        print('userinfo', userinfo)
         if(userinfo != False):
-            USER = User(userinfo[7], userinfo[2], userinfo[1])
+            USER = User(userinfo[7], userinfo[2],
+                        userinfo[1], userinfo[3], userinfo[6])
             tkWindow.destroy()
             if(USER.rank == 'admin'):
                 # refreshhhhhh<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

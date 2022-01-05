@@ -22,16 +22,18 @@ root = Tk()
 
 
 class User:
-    def __init__(self, rank, name, userID):
+    def __init__(self, rank, name, userID, lastName, personalId):
         self.name = name
         self.rank = rank
         self.userID = userID
+        self.lastName = lastName
+        self.personalId = personalId
 
     def checkRank(self):
         return self.rank
 
 
-USER = User("None", "None", "None")
+USER = User("None", "None", "None", "None", "None")
 
 
 def idVaildetor(id):
@@ -117,4 +119,4 @@ def phoneCheck(phonenumber):
 
 def signOut(x):
     Button(x, text="Sign Out", command=x.destroy).grid(column=1, row=0)
-    USER = User("None", "None", "None")
+    USER = User("None", "None", "None", "None", "None")
