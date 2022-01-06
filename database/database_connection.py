@@ -292,6 +292,9 @@ def getCustomerResarvations(userId):
     return(record)
 
 
+# print("('2',)" in str(getCustomerResarvations('e8c6d15d-b029-4ff2-90cb-b0de8a2ec38c')))
+
+
 def deleteResarvation(userId, petId, startDate, endDate):
     # delete reseved room if not assiegnd yet to worker
     # didnt start the date yet
@@ -323,6 +326,9 @@ def getWorkerRoomsByDate(date, userId):
     return(record)
 
 
+# print(getWorkerRoomsByDate('1/5/22', 'e8c6d15d-b029-4ff2-90cb-b0de8a2ec382'))
+
+
 def getPetInfoByRoomNumber(date, roomNumber):
     connection = connectToDb()
     cursor = connection.cursor()
@@ -336,6 +342,9 @@ def getPetInfoByRoomNumber(date, roomNumber):
         cursor.close()
         connection.close()
     return(getPetInfoByPetId(record[0]))
+
+
+# print('Fish' in str(getPetInfoByRoomNumber('1/5/22', '1')))
 
 
 def changeWorkerRoom(date, roomNumber, newUserId):
@@ -424,6 +433,9 @@ def getUncompletedTasks(date, userId):
     return(record)
 
 
+# print(getUncompletedTasks('1/5/22', 'e8c6d15d-b029-4ff2-90cb-b0de8a2ec382'))
+
+
 def getAllCustomers():
     connection = connectToDb()
     cursor = connection.cursor()
@@ -445,6 +457,9 @@ def getAllWorkers1():
         cursor.close()
         connection.close()
     return(record)
+
+
+# print('31511122128' in str(getAllWorkers1()))
 
 
 def getReservationInfoByRoomNumber(date, roomNumber):
@@ -483,6 +498,8 @@ def getAllReservations(date):
         connection.close()
     return record
 
+
+# print(getAllReservations('1/5/20'))
 # room history
 
 
@@ -513,6 +530,7 @@ def getRoomHistory(roomNumber):
         cursor.close()
         connection.close()
     return result
+# print(getRoomHistory(1))
 
 
 def getCustomerHistory(userId):
@@ -551,8 +569,8 @@ def getPetHistory(petId):
     return result
 
 
+# print(getCustomerHistory('e8c6d15d-b029-4ff2-90cb-b0de8a2ec383'))
 # print(getPetHistory('ba8beb62-5eb4-4f93-a2a0-657ba7d2a419'))
-
 # print(getCustomerHistory('e8c6d15d-b029-4ff2-90cb-b0de8a2ec38c'))
 # print(getReservationInfoByRoomNumber('1/5/22', 1))
 # print(getAllReservations('1/5/22'))
