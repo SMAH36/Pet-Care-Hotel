@@ -9,8 +9,10 @@ import tkinter as tk
 from functions import *
 from SignIn import *
 import datetime
-# def deletePet():
-###
+def deletePet():
+    
+
+
 
 def ReservationHistory(USER):
        #{'room_number': '2', 'start_date': '2021-10-10', 'end_date': '2021-10-12'}
