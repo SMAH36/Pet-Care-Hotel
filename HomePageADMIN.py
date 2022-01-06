@@ -11,6 +11,11 @@ import datetime
 def showAllroomHistory(USER):
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
+    newWindow.configure(background='#E9E9E5')
+    Label(newWindow, text="Room history",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=-20, y=60)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+
     today = date.today()
     todayDate = f'{today.month}/{today.day}/{today.year}'
     label_room = Label(newWindow, text="Enter room number:",width=20, font=("bold", 10))
@@ -54,7 +59,7 @@ def showAllroomHistory(USER):
     my_game.heading("Customer ID",text="Last date",anchor=CENTER)
     
     iidd=0
-    Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='brown',fg='white').place(x=100, y=200)
+    
     def addData(RoomNumber,Firstdate,Lastdate,Customername,Customerlastname,CustomerID):
                     nonlocal iidd
                     my_game.insert(parent='',index='end',iid=iidd,text='',values=(RoomNumber,Firstdate,Lastdate,Customername,Customerlastname,CustomerID))
@@ -66,12 +71,18 @@ def showAllroomHistory(USER):
                     print(i)
                     addData(i['room_number'],i['start_date'],i['end_date'],i['user'][0],i['user'][1],i['user'][2])
     
-    Button(newWindow, command=ReservationsDetails, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=300)
+    Button(newWindow, command=ReservationsDetails, text='Submit', width=20, bg='#5C715E',fg='white').place(x=100, y=150)
+    Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='#5C715E',fg='white').place(x=900, y=500)
+    Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
 def showAllTodayReservation():
     # [('(1,2022-01-04,2022-01-05)',), ('(3,2022-01-04,2022-01-05)',), 
     # ('(2,2022-01-05,2022-01-05)',), ('(4,2022-01-05,2022-01-06)',), ('(5,2022-01-03,2022-01-21)',)] 
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
+    newWindow.configure(background='#E9E9E5')
+    Label(newWindow, text="Show booked rooms",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=-20, y=60)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
     today = date.today()
     todayDate = f'{today.month}/{today.day}/{today.year}'
     rooms=list(map(lambda x:list(x.replace('(','').replace(')','').split(',')),(map(lambda x:x[0],getAllReservations(todayDate)))))
@@ -115,12 +126,16 @@ def showAllTodayReservation():
     for i in rooms:
             print(i)
             addData(i[0],i[1],i[2])
-    Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='brown',fg='white').place(x=100, y=200)
-    
+    Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='#5C715E',fg='white').place(x=100, y=500)
+    Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
 
 def showReservationDetailsByRoomNum():
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
+    newWindow.configure(background='#E9E9E5')
+    Label(newWindow, text="Details by Room Number",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=-20, y=60)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
     today = date.today()
     todayDate = f'{today.month}/{today.day}/{today.year}'
     label_room = Label(newWindow, text="Enter room number:",width=20, font=("bold", 10))
@@ -155,13 +170,17 @@ def showReservationDetailsByRoomNum():
             popupmsg('the room number ! ! !')
 
 
-    Button(newWindow, command=ReservationDetails, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=200)
-    
+    Button(newWindow, command=ReservationDetails, text='Submit', width=20, bg='#5C715E',fg='white', font=("bold", 12)).place(x=550, y=550)
+    Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
 
 
 def showWorkers():
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
+    newWindow.configure(background='#E9E9E5')
+    Label(newWindow, text="List of wokers details",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=-20, y=60)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
     customerList = []
     for c in database_connection.getAllWorkers1():
         firstName = c[0].replace('(', '').replace(')', '').split(',')[0]
@@ -214,10 +233,15 @@ def showWorkers():
                        values=(customer))
         counter = counter + 1
     my_game.pack()
+    Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
 
 def ApproveTask(USER):
        newWindow = Toplevel(root)
        newWindow.state('zoomed')
+       newWindow.configure(background='#E9E9E5')
+       #Label(newWindow, text="List of wokers details",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=-20, y=60)
+       Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+       Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
        today = date.today()
        todayDate = f'{today.month}/{today.day}/{today.year}'
        rooms = list(map(lambda x:x[0],list(getUnapprovedCompletedTasks(todayDate))))
@@ -265,17 +289,17 @@ def ApproveTask(USER):
                      popupmsg("Falied to send your request ! ! !")  
               
 
-       Button(newWindow, command=buttonHandler, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=200)
-       Button(newWindow, text="Quit", command=newWindow.destroy).grid(column=0, row=0)
+       Button(newWindow, command=buttonHandler, text='Submit', width=20, bg='#5C715E',fg='white', font=("", 12)).place(x=100, y=200)
+       Button(newWindow, text="<-Back", command=newWindow.destroy,width=10,bg='#5C715E',fg='white', font=("", 12)).place(x=1, y=1)
    
 def AddWorkerPage():
     AddWorker = Toplevel(root)
     AddWorker.title("Add Worker")
-    AddWorker.geometry("500x500")
+    AddWorker.state("zoomed")
     AddWorker.configure(background='#E9E9E5')
-    usernameLabel= Label(AddWorker, text="To add the worker...\n Please enter his Email or phone number",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=60, y=120)
-    usernameLabel= Label(AddWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
-    usernameLabel= Label(AddWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+    Label(AddWorker, text="To add the worker...\n Please enter his Email or phone number",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=60, y=120)
+    Label(AddWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    Label(AddWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
     Button(AddWorker, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12), command=AddWorker.destroy).grid(column=0, row=0)
     label_email = Label(AddWorker, text="Email or Phone",bg='#E9E9E5',fg='black', 
                         width=16, font=("bold", 16))
@@ -302,14 +326,18 @@ def AddWorkerPage():
 def DeleteWorkerPage():
     DeleteWorker = Toplevel(root)
     DeleteWorker.title("Delete Worker")
-    DeleteWorker.geometry("zoomed")
-    Button(DeleteWorker, text="Quit",
+    DeleteWorker.state("zoomed")
+    DeleteWorker.configure(background='#E9E9E5')
+    usernameLabel= Label(DeleteWorker, text="To delete the worker...\n Please enter his Email or phone number",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=60, y=120)
+    usernameLabel= Label(DeleteWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    usernameLabel= Label(DeleteWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+    Button(DeleteWorker, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12),
            command=DeleteWorker.destroy).grid(column=0, row=0)
-    label_email = Label(DeleteWorker, text="Email or Phone",
-                        width=20, font=("bold", 10))
-    label_email.place(x=0, y=100)
-    text_email = Entry(DeleteWorker)
-    text_email.place(x=200, y=100)
+    label_email = Label(DeleteWorker, text="Email or Phone",bg='#E9E9E5',fg='black',
+                        width=16, font=("bold", 16))
+    label_email.place(x=430, y=300)
+    text_email = Entry(DeleteWorker,width=20, font=("", 16))
+    text_email.place(x=630, y=300)
 
     def buttonClick():
         flag = True
@@ -324,13 +352,16 @@ def DeleteWorkerPage():
             popupmsg('You have removed ' + text_email.get() +
                      'successfuly from workers')
 
-    Button(DeleteWorker, command=buttonClick, text='Submit', width=20, bg='brown',
-           fg='white').place(x=90, y=120)
+    Button(DeleteWorker, command=buttonClick, text='Delete worker', width=18, bg='#5C715E',fg='white', font=("", 11)).place(x=660, y=370)
 
 
 def chooseWorkerRoom():
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
+    newWindow.configure(background='#E9E9E5')
+    Label(newWindow, text="List of Rooms (Not Assigned Yet)",width=35,bg='#E9E9E5',fg='black', font=("", 15)).place(x=30, y=80)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
     dec = {}
     for w in database_connection.getAllWorkers():
         name = w[0].replace('(', '').replace(')', '').split(',')[1]
@@ -359,7 +390,7 @@ def chooseWorkerRoom():
     tkvar.trace('w', change_dropdown)
 
     text_Type = OptionMenu(newWindow, tkvar, *listOfWorker)
-    text_Type.place(x=240, y=160)
+    text_Type.place(x=240, y=360)
 
     # scrollbar
     game_scroll = Scrollbar(newWindow)
@@ -382,7 +413,7 @@ def chooseWorkerRoom():
 
     # format our column
     my_game.column("#0", width=0,  stretch=NO)
-    my_game.column("room_number", anchor=CENTER, width=80)
+    my_game.column("room_number", anchor=CENTER, width=90)
 
     # Create Headings
     my_game.heading("#0", text="", anchor=CENTER)
@@ -393,10 +424,10 @@ def chooseWorkerRoom():
     for room in relaventList:
         my_game.insert(parent='', index='end', iid=counter, text='',values=(room))
         counter = counter + 1
-    label_rooms = Label(newWindow, text="Choose rooms:",width=20, font=("bold", 10))
-    label_rooms.place(x=0, y=100)
-    text_rooms = Entry(newWindow)
-    text_rooms.place(x=200, y=100)
+    label_rooms = Label(newWindow, text="Choose rooms:",width=15,bg='#E9E9E5',fg='black', font=("bold", 15))
+    label_rooms.place(x=500, y=300)
+    text_rooms = Entry(newWindow,width=10, font=("bold", 12))
+    text_rooms.place(x=700, y=300)
     def buttonHandler():
         rooms=list(text_rooms.get().split(',')) 
         # print(relaventList,rooms)
@@ -405,15 +436,21 @@ def chooseWorkerRoom():
             popupmsg("Rooms has been succsefully seted")
             newWindow.destroy()
         else:
-            popupmsg("Falied to set rooms ! ! !")
+            popupmsg("Falied to set rooms")
     
 
-    Button(newWindow, command=buttonHandler, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=200)
-    Button(newWindow, text="Quit", command=newWindow.destroy).grid(column=0, row=0)
+    Button(newWindow, command=buttonHandler, text='Submit',width=10,bg='#5C715E',fg='white', font=("", 12)).place(x=570, y=500)
+    # Button(newWindow, text="Quit", command=newWindow.destroy).grid(column=0, row=0)
+    Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
    
 def ChangeWorkerRoom():
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
+    newWindow.configure(background='#E9E9E5')
+    Label(newWindow, text="List of rooms",width=35,bg='#E9E9E5',fg='black', font=("", 15)).place(x=-10, y=50)
+    Label(newWindow, text="To change worker room =>",width=35,bg='#E9E9E5',fg='black', font=("", 13)).place(x=130, y=210)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
     dec = {}
     for w in database_connection.getAllWorkers():
         name = w[0].replace('(', '').replace(')', '').split(',')[1]
@@ -438,7 +475,7 @@ def ChangeWorkerRoom():
     tkvar.trace('w', change_dropdown)
 
     text_Type = OptionMenu(newWindow, tkvar, *listOfWorker)
-    text_Type.place(x=240, y=160)
+    text_Type.place(x=530, y=470)
 
     # scrollbar
     game_scroll = Scrollbar(newWindow)
@@ -459,7 +496,7 @@ def ChangeWorkerRoom():
     my_game['columns'] = ('room_number')
 
     # format our column
-    my_game.column("#0", width=0,  stretch=NO)
+    my_game.column("#0", width=10,  stretch=NO)
     my_game.column("room_number", anchor=CENTER, width=80)
 
     # Create Headings
@@ -472,26 +509,29 @@ def ChangeWorkerRoom():
     for room in listOfWorkersRooms:
         my_game.insert(parent='', index='end', iid=counter, text='',values=(room))
         counter = counter + 1
-    label_rooms = Label(newWindow, text="Choose rooms:",width=20, font=("bold", 10))
-    label_rooms.place(x=0, y=100)
-    text_rooms = Entry(newWindow)
-    text_rooms.place(x=200, y=100)
+    label_rooms = Label(newWindow, text="Choose rooms:",width=20,bg='#E9E9E5',fg='black', font=("bold", 12))
+    label_rooms.place(x=230, y=210)
+    text_rooms = Entry(newWindow,width=20,font=("bold", 12))
+    text_rooms.place(x=430, y=210)
     def buttonHandler():
         if (changeWorkerRoom(todayDate,text_rooms.get(), dec[tkvar.get()])):      
             popupmsg("Room's worker has been succsefully changed")
             newWindow.destroy()
         else:
-            popupmsg("Falied to change worker ! ! !")  
+            popupmsg("Falied to change worker")  
     
 
-    Button(newWindow, command=buttonHandler, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=200)
-    Button(newWindow, text="Quit", command=newWindow.destroy).grid(column=0, row=0)
+    Button(newWindow, command=buttonHandler, text='Submit',  width=18, bg='#5C715E',fg='white', font=("", 11)).place(x=660, y=370)
+    Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
    
 
 def showCustomers():
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
     newWindow.configure(background='#E9E9E5')
+    Label(newWindow,text="List of customer details",width=35,bg='#E9E9E5',fg='black', font=("", 15)).place(x=-10, y=50)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
     customerList = []
     for c in database_connection.getAllCustomers():
         firstName = c[0].replace('(', '').replace(')', '').split(',')[0]
@@ -544,6 +584,7 @@ def showCustomers():
                        values=(customer))
         counter = counter + 1
     my_game.pack()
+    Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
 
 
 def homepageADMIN(USER):
@@ -551,22 +592,24 @@ def homepageADMIN(USER):
     adminHomePage.title("Home Page")
     adminHomePage.state('zoomed')
     adminHomePage.configure(background='#E9E9E5')
-    usernameLabel= Label(adminHomePage, text="Admin Home Page:",width=20,bg='#E9E9E5',fg='black', font=("Elephant", 20)).place(x=80, y=140)
+    usernameLabel= Label(adminHomePage, text="Admin Homepage:",width=20,bg='#E9E9E5',fg='black', font=("Elephant", 20)).place(x=50, y=120)
     usernameLabel= Label(adminHomePage,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
     usernameLabel= Label(adminHomePage,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
-    Button(adminHomePage, text="Quit",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=root.destroy).place(x=450, y=410)
+    Button(adminHomePage, text="Quit",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=root.destroy).place(x=650, y=400)
     signOut(adminHomePage)
     Button(adminHomePage, text="Add Worker",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),
-           command=AddWorkerPage).place(x=450, y=200)
+           command=AddWorkerPage).place(x=350, y=200)
     Button(adminHomePage, text="Delete Worker",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),
-           command=DeleteWorkerPage).place(x=450, y=240)
+           command=DeleteWorkerPage).place(x=350, y=240)
     Button(adminHomePage, text="Choose Worker Room",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),
-           command=chooseWorkerRoom).place(x=450, y=290)
-    Button(adminHomePage, text="Show Customers",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=showCustomers).place(x=450, y=330)
-    Button(adminHomePage, text="Approve Completed Tasks",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=lambda :ApproveTask(USER)).place(x=450, y=370)
-    Button(adminHomePage, text="Show Workers",command=showWorkers).grid(column=0, row=3)
-    Button(adminHomePage, text="Details by Room Number",command=showReservationDetailsByRoomNum).grid(column=1, row=3)
-    Button(adminHomePage, text="Show booked rooms",command=showAllTodayReservation).grid(column=2, row=3)
-    Button(adminHomePage, text="Room history",command=showAllroomHistory).grid(column=3, row=3)
+           command=chooseWorkerRoom).place(x=350, y=280)
+    Button(adminHomePage, text="Change Worker Room",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),
+           command=ChangeWorkerRoom).place(x=650, y=360)
+    Button(adminHomePage, text="Show Customers",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=showCustomers).place(x=650, y=200)
+    Button(adminHomePage, text="Approve Completed Tasks",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=lambda :ApproveTask(USER)).place(x=650, y=240)
+    Button(adminHomePage, text="Show Workers",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=showWorkers).place(x=650, y=280)
+    Button(adminHomePage, text="Details by Room Number",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=showReservationDetailsByRoomNum).place(x=350, y=320)
+    Button(adminHomePage, text="Show booked rooms",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=showAllTodayReservation).place(x=350, y=360)
+    Button(adminHomePage, text="Room history",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=lambda :showAllroomHistory(USER)).place(x=650, y=320)
 
 
