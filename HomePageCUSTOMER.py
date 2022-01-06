@@ -9,6 +9,52 @@ import tkinter as tk
 from functions import *
 from SignIn import *
 import datetime
+def deleteMyPet(USER):
+    newWindow = Toplevel(root)
+    newWindow.state('zoomed')
+    Pets = getPetsByUSERid(USER.userID)
+    print(Pets)
+    PetsList = []
+    if(len(Pets) == 0):
+        popupmsg('You have no pets, please add one')
+        newWindow.destroy()
+    for p in Pets:
+        PetsList.append(p[0].replace('(', '').replace(')', '').split(','))
+    dec = {}
+    for p in PetsList:
+        dec[p[0]+'('+p[1]+')'] = p[2]
+        print(p[0]+'('+p[1]+')')
+        print(p[2])
+    Pets = {}
+    Pets = dec.keys()
+    print(Pets)
+    tkvar = StringVar(root)
+    tkvar.set('None')  # set the default option
+    # on change dropdown value
+
+    def change_dropdown(*args):
+        print(tkvar.get())
+    label_Type = Label(newWindow, text="Pet-('Name'('Type'))",width=20, font=("bold", 10))
+    # label_Type.place(x=80, y=160)
+    label_Type.pack(pady=20)
+
+    text_Type = OptionMenu(newWindow, tkvar, *Pets)
+    # text_Type.place(x=240, y=160)
+    text_Type.pack(pady=20)
+    def DeleteData():
+        if(tkvar.get()!='None'):
+            today = date.today()
+            todayDate = f'{today.month}/{today.day}/{today.year}'
+            flag=deletePet(dec[tkvar.get()],todayDate)
+            if(flag):
+                popupmsg("The pet has been deleted succefully")
+                newWindow.destroy()
+            else:
+                popupmsg("You have reservation for this pet !!\n Please contact our support ")
+        else:
+            popupmsg("Please choose pet")
+    Button(newWindow, command=DeleteData, text="Delete pet", width=20, bg='brown',fg='white').place(x=100, y=200)
+
 def PetReservations(USER):
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
@@ -485,11 +531,13 @@ def AddPetPage(USER):
 def homepageCUSTOMER(USER):
     CustomerHomePage = Toplevel(root)
     CustomerHomePage.title("Home Page")
-    CustomerHomePage.geometry("200x200")
-    Button(CustomerHomePage, text="My pets",command=lambda : ShowmeMyPets(USER)).grid(column=0, row=2)
+    CustomerHomePage.geometry("300x300")
+    Button(CustomerHomePage, text="My pets",command=lambda : ShowmeMyPets(USER)).grid(column=1, row=2)
     Button(CustomerHomePage, text="Reservation",command=lambda : Reservation(USER)).grid(column=0, row=1)
     Button(CustomerHomePage, text="AddPet",command=lambda : AddPetPage(USER)).grid(column=2, row=0)
     Button(CustomerHomePage, text="Quit",command=root.destroy).grid(column=0, row=0)
     Button(CustomerHomePage, text="History Orders",command=lambda : ReservationHistory(USER)).grid(column=2, row=1)
     Button(CustomerHomePage, text="pet's reservations",command=lambda : PetReservations(USER)).grid(column=0, row=2)
+    Button(CustomerHomePage, text="Delete pet",command=lambda : deleteMyPet(USER)).grid(column=2, row=2)
+
     signOut(CustomerHomePage)
