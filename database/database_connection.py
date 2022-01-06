@@ -551,7 +551,7 @@ def getPetHistory(petId):
     return result
 
 
-print(getPetHistory('ba8beb62-5eb4-4f93-a2a0-657ba7d2a419'))
+# print(getPetHistory('ba8beb62-5eb4-4f93-a2a0-657ba7d2a419'))
 
 # print(getCustomerHistory('e8c6d15d-b029-4ff2-90cb-b0de8a2ec38c'))
 # print(getReservationInfoByRoomNumber('1/5/22', 1))

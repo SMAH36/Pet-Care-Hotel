@@ -9,69 +9,155 @@ import tkinter as tk
 from functions import *
 from SignIn import *
 import datetime
-def deletePet():
+def PetReservations(USER):
+    newWindow = Toplevel(root)
+    newWindow.state('zoomed')
+
+    game_frame = Frame(newWindow)
+    game_frame.pack()
+    Pets_scroll= Scrollbar(game_frame,orient='vertical')
+    Pets_scroll.pack(side=RIGHT, fill=Y)
+
+    Pets_scroll = Scrollbar(game_frame,orient='horizontal')
+    Pets_scroll.pack(side= BOTTOM,fill=X)
+
+    my_game = ttk.Treeview(game_frame,yscrollcommand=Pets_scroll.set, xscrollcommand =Pets_scroll.set)
+    my_game.pack()
+
+    Pets_scroll.config(command=my_game.yview)
+    Pets_scroll.config(command=my_game.xview)
+
+    #define our column
+
+    my_game['columns'] = ('Room number', 'Checkin date', 'Checkout date','Total amount')
+
+    # format our column
+    my_game.column("#0", width=0,  stretch=NO)
+    my_game.column("Room number",anchor=CENTER, width=80)
+    my_game.column("Checkin date",anchor=CENTER,width=80)
+    my_game.column("Checkout date",anchor=CENTER,width=80)
+    my_game.column("Total amount",anchor=CENTER, width=80)
+    
+
+    #Create Headings 
+    my_game.heading("#0",text="",anchor=CENTER)
+    my_game.heading("Room number",text="Room number",anchor=CENTER)
+    my_game.heading("Checkin date",text="Checkin date",anchor=CENTER)
+    my_game.heading("Checkout date",text="Checkout date",anchor=CENTER)
+    my_game.heading("Total amount",text="Total amount",anchor=CENTER)
+    
+    Pets = getPetsByUSERid(USER.userID)
+    print(Pets)
+    PetsList = []
+    if(len(Pets) == 0):
+        popupmsg('You have no pets, please add one')
+        newWindow.destroy()
+    for p in Pets:
+        PetsList.append(p[0].replace('(', '').replace(')', '').split(','))
+    dec = {}
+    for p in PetsList:
+        dec[p[0]+'('+p[1]+')'] = p[2]
+        print(p[0]+'('+p[1]+')')
+        print(p[2])
+    Pets = {}
+    Pets = dec.keys()
+    print(Pets)
+    tkvar = StringVar(root)
+    tkvar.set('None')  # set the default option
+    # on change dropdown value
+
+    def change_dropdown(*args):
+        print(tkvar.get())
+    label_Type = Label(newWindow, text="Pet-('Name'('Type'))",
+                       width=20, font=("bold", 10))
+    # label_Type.place(x=80, y=160)
+    label_Type.pack(pady=20)
+
+    text_Type = OptionMenu(newWindow, tkvar, *Pets)
+    # text_Type.place(x=240, y=160)
+    text_Type.pack(pady=20)
+    iidd=0
+    Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='brown',fg='white').place(x=100, y=200)
+    def addData(RoomNumber,Firstdate,Lastdate,TotalAmount):
+            nonlocal iidd
+            my_game.insert(parent='',index='end',iid=iidd,text='',values=(RoomNumber,Firstdate,Lastdate,TotalAmount))
+            iidd+=1
+    def showDetails():
+        Reserevations=getPetHistory(dec[tkvar.get()])
+        print(Reserevations)
+        for i in Reserevations:
+            D1=tuple(map(lambda x:int(x),list(i['start_date'].split('-'))))
+            D2=tuple(map(lambda x:int(x),list(i['end_date'].split('-'))))
+            d1=datetime.datetime(D1[0],D1[1],D1[2])
+            d2=datetime.datetime(D2[0],D2[1],D2[2])
+            price=((d2-d1).days+1)*77
+            addData(i['room_number'],i['start_date'],i['end_date'],price)
+    Button(newWindow, command=showDetails, text="Pet's reservations", width=20, bg='brown',fg='white').place(x=100, y=200)
+    my_game.pack()
+
     
 
 
 
 def ReservationHistory(USER):
-       #{'room_number': '2', 'start_date': '2021-10-10', 'end_date': '2021-10-12'}
-       Reserevations=getCustomerHistory(USER.userID)
-       print(Reserevations)
+        #{'room_number': '2', 'start_date': '2021-10-10', 'end_date': '2021-10-12'}
+        Reserevations=getCustomerHistory(USER.userID)
+        print(Reserevations)
 
-       newWindow = Toplevel(root)
-       newWindow.state('zoomed')
 
-       game_frame = Frame(newWindow)
-       game_frame.pack()
-       Pets_scroll= Scrollbar(game_frame,orient='vertical')
-       Pets_scroll.pack(side=RIGHT, fill=Y)
+        newWindow = Toplevel(root)
+        newWindow.state('zoomed')
 
-       Pets_scroll = Scrollbar(game_frame,orient='horizontal')
-       Pets_scroll.pack(side= BOTTOM,fill=X)
+        game_frame = Frame(newWindow)
+        game_frame.pack()
+        Pets_scroll= Scrollbar(game_frame,orient='vertical')
+        Pets_scroll.pack(side=RIGHT, fill=Y)
 
-       my_game = ttk.Treeview(game_frame,yscrollcommand=Pets_scroll.set, xscrollcommand =Pets_scroll.set)
-       my_game.pack()
+        Pets_scroll = Scrollbar(game_frame,orient='horizontal')
+        Pets_scroll.pack(side= BOTTOM,fill=X)
 
-       Pets_scroll.config(command=my_game.yview)
-       Pets_scroll.config(command=my_game.xview)
+        my_game = ttk.Treeview(game_frame,yscrollcommand=Pets_scroll.set, xscrollcommand =Pets_scroll.set)
+        my_game.pack()
 
-       #define our column
+        Pets_scroll.config(command=my_game.yview)
+        Pets_scroll.config(command=my_game.xview)
 
-       my_game['columns'] = ('Room number', 'Checkin date', 'Checkout date','Total amount')
+        #define our column
 
-       # format our column
-       my_game.column("#0", width=0,  stretch=NO)
-       my_game.column("Room number",anchor=CENTER, width=80)
-       my_game.column("Checkin date",anchor=CENTER,width=80)
-       my_game.column("Checkout date",anchor=CENTER,width=80)
-       my_game.column("Total amount",anchor=CENTER, width=80)
+        my_game['columns'] = ('Room number', 'Checkin date', 'Checkout date','Total amount')
+
+        # format our column
+        my_game.column("#0", width=0,  stretch=NO)
+        my_game.column("Room number",anchor=CENTER, width=80)
+        my_game.column("Checkin date",anchor=CENTER,width=80)
+        my_game.column("Checkout date",anchor=CENTER,width=80)
+        my_game.column("Total amount",anchor=CENTER, width=80)
+        
+
+        #Create Headings 
+        my_game.heading("#0",text="",anchor=CENTER)
+        my_game.heading("Room number",text="Room number",anchor=CENTER)
+        my_game.heading("Checkin date",text="Checkin date",anchor=CENTER)
+        my_game.heading("Checkout date",text="Checkout date",anchor=CENTER)
+        my_game.heading("Total amount",text="Total amount",anchor=CENTER)
        
-
-       #Create Headings 
-       my_game.heading("#0",text="",anchor=CENTER)
-       my_game.heading("Room number",text="Room number",anchor=CENTER)
-       my_game.heading("Checkin date",text="Checkin date",anchor=CENTER)
-       my_game.heading("Checkout date",text="Checkout date",anchor=CENTER)
-       my_game.heading("Total amount",text="Total amount",anchor=CENTER)
        
-       
-       iidd=0
-       Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='brown',fg='white').place(x=100, y=200)
-       def addData(RoomNumber,Firstdate,Lastdate,TotalAmount):
+        iidd=0
+        Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='brown',fg='white').place(x=100, y=200)
+        def addData(RoomNumber,Firstdate,Lastdate,TotalAmount):
               nonlocal iidd
               my_game.insert(parent='',index='end',iid=iidd,text='',values=(RoomNumber,Firstdate,Lastdate,TotalAmount))
               iidd+=1
        
-       
-       for i in Reserevations:
-              D1=tuple(map(lambda x:int(x),list(i['start_date'].split('-'))))
-              D2=tuple(map(lambda x:int(x),list(i['end_date'].split('-'))))
-              d1=datetime.datetime(D1[0],D1[1],D1[2])
-              d2=datetime.datetime(D2[0],D2[1],D2[2])
-              price=((d2-d1).days+1)*77
-              addData(i['room_number'],i['start_date'],i['end_date'],price)
-       my_game.pack()
+        
+        for i in Reserevations:
+            D1=tuple(map(lambda x:int(x),list(i['start_date'].split('-'))))
+            D2=tuple(map(lambda x:int(x),list(i['end_date'].split('-'))))
+            d1=datetime.datetime(D1[0],D1[1],D1[2])
+            d2=datetime.datetime(D2[0],D2[1],D2[2])
+            price=((d2-d1).days+1)*77
+            addData(i['room_number'],i['start_date'],i['end_date'],price)
+        my_game.pack()
 
 # def ReservationHistory(USER):
 #        Reserevations=getRoomHistory(USER.userID)
@@ -403,5 +489,6 @@ def homepageCUSTOMER(USER):
     Button(CustomerHomePage, text="Reservation",command=lambda : Reservation(USER)).grid(column=0, row=1)
     Button(CustomerHomePage, text="AddPet",command=lambda : AddPetPage(USER)).grid(column=2, row=0)
     Button(CustomerHomePage, text="Quit",command=root.destroy).grid(column=0, row=0)
-    Button(CustomerHomePage, text="Riservation history",command=lambda : ReservationHistory(USER)).grid(column=2, row=1)
+    Button(CustomerHomePage, text="History Orders",command=lambda : ReservationHistory(USER)).grid(column=2, row=1)
+    Button(CustomerHomePage, text="pet's reservations",command=lambda : PetReservations(USER)).grid(column=0, row=2)
     signOut(CustomerHomePage)
