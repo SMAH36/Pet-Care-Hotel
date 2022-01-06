@@ -99,6 +99,7 @@ def PetReservations(USER):
 
 
 
+
 def ReservationHistory(USER):
         #{'room_number': '2', 'start_date': '2021-10-10', 'end_date': '2021-10-12'}
         Reserevations=getCustomerHistory(USER.userID)
@@ -188,24 +189,24 @@ def ReservationHistory(USER):
 #        my_game.column("Checkin date",anchor=CENTER,width=80)
 #        my_game.column("Checkout date",anchor=CENTER,width=80)
 #        my_game.column("Total amount",anchor=CENTER, width=80)
-       
 
-#        #Create Headings 
+
+#        #Create Headings
 #        my_game.heading("#0",text="",anchor=CENTER)
 #        my_game.heading("Room number",text="Room number",anchor=CENTER)
 #        my_game.heading("Checkin date",text="Checkin date",anchor=CENTER)
 #        my_game.heading("Checkout date",text="Checkout date",anchor=CENTER)
 #        my_game.heading("Total amount",text="Total amount",anchor=CENTER)
-       
-       
+
+
 #        iidd=0
 #        Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='brown',fg='white').place(x=100, y=200)
 #        def addData(RoomNumber,Firstdate,Lastdate,TotalAmount):
 #               nonlocal iidd
 #               my_game.insert(parent='',index='end',iid=iidd,text='',values=(RoomNumber,Firstdate,Lastdate,TotalAmount))
 #               iidd+=1
-       
-       
+
+
 #        for i in Reserevations:
 #               D1=list(Reserevations['start_date'].split('-'))
 #               D2=list(Reserevations['end_date'].split('-'))
@@ -214,7 +215,7 @@ def ReservationHistory(USER):
 #               price=((d2-d1).days+1)*77
 #               print(i)
 #               addData(i['room_number'],i['start_date'],i['end_date'],str(price))
-   
+
 def ShowmeMyPets(USER):
     Pets = getPetsByUSERid(USER.userID)
     PetsList = []
@@ -304,7 +305,7 @@ def popupPricemsg(f, date1, date2, tkvar, USER):
             popup.title("!")
             # Can add a font arg here
             label = tk.Label(
-                popup, text=f"I'm {USER.name} {USER.lastName} with ID number {USER.personalId}\nI agree to pay {price} nis at the reception before {d1}")
+                popup, text=f"I'm {USER.name} {USER.lastName} with ID number {USER.personalId}\nI agree to pay {price} nis at the reception before {date1}")
             label.pack(side="top", fill="x", pady=10)
             B1 = tk.Button(popup, text="I Agree", command=Helpfun)
             B1.pack()
