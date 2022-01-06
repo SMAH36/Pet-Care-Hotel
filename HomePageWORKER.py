@@ -7,7 +7,7 @@ from functions import *
 from datetime import date
 from tkinter import ttk
 
-def CompleteTask(USER):
+def CompleteTask(USER):# >>>>>>>>>>>>>>>>>>>>>Task 5
        newWindow = Toplevel(root)
        newWindow.state('zoomed')
        today = date.today()
@@ -51,9 +51,7 @@ def CompleteTask(USER):
        text_rooms.place(x=200, y=100)
        Choosedrooms=list(text_rooms.get().split(',')) 
        def buttonHandler():
-              
-            
-              if (completedTask(todayDate,list(filter(lambda x:x in rooms,Choosedrooms)),USER.userID)):      
+              if (completeTask(todayDate,list(filter(lambda x:x in rooms,Choosedrooms)),USER.userID)):      
                      popupmsg("Your request has been succsefully sent")
                      newWindow.destroy()
               else:
@@ -63,7 +61,7 @@ def CompleteTask(USER):
        Button(newWindow, command=buttonHandler, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=200)
        Button(newWindow, text="Quit", command=newWindow.destroy).grid(column=0, row=0)
    
-def ShowMeMyRooms(USER):
+def ShowMeMyRooms(USER):#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Task 4
        today = date.today()
        todayDate = f'{today.month}/{today.day}/{today.year}'
        rooms = list(map(lambda x:x[0],list(getWorkerRoomsByDate(todayDate, USER.userID))))
@@ -71,7 +69,7 @@ def ShowMeMyRooms(USER):
        for r in rooms:
               text+=r+','
        popupmsg(text)
-def ShowMePetByRoom(USER):
+def ShowMePetByRoom(USER):#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> task 3
        #(ddd,Dog,ba8beb62-5eb4-4f93-a2a0-657ba7d2a419,1,male,123)
        PetByRoom = Toplevel(root)
        PetByRoom.title("Pet By Room")
@@ -96,12 +94,13 @@ def ShowMePetByRoom(USER):
        Button(PetByRoom, command=PetsDetailsPopUp, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=200)
        
 
-def homepageWORKER(USER):
+def homepageWORKER(USER):#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> task 6
        workerHomePage = Toplevel(root)
        workerHomePage.title("Home Page")
        workerHomePage.geometry("200x200")
        Button(workerHomePage, text="Complete task",command=lambda :CompleteTask(USER)).grid(column=-0, row=2)
        Button(workerHomePage, text="Quit",command=root.destroy).grid(column=0, row=0)
+       Button(workerHomePage, text="Sign out",command=workerHomePage.destroy).grid(column=-1, row=0)#>>>>>>>>>>>>>>>>>>>>>>> task 2
        Button(workerHomePage, text="My rooms",command=lambda :ShowMeMyRooms(USER)).grid(column=2, row=0)
        Button(workerHomePage, text="Pet's details by room number",command=lambda :ShowMePetByRoom(USER)).grid(column=-0, row=1)
        signOut(workerHomePage)
