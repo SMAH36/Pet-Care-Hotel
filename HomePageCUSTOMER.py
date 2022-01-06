@@ -9,7 +9,7 @@ import tkinter as tk
 from functions import *
 from SignIn import *
 import datetime
-def deleteMyPet(USER):
+def deleteMyPet(USER):#>>>>>>>>>>>>>>>9
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
     Pets = getPetsByUSERid(USER.userID)
@@ -55,7 +55,7 @@ def deleteMyPet(USER):
             popupmsg("Please choose pet")
     Button(newWindow, command=DeleteData, text="Delete pet", width=20, bg='brown',fg='white').place(x=100, y=200)
 
-def PetReservations(USER):
+def PetReservations(USER):#>>>>>>>>>>>>>>>>10
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
 
@@ -146,7 +146,7 @@ def PetReservations(USER):
 
 
 
-def ReservationHistory(USER):
+def ReservationHistory(USER):#>>>>>>>>>>>>>>>>>>6
         #{'room_number': '2', 'start_date': '2021-10-10', 'end_date': '2021-10-12'}
         Reserevations=getCustomerHistory(USER.userID)
         print(Reserevations)
@@ -262,7 +262,7 @@ def ReservationHistory(USER):
 #               print(i)
 #               addData(i['room_number'],i['start_date'],i['end_date'],str(price))
 
-def ShowmeMyPets(USER):
+def ShowmeMyPets(USER):#>>>>>>>>>>>>>>>>>>>>7
     Pets = getPetsByUSERid(USER.userID)
     PetsList = []
     if(len(Pets) == 0):
@@ -350,8 +350,8 @@ def popupPricemsg(f, date1, date2, tkvar, USER):
             popup = tk.Toplevel()
             popup.title("!")
             # Can add a font arg here
-            label = tk.Label(
-                popup, text=f"I'm {USER.name} {USER.lastName} with ID number {USER.personalId}\nI agree to pay {price} nis at the reception before {date1}")
+            #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>8
+            label = tk.Label(popup, text=f"I'm {USER.name} {USER.lastName} with ID number {USER.personalId}\nI agree to pay {price} nis at the reception before {date1}")
             label.pack(side="top", fill="x", pady=10)
             B1 = tk.Button(popup, text="I Agree", command=Helpfun)
             B1.pack()
@@ -367,7 +367,7 @@ def PetAgeVaildetor(x):
     return True
 
 
-def Reservation(USER):
+def Reservation(USER):#>>>>>>>>>>>>>>>>>>>>>>>>>4
     tktk = Toplevel(root)
     tktk.title("Reservation")
     tktk.state("zoomed")
@@ -440,7 +440,7 @@ def Reservation(USER):
     ), tkvar.get(), USER), text='Submit', width=20, bg='brown', fg='white').place(x=180, y=380)
 
 
-def AddPetPage(USER):
+def AddPetPage(USER):#>>>>>>>>>>>>>>>>>>>>>>>>3
     # Dictionary with options
     PetsTypes = {
         'Dog',
@@ -528,7 +528,7 @@ def AddPetPage(USER):
     print("registration form  seccussfully created...")
 
 
-def homepageCUSTOMER(USER):
+def homepageCUSTOMER(USER):#>>>>>>>>>>9
     CustomerHomePage = Toplevel(root)
     CustomerHomePage.title("Home Page")
     CustomerHomePage.geometry("300x300")
@@ -540,4 +540,4 @@ def homepageCUSTOMER(USER):
     Button(CustomerHomePage, text="pet's reservations",command=lambda : PetReservations(USER)).grid(column=0, row=2)
     Button(CustomerHomePage, text="Delete pet",command=lambda : deleteMyPet(USER)).grid(column=2, row=2)
 
-    signOut(CustomerHomePage)
+    signOut(CustomerHomePage)#>>>>>>>>>>>>>>>5

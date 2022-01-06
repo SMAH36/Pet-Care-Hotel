@@ -8,7 +8,7 @@ from tkinter import ttk
 from datetime import date
 import datetime
 
-def showAllroomHistory(USER):
+def showAllroomHistory(USER):#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>12
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
     newWindow.configure(background='#E9E9E5')
@@ -74,9 +74,7 @@ def showAllroomHistory(USER):
     Button(newWindow, command=ReservationsDetails, text='Submit', width=20, bg='#5C715E',fg='white').place(x=100, y=150)
     Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='#5C715E',fg='white').place(x=900, y=500)
     Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
-def showAllTodayReservation():
-    # [('(1,2022-01-04,2022-01-05)',), ('(3,2022-01-04,2022-01-05)',), 
-    # ('(2,2022-01-05,2022-01-05)',), ('(4,2022-01-05,2022-01-06)',), ('(5,2022-01-03,2022-01-21)',)] 
+def showAllTodayReservation():#>>>>>>>>>>>>>>>>>11
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
     newWindow.configure(background='#E9E9E5')
@@ -129,7 +127,7 @@ def showAllTodayReservation():
     Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='#5C715E',fg='white').place(x=100, y=500)
     Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
 
-def showReservationDetailsByRoomNum():
+def showReservationDetailsByRoomNum():#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>10
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
     newWindow.configure(background='#E9E9E5')
@@ -174,7 +172,7 @@ def showReservationDetailsByRoomNum():
     Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
 
 
-def showWorkers():
+def showWorkers():#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>4
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
     newWindow.configure(background='#E9E9E5')
@@ -235,7 +233,7 @@ def showWorkers():
     my_game.pack()
     Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
 
-def ApproveTask(USER):
+def ApproveTask(USER):#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>9
        newWindow = Toplevel(root)
        newWindow.state('zoomed')
        newWindow.configure(background='#E9E9E5')
@@ -292,7 +290,7 @@ def ApproveTask(USER):
        Button(newWindow, command=buttonHandler, text='Submit', width=20, bg='#5C715E',fg='white', font=("", 12)).place(x=100, y=200)
        Button(newWindow, text="<-Back", command=newWindow.destroy,width=10,bg='#5C715E',fg='white', font=("", 12)).place(x=1, y=1)
    
-def AddWorkerPage():
+def AddWorkerPage():#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>2
     AddWorker = Toplevel(root)
     AddWorker.title("Add Worker")
     AddWorker.state("zoomed")
@@ -323,7 +321,7 @@ def AddWorkerPage():
     Button(AddWorker, command=buttonClick, text='Add Worker', width=18, bg='#5C715E',fg='white', font=("", 11)).place(x=660, y=370)
 
 
-def DeleteWorkerPage():
+def DeleteWorkerPage():#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>5
     DeleteWorker = Toplevel(root)
     DeleteWorker.title("Delete Worker")
     DeleteWorker.state("zoomed")
@@ -355,7 +353,7 @@ def DeleteWorkerPage():
     Button(DeleteWorker, command=buttonClick, text='Delete worker', width=18, bg='#5C715E',fg='white', font=("", 11)).place(x=660, y=370)
 
 
-def chooseWorkerRoom():
+def chooseWorkerRoom():#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>6
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
     newWindow.configure(background='#E9E9E5')
@@ -443,7 +441,7 @@ def chooseWorkerRoom():
     # Button(newWindow, text="Quit", command=newWindow.destroy).grid(column=0, row=0)
     Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
    
-def ChangeWorkerRoom():
+def ChangeWorkerRoom():#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>8
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
     newWindow.configure(background='#E9E9E5')
@@ -525,7 +523,7 @@ def ChangeWorkerRoom():
     Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
    
 
-def showCustomers():
+def showCustomers():#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>7
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
     newWindow.configure(background='#E9E9E5')
@@ -587,7 +585,7 @@ def showCustomers():
     Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
 
 
-def homepageADMIN(USER):
+def homepageADMIN(USER):#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>13
     adminHomePage = Toplevel(root)
     adminHomePage.title("Home Page")
     adminHomePage.state('zoomed')
