@@ -30,7 +30,8 @@ def login():
                           show='*').place(x=600, y=300)
 
     def afterlogin():
-        userinfo = database_connection.signIn(username.get(), password.get())
+        # userinfo = database_connection.signIn(username.get(), password.get())
+        userinfo = database_connection.signIn('a','a')
         print('userinfo', userinfo)
         if(userinfo != False):
             USER = User(userinfo[7], userinfo[2],

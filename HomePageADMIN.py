@@ -10,21 +10,23 @@ import datetime
 
 def showAllroomHistory(USER):
     newWindow = Toplevel(root)
-    newWindow.state('zoomed')
+    newWindow.attributes('-fullscreen',True)
     newWindow.configure(background='#E9E9E5')
-    Label(newWindow, text="Room history",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=-20, y=60)
-    topLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
-    topLabel.pack(side=TOP)
+    table_frame=Frame(newWindow,bg='#5C715E',pady=50,padx=50)
+    table_frame.pack(side=TOP,pady=130)
+    Label(newWindow, text="Room history",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=370, y=160)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30,y=0)
+    
     bottomLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
     bottomLabel.pack(side=BOTTOM)
 
     today = date.today()
     todayDate = f'{today.month}/{today.day}/{today.year}'
-    label_room = Label(newWindow, text="Enter room number:",width=20, font=("bold", 10))
+    label_room = Label(newWindow, text="Enter room number:",width=20,bg='#E9E9E5',fg='black', font=("bold", 15))
     label_room.place(x=0, y=100)
 
     text_room = Entry(newWindow)
-    text_room.place(x=200, y=100)
+    text_room.place(x=220, y=105)
 
     Pets_scroll= Scrollbar(newWindow)
     Pets_scroll.pack(side=RIGHT, fill=Y)
@@ -43,13 +45,14 @@ def showAllroomHistory(USER):
     my_game['columns'] = ('Room number', 'Checkin date', 'Checkout date','Customer name','Customer lastname','Customer ID')
 
     # format our column
+    wid=200
     my_game.column("#0", width=0,  stretch=NO)
-    my_game.column("Room number",anchor=CENTER, width=80)
-    my_game.column("Checkin date",anchor=CENTER,width=80)
-    my_game.column("Checkout date",anchor=CENTER,width=80)
-    my_game.column("Customer name",anchor=CENTER, width=80)
-    my_game.column("Customer lastname",anchor=CENTER,width=80)
-    my_game.column("Customer ID",anchor=CENTER,width=80)
+    my_game.column("Room number",anchor=CENTER, width=wid)
+    my_game.column("Checkin date",anchor=CENTER,width=wid)
+    my_game.column("Checkout date",anchor=CENTER,width=wid)
+    my_game.column("Customer name",anchor=CENTER, width=wid)
+    my_game.column("Customer lastname",anchor=CENTER,width=wid)
+    my_game.column("Customer ID",anchor=CENTER,width=wid)
 
     #Create Headings 
     my_game.heading("#0",text="",anchor=CENTER)
@@ -73,14 +76,14 @@ def showAllroomHistory(USER):
                     print(i)
                     addData(i['room_number'],i['start_date'],i['end_date'],i['user'][0],i['user'][1],i['user'][2])
     
-    Button(newWindow, command=ReservationsDetails, text='Submit', width=20, bg='#5C715E',fg='white').place(x=100, y=150)
-    Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='#5C715E',fg='white').place(x=900, y=500)
+    Button(newWindow, command=ReservationsDetails, text='Submit', width=20, bg='#5C715E',fg='white',font=("bold", 12)).place(x=100, y=150)
+    Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='#5C715E',fg='white',font=("bold", 12)).place(x=900, y=500)
     Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
 def showAllTodayReservation():
     # [('(1,2022-01-04,2022-01-05)',), ('(3,2022-01-04,2022-01-05)',), 
     # ('(2,2022-01-05,2022-01-05)',), ('(4,2022-01-05,2022-01-06)',), ('(5,2022-01-03,2022-01-21)',)] 
     newWindow = Toplevel(root)
-    newWindow.state('zoomed')
+    newWindow.attributes('-fullscreen',True)
     newWindow.configure(background='#E9E9E5')
     Label(newWindow, text="Show booked rooms",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=-20, y=60)
     topLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
@@ -135,7 +138,7 @@ def showAllTodayReservation():
 
 def showReservationDetailsByRoomNum():
     newWindow = Toplevel(root)
-    newWindow.state('zoomed')
+    newWindow.attributes('-fullscreen',True)
     newWindow.configure(background='#E9E9E5')
     Label(newWindow, text="Details by Room Number",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=-20, y=60)
     topLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
@@ -246,7 +249,7 @@ def showWorkers():
 
 def ApproveTask(USER):
        newWindow = Toplevel(root)
-       newWindow.state('zoomed')
+       newWindow.attributes('-fullscreen',True)
        newWindow.configure(background='#E9E9E5')
        #Label(newWindow, text="List of wokers details",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=-20, y=60)
        topLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
@@ -306,14 +309,17 @@ def ApproveTask(USER):
 def AddWorkerPage():
     AddWorker = Toplevel(root)
     AddWorker.title("Add Worker")
-    AddWorker.state("zoomed")
+    AddWorker.attributes('-fullscreen',True)
     AddWorker.configure(background='#E9E9E5')
     Label(AddWorker, text="To add the worker...\n Please enter his Email or phone number",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=60, y=120)
     topLabel = Label(AddWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
     topLabel.pack(side=TOP)
+    topLabel = Label(AddWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    topLabel.pack(side=TOP)
     bottomLabel = Label(AddWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
     bottomLabel.pack(side=BOTTOM)
-    Button(AddWorker, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12), command=AddWorker.destroy).grid(column=0, row=0)
+    Button(AddWorker, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12), command=AddWorker.destroy).place(x=0,y=0)
+   
     label_email = Label(AddWorker, text="Email or Phone",bg='#E9E9E5',fg='black', 
                         width=16, font=("bold", 16))
     label_email.place(x=430, y=300)
@@ -339,7 +345,7 @@ def AddWorkerPage():
 def DeleteWorkerPage():
     DeleteWorker = Toplevel(root)
     DeleteWorker.title("Delete Worker")
-    DeleteWorker.state("zoomed")
+    DeleteWorker.attributes('-fullscreen',True)
     DeleteWorker.configure(background='#E9E9E5')
     usernameLabel= Label(DeleteWorker, text="To delete the worker...\n Please enter his Email or phone number",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=60, y=120)
     topLabel = Label(DeleteWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
@@ -372,8 +378,10 @@ def DeleteWorkerPage():
 
 def chooseWorkerRoom():
     newWindow = Toplevel(root)
-    newWindow.state('zoomed')
+    newWindow.attributes('-fullscreen',True)
     newWindow.configure(background='#E9E9E5')
+    table_frame=Frame(newWindow,bg='#5C715E',pady=20,padx=20)
+    table_frame.pack(side=TOP,pady=100,padx=100)
     Label(newWindow, text="List of Rooms (Not Assigned Yet)",width=35,bg='#E9E9E5',fg='black', font=("", 15)).place(x=30, y=80)
     topLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
     topLabel.pack(side=TOP)
@@ -462,7 +470,7 @@ def chooseWorkerRoom():
    
 def ChangeWorkerRoom():
     newWindow = Toplevel(root)
-    newWindow.state('zoomed')
+    newWindow.attributes('-fullscreen',True)
     newWindow.configure(background='#E9E9E5')
     topLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
     topLabel.pack(side=TOP)
@@ -614,7 +622,7 @@ def showCustomers():
 def homepageADMIN(USER):
     adminHomePage = Toplevel(root)
     adminHomePage.title("Home Page")
-    adminHomePage.state('zoomed')
+    adminHomePage.attributes('-fullscreen',True)
     adminHomePage.configure(background='#E9E9E5')
     Label(adminHomePage, text="Admin Homepage:",width=20,bg='#E9E9E5',fg='black', font=("Elephant", 20)).place(x=50, y=120)
     topLabel = Label(adminHomePage,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
