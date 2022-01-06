@@ -20,6 +20,9 @@ def ReservationHistory(USER):
 
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
+    newWindow.configure(background='#E9E9E5')
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
 
     game_frame = Frame(newWindow)
     game_frame.pack()
@@ -56,9 +59,8 @@ def ReservationHistory(USER):
     my_game.heading("Total amount", text="Total amount", anchor=CENTER)
 
     iidd = 0
-    Button(newWindow, command=newWindow.destroy, text='Quit page',
-           width=20, bg='brown', fg='white').place(x=100, y=200)
-
+    Button(newWindow, command=newWindow.destroy, text='<-Back',
+          width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
     def addData(RoomNumber, Firstdate, Lastdate, TotalAmount):
         nonlocal iidd
         my_game.insert(parent='', index='end', iid=iidd, text='',
@@ -139,6 +141,10 @@ def ShowmeMyPets(USER):
         tktk = Toplevel(root)
         tktk.title("AddPetPage")
         tktk.state("zoomed")
+        tktk.configure(background='#E9E9E5')
+        Label(tktk, text="My Pets",width=20,bg='#E9E9E5',fg='black', font=("Elephant", 20)).place(x=50, y=120)
+        Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+        Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
         # scrollbar
         Pets_scroll = Scrollbar(tktk)
         Pets_scroll.pack(side=RIGHT, fill=Y)
@@ -188,9 +194,9 @@ def ShowmeMyPets(USER):
         for i in PetsList:
             print(i)
             addData(i[5], i[0], i[1], i[4], i[3])
-        Button(tktk, text="close", command=tktk.destroy).pack(pady=20)
+        Button(tktk, text="<-Back",command=tktk.destroy,width=13,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
+        Button(tktk, text="close", command=tktk.destroy,width=20, bg='#5C715E',fg='white',font=('Elephant',13),).place(x=700, y=520)
         tktk.mainloop()
-
 
 def popupPricemsg(f, date1, date2, tkvar, USER):
     if tkvar == 'None':
@@ -239,6 +245,11 @@ def Reservation(USER):
     tktk = Toplevel(root)
     tktk.title("Reservation")
     tktk.state("zoomed")
+    tktk.configure(background='#E9E9E5')
+    Label(tktk, text="My Reservation",width=20,bg='#E9E9E5',fg='black', font=("Elephant", 20)).place(x=50, y=120)
+    Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+
     Pets = database_connection.getPetsByUSERid(USER.userID)
     PetsList = []
     if(len(Pets) == 0):
@@ -257,7 +268,8 @@ def Reservation(USER):
     tkvar = StringVar(root)
     tkvar.set('None')  # set the default option
     # on change dropdown value
-
+    Button(tktk, text="<-Back",command=tktk.destroy,width=13,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
+    #Button(tktk,command=tktk.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
     def change_dropdown(*args):
         print(tkvar.get())
     label_Type = Label(tktk, text="Pet-('Name'('Type'))",
@@ -305,7 +317,7 @@ def Reservation(USER):
             popupmsg("Your reservation has been failed please select another date")
 
     Button(tktk, command=lambda: popupPricemsg(ReservePage, cal1.get_date(), cal2.get_date(
-    ), tkvar.get(), USER), text='Submit', width=20, bg='brown', fg='white').place(x=180, y=380)
+    ), tkvar.get(), USER), text='<-Back', width=20,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
 
 
 def AddPetPage(USER):
@@ -329,39 +341,43 @@ def AddPetPage(USER):
     tkvar.trace('w', change_dropdown)
     tktk = Toplevel(root)
     tktk.title("AddPetPage")
-    tktk.geometry("500x500")
+    tktk.state("zoomed")
+    tktk.configure(background='#E9E9E5')
+    Label(tktk,text="Add Pet",width=20,bg='#E9E9E5',fg='black',font=("Elephant",17)).place(x=450, y=90)
+    Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
 
-    label_name = Label(tktk, text="Name", width=20, font=("bold", 10))
-    label_name.place(x=80, y=130)
+    label_name = Label(tktk, text="Name", width=20,bg='#E9E9E5',fg='black', font=("bold", 15))
+    label_name.place(x=473, y=180)
 
     text_name = Entry(tktk)
-    text_name.place(x=240, y=130)
+    text_name.place(x=650, y=180)
 
-    label_Type = Label(tktk, text="Type", width=20, font=("bold", 10))
-    label_Type.place(x=80, y=160)
+    label_Type = Label(tktk, text="Type", width=20,bg='#E9E9E5',fg='black', font=("bold", 15))
+    label_Type.place(x=471, y=220)
 
     text_Type = OptionMenu(tktk, tkvar, *PetsTypes)
-    text_Type.place(x=240, y=160)
+    text_Type.place(x=650, y=220)
 
-    label_id = Label(tktk, text="Id", width=20, font=("bold", 10))
-    label_id.place(x=68, y=190)
+    label_id = Label(tktk, text="Id",width=20,bg='#E9E9E5',fg='black', font=("bold", 15))
+    label_id.place(x=457, y=260)
 
-    text_id = Entry(tktk)
-    text_id.place(x=240, y=190)
+    text_id = Entry(tktk, width=20)
+    text_id.place(x=650, y=260)
 
-    label_gender = Label(tktk, text="Gender", width=20, font=("bold", 10))
-    label_gender.place(x=70, y=250)
+    label_gender = Label(tktk, text="Gender", width=20,bg='#E9E9E5',fg='black', font=("bold", 15))
+    label_gender.place(x=480, y=300)
     var = IntVar()
-    Radiobutton(tktk, text="Male", padx=5, variable=var,
-                value=1).place(x=235, y=250)
-    Radiobutton(tktk, text="Female", padx=20,
-                variable=var, value=2).place(x=290, y=250)
+    Radiobutton(tktk, text="Male", padx=5, variable=var,bg='#E9E9E5',fg='black',
+                value=1).place(x=650, y=300)
+    Radiobutton(tktk, text="Female", padx=20,bg='#E9E9E5',fg='black',
+                variable=var, value=2).place(x=730, y=300)
 
-    label_age = Label(tktk, text="Age:", width=20, font=("bold", 10))
-    label_age.place(x=70, y=300)
+    label_age = Label(tktk, text="Age", width=20,bg='#E9E9E5',fg='black', font=("bold", 15))
+    label_age.place(x=473, y=340)
 
     entry_age = Entry(tktk)
-    entry_age.place(x=240, y=300)
+    entry_age.place(x=650, y=340)
 
     def buttonClick():
         flag = True
@@ -388,9 +404,8 @@ def AddPetPage(USER):
             else:
                 popupmsg('Pet"s ID already exist')
 
-    Button(tktk, command=buttonClick, text='Submit', width=20,
-           bg='brown', fg='white').place(x=180, y=380)
-
+    Button(tktk, command=buttonClick, text='Submit', width=15,bg='#5C715E',fg='white', font=("", 12)).place(x=570, y=500)
+    Button(tktk,command=tktk.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
  # it is use for display the registration form on the window
     tktk.mainloop()
     print("registration form  seccussfully created...")
@@ -399,15 +414,19 @@ def AddPetPage(USER):
 def homepageCUSTOMER(USER):
     CustomerHomePage = Toplevel(root)
     CustomerHomePage.title("Home Page")
-    CustomerHomePage.geometry("200x200")
-    Button(CustomerHomePage, text="My pets",
-           command=lambda: ShowmeMyPets(USER)).grid(column=0, row=2)
-    Button(CustomerHomePage, text="Reservation",
-           command=lambda: Reservation(USER)).grid(column=0, row=1)
-    Button(CustomerHomePage, text="AddPet",
-           command=lambda: AddPetPage(USER)).grid(column=2, row=0)
-    Button(CustomerHomePage, text="Quit",
-           command=root.destroy).grid(column=0, row=0)
-    Button(CustomerHomePage, text="Riservation history",
-           command=lambda: ReservationHistory(USER)).grid(column=2, row=1)
+    CustomerHomePage.state("zoomed")
+    CustomerHomePage.configure(background='#E9E9E5')
+    Label(CustomerHomePage, text="Customer Homepage:",width=20,bg='#E9E9E5',fg='black', font=("Elephant", 20)).place(x=50, y=120)
+    Label(CustomerHomePage,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    Label(CustomerHomePage,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+    Button(CustomerHomePage, text="My pets",width=20, bg='#D4D6C8',fg='black',font=('Elephant',15),
+           command=lambda: ShowmeMyPets(USER)).place(x=250, y=200)
+    Button(CustomerHomePage, text="Reservation",width=20, bg='#D4D6C8',fg='black',font=('Elephant',15),
+           command=lambda: Reservation(USER)).place(x=250, y=270)
+    Button(CustomerHomePage, text="AddPet",width=20, bg='#D4D6C8',fg='black',font=('Elephant',15),
+           command=lambda: AddPetPage(USER)).place(x=550, y=200)
+    Button(CustomerHomePage, text="Quit",width=20, bg='#D4D6C8',fg='black',font=('Elephant',15),
+           command=root.destroy).place(x=450, y=400)
+    Button(CustomerHomePage, text="Riservation history",width=20, bg='#D4D6C8',fg='black',font=('Elephant',15),
+           command=lambda: ReservationHistory(USER)).place(x=550, y=270)
     signOut(CustomerHomePage)
