@@ -98,9 +98,9 @@ def homepageWORKER(USER):#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
        workerHomePage = Toplevel(root)
        workerHomePage.title("Home Page")
        workerHomePage.geometry("200x200")
-       Button(workerHomePage, text="Complete task",command=lambda :CompleteTask(USER)).grid(column=-0, row=2)
+       Button(workerHomePage, text="Complete task",command=lambda :CompleteTask(USER)).grid(column=0, row=2)
        Button(workerHomePage, text="Quit",command=root.destroy).grid(column=0, row=0)
-       Button(workerHomePage, text="Sign out",command=workerHomePage.destroy).grid(column=-1, row=0)#>>>>>>>>>>>>>>>>>>>>>>> task 2
+       Button(workerHomePage, text="Sign out",command=workerHomePage.destroy).grid(column=1, row=0)#>>>>>>>>>>>>>>>>>>>>>>> task 2
        Button(workerHomePage, text="My rooms",command=lambda :ShowMeMyRooms(USER)).grid(column=2, row=0)
-       Button(workerHomePage, text="Pet's details by room number",command=lambda :ShowMePetByRoom(USER)).grid(column=-0, row=1)
+       Button(workerHomePage, text="Pet's details by room number",command=lambda :ShowMePetByRoom(USER)).grid(column=0, row=1)
        signOut(workerHomePage)
