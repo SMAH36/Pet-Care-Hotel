@@ -70,6 +70,9 @@ def getUserInfo(userId):
     return(record)
 
 
+# print(getUserInfo('327e4390-87d5-4bad-8d3c-d807687248ea'))
+
+
 def checkIfUserExist(mailOrPhone):
     connection = connectToDb()
     cursor = connection.cursor()
@@ -303,26 +306,6 @@ def getCustomerResarvations(userId):
 
 
 # print("('2',)" in str(getCustomerResarvations('e8c6d15d-b029-4ff2-90cb-b0de8a2ec38c')))
-
-
-def deleteResarvation(userId, petId, startDate, endDate):
-    # delete reseved room if not assiegnd yet to worker
-    # didnt start the date yet
-    connection = connectToDb()
-    cursor = connection.cursor()
-    try:
-        cursor.execute(
-            f"DELETE FROM room_reservation WHERE user_id = '{userId}' AND pet_id = '{petId}' AND start_date = '{startDate} AND end_date= '{endDate}' ")
-        if (connection):
-            cursor.close()
-            connection.close()
-        return True
-    except:
-        if (connection):
-            cursor.close()
-            connection.close()
-        return False
-
 
 def getWorkerRoomsByDate(date, userId):
     connection = connectToDb()
@@ -582,6 +565,53 @@ def getPetHistory(petId):
     return result
 
 
+def deletePet(petId, date):
+    # delete reseved room if not assiegnd yet to worker
+    # didnt start the date yet
+    connection = connectToDb()
+    cursor = connection.cursor()
+    try:
+        cursor.execute("BEGIN")
+        cursor.execute(
+            f"""
+        SELECT * FROM pets_info WHERE id = '{petId}'
+        """)
+        record = cursor.rowcount
+        if record != 0:
+            cursor.execute(
+                f"""
+            SELECT * FROM room_reservation WHERE pet_id = '{petId}' AND start_date <= '{date}' AND end_date >= '{date}'
+            """)
+            record = cursor.rowcount
+            if record == 0:
+                cursor.execute(
+                    f"DELETE FROM pets_info WHERE id = '{petId}'")
+                cursor.execute("COMMIT")
+                if (connection):
+                    cursor.close()
+                    connection.close()
+                return True
+            else:
+                cursor.execute("COMMIT")
+                if (connection):
+                    cursor.close()
+                    connection.close()
+                return False
+        else:
+            cursor.execute("COMMIT")
+            if (connection):
+                cursor.close()
+                connection.close()
+            return False
+    except:
+        cursor.execute("ROLLBACK")
+        if (connection):
+            cursor.close()
+            connection.close()
+        return False
+
+
+# print(deletePet('e32943af-71e9-4cff-82dc-cbe682c94454', '1/6/22'))
 # print(getCustomerHistory('e8c6d15d-b029-4ff2-90cb-b0de8a2ec383'))
 # print(getPetHistory('ba8beb62-5eb4-4f93-a2a0-657ba7d2a419'))
 # print(getCustomerHistory('e8c6d15d-b029-4ff2-90cb-b0de8a2ec38c'))

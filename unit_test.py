@@ -124,6 +124,14 @@ class Test_functions(unittest.TestCase):
         self.assertEqual("('3',)" in str(reservedRoomsByDate('1/4/22', '1/5/22')), True,
                          '3 is contained should return True')
 
+    def test_removeUser(self):
+        self.assertEqual(removeUser('doNotExist@gmail.com'), False,
+                         'email doesnt exist in databse should return False')
+
+    def test_getUserInfo(self):
+        self.assertEqual('214412515' in str(getUserInfo('327e4390-87d5-4bad-8d3c-d807687248ea')), True,
+                         'id exists in databse should return True')
+
 
 if __name__ == '__main__':
     unittest.main()
