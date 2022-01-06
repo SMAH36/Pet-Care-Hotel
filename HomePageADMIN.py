@@ -11,6 +11,11 @@ import datetime
 def showAllroomHistory(USER):
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
+    newWindow.configure(background='#E9E9E5')
+    Label(newWindow, text="Room history",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=-20, y=60)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+
     today = date.today()
     todayDate = f'{today.month}/{today.day}/{today.year}'
     label_room = Label(newWindow, text="Enter room number:",width=20, font=("bold", 10))
@@ -54,7 +59,7 @@ def showAllroomHistory(USER):
     my_game.heading("Customer ID",text="Last date",anchor=CENTER)
     
     iidd=0
-    Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='brown',fg='white').place(x=100, y=200)
+    
     def addData(RoomNumber,Firstdate,Lastdate,Customername,Customerlastname,CustomerID):
                     nonlocal iidd
                     my_game.insert(parent='',index='end',iid=iidd,text='',values=(RoomNumber,Firstdate,Lastdate,Customername,Customerlastname,CustomerID))
@@ -66,7 +71,9 @@ def showAllroomHistory(USER):
                     print(i)
                     addData(i['room_number'],i['start_date'],i['end_date'],i['user'][0],i['user'][1],i['user'][2])
     
-    Button(newWindow, command=ReservationsDetails, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=300)
+    Button(newWindow, command=ReservationsDetails, text='Submit', width=20, bg='#5C715E',fg='white').place(x=100, y=150)
+    Button(newWindow, command=newWindow.destroy, text='Quit page', width=20, bg='#5C715E',fg='white').place(x=900, y=500)
+    Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
 def showAllTodayReservation():
     # [('(1,2022-01-04,2022-01-05)',), ('(3,2022-01-04,2022-01-05)',), 
     # ('(2,2022-01-05,2022-01-05)',), ('(4,2022-01-05,2022-01-06)',), ('(5,2022-01-03,2022-01-21)',)] 
