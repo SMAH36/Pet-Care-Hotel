@@ -13,8 +13,10 @@ def showAllroomHistory(USER):
     newWindow.state('zoomed')
     newWindow.configure(background='#E9E9E5')
     Label(newWindow, text="Room history",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=-20, y=60)
-    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
-    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+    topLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    topLabel.pack(side=TOP)
+    bottomLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    bottomLabel.pack(side=BOTTOM)
 
     today = date.today()
     todayDate = f'{today.month}/{today.day}/{today.year}'
@@ -81,8 +83,10 @@ def showAllTodayReservation():
     newWindow.state('zoomed')
     newWindow.configure(background='#E9E9E5')
     Label(newWindow, text="Show booked rooms",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=-20, y=60)
-    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
-    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+    topLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    topLabel.pack(side=TOP)
+    bottomLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    bottomLabel.pack(side=BOTTOM)
     today = date.today()
     todayDate = f'{today.month}/{today.day}/{today.year}'
     rooms=list(map(lambda x:list(x.replace('(','').replace(')','').split(',')),(map(lambda x:x[0],getAllReservations(todayDate)))))
@@ -134,8 +138,10 @@ def showReservationDetailsByRoomNum():
     newWindow.state('zoomed')
     newWindow.configure(background='#E9E9E5')
     Label(newWindow, text="Details by Room Number",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=-20, y=60)
-    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
-    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+    topLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    topLabel.pack(side=TOP)
+    bottomLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    bottomLabel.pack(side=BOTTOM)
     today = date.today()
     todayDate = f'{today.month}/{today.day}/{today.year}'
     label_room = Label(newWindow, text="Enter room number:",width=20, font=("bold", 10))
@@ -176,11 +182,14 @@ def showReservationDetailsByRoomNum():
 
 def showWorkers():
     newWindow = Toplevel(root)
-    newWindow.state('zoomed')
+    newWindow.attributes('-fullscreen',True)
+    table_frame=Frame(newWindow,bg='#5C715E',pady=20,padx=20)
+    table_frame.pack(side=TOP,pady=100)
     newWindow.configure(background='#E9E9E5')
-    Label(newWindow, text="List of wokers details",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=-20, y=60)
-    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
-    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+    Label(newWindow, text="List of wokers",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=470, y=60)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30,y=0)
+    bottomLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    bottomLabel.pack(side=BOTTOM)
     customerList = []
     for c in database_connection.getAllWorkers1():
         firstName = c[0].replace('(', '').replace(')', '').split(',')[0]
@@ -212,11 +221,11 @@ def showWorkers():
 
     # format our column
     my_game.column("#0", width=0,  stretch=NO)
-    my_game.column("firstName", anchor=CENTER, width=80)
-    my_game.column("lastName", anchor=CENTER, width=80)
-    my_game.column("age", anchor=CENTER, width=80)
-    my_game.column("gender", anchor=CENTER, width=80)
-    my_game.column("personalId", anchor=CENTER, width=80)
+    my_game.column("firstName", anchor=CENTER, width=120)
+    my_game.column("lastName", anchor=CENTER, width=120)
+    my_game.column("age", anchor=CENTER, width=120)
+    my_game.column("gender", anchor=CENTER, width=120)
+    my_game.column("personalId", anchor=CENTER, width=120)
 
     # Create Headings
     my_game.heading("#0", text="", anchor=CENTER)
@@ -240,8 +249,10 @@ def ApproveTask(USER):
        newWindow.state('zoomed')
        newWindow.configure(background='#E9E9E5')
        #Label(newWindow, text="List of wokers details",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=-20, y=60)
-       Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
-       Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+       topLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+       topLabel.pack(side=TOP)
+       bottomLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+       bottomLabel.pack(side=BOTTOM)
        today = date.today()
        todayDate = f'{today.month}/{today.day}/{today.year}'
        rooms = list(map(lambda x:x[0],list(getUnapprovedCompletedTasks(todayDate))))
@@ -298,8 +309,10 @@ def AddWorkerPage():
     AddWorker.state("zoomed")
     AddWorker.configure(background='#E9E9E5')
     Label(AddWorker, text="To add the worker...\n Please enter his Email or phone number",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=60, y=120)
-    Label(AddWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
-    Label(AddWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+    topLabel = Label(AddWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    topLabel.pack(side=TOP)
+    bottomLabel = Label(AddWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    bottomLabel.pack(side=BOTTOM)
     Button(AddWorker, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12), command=AddWorker.destroy).grid(column=0, row=0)
     label_email = Label(AddWorker, text="Email or Phone",bg='#E9E9E5',fg='black', 
                         width=16, font=("bold", 16))
@@ -329,8 +342,10 @@ def DeleteWorkerPage():
     DeleteWorker.state("zoomed")
     DeleteWorker.configure(background='#E9E9E5')
     usernameLabel= Label(DeleteWorker, text="To delete the worker...\n Please enter his Email or phone number",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=60, y=120)
-    usernameLabel= Label(DeleteWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
-    usernameLabel= Label(DeleteWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+    topLabel = Label(DeleteWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    topLabel.pack(side=TOP)
+    bottomLabel = Label(DeleteWorker,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    bottomLabel.pack(side=BOTTOM)
     Button(DeleteWorker, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12),
            command=DeleteWorker.destroy).grid(column=0, row=0)
     label_email = Label(DeleteWorker, text="Email or Phone",bg='#E9E9E5',fg='black',
@@ -360,8 +375,10 @@ def chooseWorkerRoom():
     newWindow.state('zoomed')
     newWindow.configure(background='#E9E9E5')
     Label(newWindow, text="List of Rooms (Not Assigned Yet)",width=35,bg='#E9E9E5',fg='black', font=("", 15)).place(x=30, y=80)
-    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
-    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+    topLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    topLabel.pack(side=TOP)
+    bottomLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    bottomLabel.pack(side=BOTTOM)
     dec = {}
     for w in database_connection.getAllWorkers():
         name = w[0].replace('(', '').replace(')', '').split(',')[1]
@@ -447,10 +464,12 @@ def ChangeWorkerRoom():
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
     newWindow.configure(background='#E9E9E5')
+    topLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    topLabel.pack(side=TOP)
+    bottomLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    bottomLabel.pack(side=BOTTOM)
     Label(newWindow, text="List of rooms",width=35,bg='#E9E9E5',fg='black', font=("", 15)).place(x=-10, y=50)
     Label(newWindow, text="To change worker room =>",width=35,bg='#E9E9E5',fg='black', font=("", 13)).place(x=130, y=210)
-    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
-    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
     dec = {}
     for w in database_connection.getAllWorkers():
         name = w[0].replace('(', '').replace(')', '').split(',')[1]
@@ -527,11 +546,15 @@ def ChangeWorkerRoom():
 
 def showCustomers():
     newWindow = Toplevel(root)
-    newWindow.state('zoomed')
+    newWindow.attributes('-fullscreen',True)
+    table_frame=Frame(newWindow,bg='#5C715E',pady=10,padx=10)
+    table_frame.pack(side=TOP,pady=100)
     newWindow.configure(background='#E9E9E5')
-    Label(newWindow,text="List of customer details",width=35,bg='#E9E9E5',fg='black', font=("", 15)).place(x=-10, y=50)
-    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
-    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+    Label(newWindow,text="List of customers",width=35,bg='#E9E9E5',fg='black', font=("Elephant", 15)).place(x=420,y=50)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30,y=0)
+    
+    bottomLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    bottomLabel.pack(side=BOTTOM)
     customerList = []
     for c in database_connection.getAllCustomers():
         firstName = c[0].replace('(', '').replace(')', '').split(',')[0]
@@ -542,14 +565,14 @@ def showCustomers():
         customerList.append((firstName, lastName, age, gender, id))
 
     # scrollbar
-    game_scroll = Scrollbar(newWindow)
+    game_scroll = Scrollbar(table_frame)
     game_scroll.pack(side=RIGHT, fill=Y)
 
-    game_scroll = Scrollbar(newWindow, orient='horizontal')
+    game_scroll = Scrollbar(table_frame, orient='horizontal')
     game_scroll.pack(side=BOTTOM, fill=X)
 
     my_game = ttk.Treeview(
-        newWindow, yscrollcommand=game_scroll.set, xscrollcommand=game_scroll.set)
+        table_frame, yscrollcommand=game_scroll.set, xscrollcommand=game_scroll.set)
 
     my_game.pack()
 
@@ -562,12 +585,13 @@ def showCustomers():
                           'age', 'gender', 'personalId')
 
     # format our column
+    wid=210
     my_game.column("#0", width=0,  stretch=NO)
-    my_game.column("firstName", anchor=CENTER, width=80)
-    my_game.column("lastName", anchor=CENTER, width=80)
-    my_game.column("age", anchor=CENTER, width=80)
-    my_game.column("gender", anchor=CENTER, width=80)
-    my_game.column("personalId", anchor=CENTER, width=80)
+    my_game.column("firstName", anchor=CENTER, width=wid)
+    my_game.column("lastName", anchor=CENTER, width=wid)
+    my_game.column("age", anchor=CENTER, width=wid)
+    my_game.column("gender", anchor=CENTER, width=wid)
+    my_game.column("personalId", anchor=CENTER, width=wid)
 
     # Create Headings
     my_game.heading("#0", text="", anchor=CENTER)
@@ -592,9 +616,11 @@ def homepageADMIN(USER):
     adminHomePage.title("Home Page")
     adminHomePage.state('zoomed')
     adminHomePage.configure(background='#E9E9E5')
-    usernameLabel= Label(adminHomePage, text="Admin Homepage:",width=20,bg='#E9E9E5',fg='black', font=("Elephant", 20)).place(x=50, y=120)
-    usernameLabel= Label(adminHomePage,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
-    usernameLabel= Label(adminHomePage,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
+    Label(adminHomePage, text="Admin Homepage:",width=20,bg='#E9E9E5',fg='black', font=("Elephant", 20)).place(x=50, y=120)
+    topLabel = Label(adminHomePage,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    topLabel.pack(side=TOP)
+    bottomLabel = Label(adminHomePage,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    bottomLabel.pack(side=BOTTOM)
     Button(adminHomePage, text="Quit",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=root.destroy).place(x=650, y=400)
     signOut(adminHomePage)
     Button(adminHomePage, text="Add Worker",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),
