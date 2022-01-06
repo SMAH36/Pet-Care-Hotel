@@ -156,6 +156,7 @@ def userPromotion(mailOrPhone, rank='worker'):
     return False
 
 
+# here
 def addPet(userId, petName, petType, age, gender, petPersonalId):
     connection = connectToDb()
     cursor = connection.cursor()
@@ -188,6 +189,9 @@ def reservedRoomsByDate(startDate, endDate):
         cursor.close()
         connection.close()
     return(record)
+
+
+# print(reservedRoomsByDate('1/4/22', '1/5/22'))
 
 
 def reserveRoom(roomNumber, petId, userId, startDate, endDate):
@@ -233,6 +237,9 @@ def getPetInfoByPetId(petId):
     return(record[0])
 
 
+# print(getPetInfoByPetId('ba8beb62-5eb4-4f93-a2a0-657ba7d2a419'))
+
+
 def getAllWorkers():
     connection = connectToDb()
     cursor = connection.cursor()
@@ -255,6 +262,9 @@ def getAllRoomsWorkers(date):
         cursor.close()
         connection.close()
     return(record)
+
+
+# print(getAllRoomsWorkers('1/4/22'))
 
 
 def setWorkerToRoom(date, roomNumbers, userId):

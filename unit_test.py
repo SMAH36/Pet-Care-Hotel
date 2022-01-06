@@ -108,6 +108,22 @@ class Test_functions(unittest.TestCase):
         self.assertEqual("('2',)" in str(getCustomerResarvations('e8c6d15d-b029-4ff2-90cb-b0de8a2ec38c')), True,
                          '2 is contained should return True')
 
+    def test_getAllRoomsWorkers(self):
+        self.assertEqual("('3',)" in str(getAllRoomsWorkers('1/4/22')), True,
+                         '3 is contained should return True')
+
+    def test_getAllWorkers(self):
+        self.assertEqual('31511122128' in str(getAllWorkers()), True,
+                         'id of worker exist should return True')
+
+    def test_getPetInfoByPetId(self):
+        self.assertEqual('Dog' in str(getPetInfoByPetId('ba8beb62-5eb4-4f93-a2a0-657ba7d2a419')), True,
+                         'this petId is to Dog should return True')
+
+    def test_reservedRoomsByDates(self):
+        self.assertEqual("('3',)" in str(reservedRoomsByDate('1/4/22', '1/5/22')), True,
+                         '3 is contained should return True')
+
 
 if __name__ == '__main__':
     unittest.main()
