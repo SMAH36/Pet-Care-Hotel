@@ -334,6 +334,10 @@ def DeleteWorkerPage():
 def chooseWorkerRoom():
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
+    newWindow.configure(background='#E9E9E5')
+    Label(newWindow, text="List of Rooms (Not Assigned Yet)",width=35,bg='#E9E9E5',fg='black', font=("", 15)).place(x=30, y=80)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
     dec = {}
     for w in database_connection.getAllWorkers():
         name = w[0].replace('(', '').replace(')', '').split(',')[1]
@@ -362,7 +366,7 @@ def chooseWorkerRoom():
     tkvar.trace('w', change_dropdown)
 
     text_Type = OptionMenu(newWindow, tkvar, *listOfWorker)
-    text_Type.place(x=240, y=160)
+    text_Type.place(x=240, y=360)
 
     # scrollbar
     game_scroll = Scrollbar(newWindow)
@@ -385,7 +389,7 @@ def chooseWorkerRoom():
 
     # format our column
     my_game.column("#0", width=0,  stretch=NO)
-    my_game.column("room_number", anchor=CENTER, width=80)
+    my_game.column("room_number", anchor=CENTER, width=90)
 
     # Create Headings
     my_game.heading("#0", text="", anchor=CENTER)
@@ -396,10 +400,10 @@ def chooseWorkerRoom():
     for room in relaventList:
         my_game.insert(parent='', index='end', iid=counter, text='',values=(room))
         counter = counter + 1
-    label_rooms = Label(newWindow, text="Choose rooms:",width=20, font=("bold", 10))
-    label_rooms.place(x=0, y=100)
-    text_rooms = Entry(newWindow)
-    text_rooms.place(x=200, y=100)
+    label_rooms = Label(newWindow, text="Choose rooms:",width=15,bg='#E9E9E5',fg='black', font=("bold", 15))
+    label_rooms.place(x=500, y=300)
+    text_rooms = Entry(newWindow,width=10, font=("bold", 12))
+    text_rooms.place(x=700, y=300)
     def buttonHandler():
         rooms=list(text_rooms.get().split(',')) 
         # print(relaventList,rooms)
@@ -408,15 +412,21 @@ def chooseWorkerRoom():
             popupmsg("Rooms has been succsefully seted")
             newWindow.destroy()
         else:
-            popupmsg("Falied to set rooms ! ! !")
+            popupmsg("Falied to set rooms")
     
 
-    Button(newWindow, command=buttonHandler, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=200)
-    Button(newWindow, text="Quit", command=newWindow.destroy).grid(column=0, row=0)
+    Button(newWindow, command=buttonHandler, text='Submit',width=10,bg='#5C715E',fg='white', font=("", 12)).place(x=570, y=500)
+    # Button(newWindow, text="Quit", command=newWindow.destroy).grid(column=0, row=0)
+    Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
    
 def ChangeWorkerRoom():
     newWindow = Toplevel(root)
     newWindow.state('zoomed')
+    newWindow.configure(background='#E9E9E5')
+    Label(newWindow, text="List of rooms",width=35,bg='#E9E9E5',fg='black', font=("", 15)).place(x=-10, y=50)
+    Label(newWindow, text="To change worker room =>",width=35,bg='#E9E9E5',fg='black', font=("", 13)).place(x=130, y=210)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
     dec = {}
     for w in database_connection.getAllWorkers():
         name = w[0].replace('(', '').replace(')', '').split(',')[1]
@@ -441,7 +451,7 @@ def ChangeWorkerRoom():
     tkvar.trace('w', change_dropdown)
 
     text_Type = OptionMenu(newWindow, tkvar, *listOfWorker)
-    text_Type.place(x=240, y=160)
+    text_Type.place(x=530, y=470)
 
     # scrollbar
     game_scroll = Scrollbar(newWindow)
@@ -462,7 +472,7 @@ def ChangeWorkerRoom():
     my_game['columns'] = ('room_number')
 
     # format our column
-    my_game.column("#0", width=0,  stretch=NO)
+    my_game.column("#0", width=10,  stretch=NO)
     my_game.column("room_number", anchor=CENTER, width=80)
 
     # Create Headings
@@ -475,20 +485,20 @@ def ChangeWorkerRoom():
     for room in listOfWorkersRooms:
         my_game.insert(parent='', index='end', iid=counter, text='',values=(room))
         counter = counter + 1
-    label_rooms = Label(newWindow, text="Choose rooms:",width=20, font=("bold", 10))
-    label_rooms.place(x=0, y=100)
-    text_rooms = Entry(newWindow)
-    text_rooms.place(x=200, y=100)
+    label_rooms = Label(newWindow, text="Choose rooms:",width=20,bg='#E9E9E5',fg='black', font=("bold", 12))
+    label_rooms.place(x=230, y=210)
+    text_rooms = Entry(newWindow,width=20,font=("bold", 12))
+    text_rooms.place(x=430, y=210)
     def buttonHandler():
         if (changeWorkerRoom(todayDate,text_rooms.get(), dec[tkvar.get()])):      
             popupmsg("Room's worker has been succsefully changed")
             newWindow.destroy()
         else:
-            popupmsg("Falied to change worker ! ! !")  
+            popupmsg("Falied to change worker")  
     
 
-    Button(newWindow, command=buttonHandler, text='Submit', width=20, bg='brown',fg='white').place(x=100, y=200)
-    Button(newWindow, text="Quit", command=newWindow.destroy).grid(column=0, row=0)
+    Button(newWindow, command=buttonHandler, text='Submit',  width=18, bg='#5C715E',fg='white', font=("", 11)).place(x=660, y=370)
+    Button(newWindow,command=newWindow.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).grid(column=0, row=0)
    
 
 def showCustomers():
@@ -565,6 +575,8 @@ def homepageADMIN(USER):
            command=DeleteWorkerPage).place(x=350, y=240)
     Button(adminHomePage, text="Choose Worker Room",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),
            command=chooseWorkerRoom).place(x=350, y=280)
+    Button(adminHomePage, text="Change Worker Room",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),
+           command=ChangeWorkerRoom).place(x=350, y=380)
     Button(adminHomePage, text="Show Customers",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=showCustomers).place(x=650, y=200)
     Button(adminHomePage, text="Approve Completed Tasks",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=lambda :ApproveTask(USER)).place(x=650, y=240)
     Button(adminHomePage, text="Show Workers",width=20, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',13),command=showWorkers).place(x=650, y=280)

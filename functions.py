@@ -118,6 +118,6 @@ def phoneCheck(phonenumber):
 
 
 def signOut(x):
-    Button(x, text="Sign Out", width=15, bg='#5C715E', fg='black', font=(
+    Button(x, text="Sign Out", width=15, bg='#5C715E', fg='white', font=(
         'Verdana Pro Black', 13), command=x.destroy).place(x=900, y=530)
     USER = User("None", "None", "None", "None", "None")
