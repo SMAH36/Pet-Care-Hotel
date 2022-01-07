@@ -37,8 +37,8 @@ def login():
 
     def afterlogin():
         userinfo = database_connection.signIn(username.get(), password.get())
-        # userinfo = (2, 'e8c6d15d-b029-4ff2-90cb-b0de8a2ec38c', 'malak', 'bta', '18', 'Male', '3151112128',
-        #             'customer', datetime.datetime(2021, 12, 29, 14, 25, 39, 243084, tzinfo=datetime.timezone.utc))
+        # userinfo = (3, '8d6ad7c9-7a1a-42fb-bfee-2ad508749225', 'malak', 'bta', '18', 'Male', '31511122128',
+        #             'worker', datetime.datetime(2021, 12, 29, 14, 26, 44, 513526, tzinfo=datetime.timezone.utc))
         if(userinfo != False):
             USER = User(userinfo[7], userinfo[2],
                         userinfo[1], userinfo[3], userinfo[6])

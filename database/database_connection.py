@@ -331,11 +331,19 @@ def getPetInfoByRoomNumber(date, roomNumber):
         (end_date >= '{date}' AND start_date <= '{date}')
         """)
     record = cursor.fetchone()
+    print(record)
+    if record != None:
+        if (connection):
+            cursor.close()
+            connection.close()
+        return(getPetInfoByPetId(record[0]))
     if (connection):
         cursor.close()
         connection.close()
-    return(getPetInfoByPetId(record[0]))
+    return(False)
 
+
+print(getPetInfoByRoomNumber('1/5/22', 1))
 
 # print('Fish' in str(getPetInfoByRoomNumber('1/5/22', '1')))
 

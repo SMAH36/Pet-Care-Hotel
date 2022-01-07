@@ -15,25 +15,27 @@ def CompleteTask(USER):
     topLabel = Label(newWindow, text='', width=90, bg='#D4D6C8',
                      fg='black', font=('Verdana Pro Black', 30))
     topLabel.pack(side=TOP)
+    Label(newWindow, text="Complete Task", width=30, bg='#E9E9E5',
+          fg='black', font=("Elephant", 20)).pack(side=TOP, pady=20)
+    table_frame = Frame(newWindow, bg='#5C715E', pady=20, padx=20)
+    table_frame.pack(side=TOP, pady=40)
     bottomLabel = Label(newWindow, text='', width=90, bg='#D4D6C8',
                         fg='black', font=('Verdana Pro Black', 30))
     bottomLabel.pack(side=BOTTOM)
-    Label(newWindow, text="Complete Task", width=30, bg='#E9E9E5',
-          fg='black', font=("Elephant", 20)).place(x=0, y=70)
     today = date.today()
     todayDate = f'{today.month}/{today.day}/{today.year}'
     rooms = list(map(lambda x: x[0], list(
         getUncompletedTasks(todayDate, USER.userID))))
     print(rooms)
     # scrollbar
-    game_scroll = Scrollbar(newWindow)
+    game_scroll = Scrollbar(table_frame)
     game_scroll.pack(side=RIGHT, fill=Y)
 
-    game_scroll = Scrollbar(newWindow, orient='horizontal')
+    game_scroll = Scrollbar(table_frame, orient='horizontal')
     game_scroll.pack(side=BOTTOM, fill=X)
 
     my_game = ttk.Treeview(
-        newWindow, yscrollcommand=game_scroll.set, xscrollcommand=game_scroll.set)
+        table_frame, yscrollcommand=game_scroll.set, xscrollcommand=game_scroll.set)
 
     my_game.pack()
 
@@ -46,7 +48,7 @@ def CompleteTask(USER):
 
     # format our column
     my_game.column("#0", width=0,  stretch=NO)
-    my_game.column("room_number", anchor=CENTER, width=80)
+    my_game.column("room_number", anchor=CENTER, width=450)
 
     # Create Headings
     my_game.heading("#0", text="", anchor=CENTER)
@@ -59,10 +61,10 @@ def CompleteTask(USER):
                        iid=counter, text='', values=(room))
         counter = counter + 1
     label_rooms = Label(newWindow, text="Choose rooms:", width=20,
-                        bg='#E9E9E5', fg='black', font=("Elephant", 15))
-    label_rooms.place(x=100, y=200)
-    text_rooms = Entry(newWindow)
-    text_rooms.place(x=370, y=200)
+                        bg='#E9E9E5', fg='black', font=("Elephant", 18))
+    label_rooms.pack(side=TOP, pady=20)
+    text_rooms = Entry(newWindow, justify='center', font=('', 18))
+    text_rooms.pack(side=TOP, pady=20)
     Choosedrooms = list(text_rooms.get().split(','))
 
     def buttonHandler():
@@ -74,7 +76,7 @@ def CompleteTask(USER):
             popupmsg("Falied to send your request")
 
     Button(newWindow, command=buttonHandler, text='Submit',
-           width=20, bg='#5C715E', fg='white').place(x=350, y=250)
+           width=20, bg='#5C715E', fg='white', font=('', 18)).pack(side=TOP, pady=100)
     Button(newWindow,  command=newWindow.destroy, text="<-Back", width=10,
            bg='#5C715E', fg='white', font=("bold", 12)).place(x=1, y=1)
 
@@ -99,32 +101,35 @@ def ShowMePetByRoom(USER):
     topLabel = Label(PetByRoom, text='', width=90, bg='#D4D6C8',
                      fg='black', font=('Verdana Pro Black', 30))
     topLabel.pack(side=TOP)
+    Label(PetByRoom, text="Pet's details by room number", width=30,
+          bg='#E9E9E5', fg='black', font=("Elephant", 20)).pack(side=TOP, pady=20)
     bottomLabel = Label(PetByRoom, text='', width=90, bg='#D4D6C8',
                         fg='black', font=('Verdana Pro Black', 30))
     bottomLabel.pack(side=BOTTOM)
-    Label(PetByRoom, text="Pet's details by room number", width=30,
-          bg='#E9E9E5', fg='black', font=("Elephant", 20)).place(x=0, y=80)
     today = date.today()
     todayDate = f'{today.month}/{today.day}/{today.year}'
     label_room = Label(PetByRoom, text="Enter room number Please:",
-                       width=23, bg='#E9E9E5', fg='black', font=("bold", 15))
-    label_room.place(x=300, y=200)
-    text_room = Entry(PetByRoom, width=20, font=("", 15))
-    text_room.place(x=700, y=200)
+                       width=23, bg='#E9E9E5', fg='black', font=("bold", 18))
+    label_room.pack(side=TOP, pady=20)
+    text_room = Entry(PetByRoom, width=20, font=("", 18), justify='center')
+    text_room.pack(side=TOP, pady=20)
 
     def PetsDetailsPopUp():
-        Pet = list(getPetInfoByRoomNumber(todayDate, text_room.get()
-                                          ).replace('(', '').replace(')', '').split(','))
-        print(Pet)
-        text = 'Pet details: \n'
-        text += 'Name: '+Pet[0]+'\n'
-        text += 'Type: '+Pet[1]+'\n'
-        text += 'Age: '+Pet[3]+'\n'
-        text += 'Gender: '+Pet[4]+'\n'
-        text += 'ID: '+Pet[5]+'\n'
-        popupmsg(text)
+        res = getPetInfoByRoomNumber(todayDate, text_room.get())
+        if res != False:
+            Pet = list(res).replace('(', '').replace(')', '').split(',')
+            print('Pet', Pet)
+            text = 'Pet details: \n'
+            text += 'Name: '+Pet[0]+'\n'
+            text += 'Type: '+Pet[1]+'\n'
+            text += 'Age: '+Pet[3]+'\n'
+            text += 'Gender: '+Pet[4]+'\n'
+            text += 'ID: '+Pet[5]+'\n'
+            popupmsg(text)
+        else:
+            popupmsg('No pet in this room')
     Button(PetByRoom, command=PetsDetailsPopUp, text='Submit',
-           width=20, bg='#5C715E', fg='white').place(x=600, y=500)
+           width=20, bg='#5C715E', fg='white', font=('', 18)).pack(side=TOP, pady=20)
     Button(PetByRoom, command=PetByRoom.destroy, text="<-Back", width=10,
            bg='#5C715E', fg='white', font=("bold", 12)).place(x=1, y=1)
 
