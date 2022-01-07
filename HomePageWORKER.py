@@ -26,7 +26,7 @@ def CompleteTask(USER):  # >>>>>>>>>>>>>>>>>>>>>Task 5
     todayDate = f'{today.month}/{today.day}/{today.year}'
     rooms = list(map(lambda x: x[0], list(
         getUncompletedTasks(todayDate, USER.userID))))
-    print(rooms)
+    print('rooms', rooms)
     # scrollbar
     game_scroll = Scrollbar(table_frame)
     game_scroll.pack(side=RIGHT, fill=Y)
@@ -65,10 +65,10 @@ def CompleteTask(USER):  # >>>>>>>>>>>>>>>>>>>>>Task 5
     label_rooms.pack(side=TOP, pady=20)
     text_rooms = Entry(newWindow, justify='center', font=('', 18))
     text_rooms.pack(side=TOP, pady=20)
-    Choosedrooms = list(text_rooms.get().split(','))
 
     def buttonHandler():
 
+        Choosedrooms = list(text_rooms.get().split(','))
         if (completeTask(todayDate, list(filter(lambda x: x in rooms, Choosedrooms)), USER.userID)):
             popupmsg("Your request has been succsefully sent")
             newWindow.destroy()
@@ -117,7 +117,7 @@ def ShowMePetByRoom(USER):  # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
     def PetsDetailsPopUp():
         res = getPetInfoByRoomNumber(todayDate, text_room.get())
         if res != False:
-            Pet = list(res).replace('(', '').replace(')', '').split(',')
+            Pet = list((res).replace('(', '').replace(')', '').split(','))
             print('Pet', Pet)
             text = 'Pet details: \n'
             text += 'Name: '+Pet[0]+'\n'
@@ -130,7 +130,8 @@ def ShowMePetByRoom(USER):  # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             popupmsg('No pet in this room')
     Button(PetByRoom, command=PetsDetailsPopUp, text='Submit',
            width=20, bg='#5C715E', fg='white', font=('', 18)).pack(side=TOP, pady=20)
-    Button(PetByRoom, command=PetByRoom.destroy, text="<-Back", width=10,bg='#5C715E', fg='white', font=("bold", 12)).place(x=1, y=1)
+    Button(PetByRoom, command=PetByRoom.destroy, text="<-Back", width=10,
+           bg='#5C715E', fg='white', font=("bold", 12)).place(x=1, y=1)
 
 
 def homepageWORKER(USER):  # task 6************************************************

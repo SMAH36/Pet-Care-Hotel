@@ -343,7 +343,7 @@ def getPetInfoByRoomNumber(date, roomNumber):
     return(False)
 
 
-# print(getPetInfoByRoomNumber('1/5/22', 1))
+# print(getPetInfoByRoomNumber('1/7/22', 1))
 
 # print('Fish' in str(getPetInfoByRoomNumber('1/5/22', '1')))
 
@@ -375,7 +375,7 @@ def completeTask(date, roomNumbers, userId):
         cursor.execute("BEGIN")
         for room in roomNumbers:
             cursor.execute(
-                f"UPDATE rooms_workers SET task_completed = TRUE WHERE date = '{date}' AND room_number= '{room}' AND user_id = '{userId}'")
+                f"UPDATE rooms_workers SET task_completed = 'TRUE' WHERE date = '{date}' AND room_number= '{room}' AND user_id = '{userId}'")
         cursor.execute("COMMIT")
         if (connection):
             cursor.close()
@@ -447,6 +447,7 @@ def getAllCustomers():
         cursor.close()
         connection.close()
     return(record)
+
 
 def getAllWorkers1():
     connection = connectToDb()
@@ -551,6 +552,8 @@ def getCustomerHistory(userId):
         cursor.close()
         connection.close()
     return result
+
+
 def getPetHistory(petId):
     connection = connectToDb()
     cursor = connection.cursor()
