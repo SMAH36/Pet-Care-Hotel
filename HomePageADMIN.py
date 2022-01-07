@@ -9,7 +9,7 @@ from datetime import date
 import datetime
 
 
-def showAllroomHistory(USER):
+def showAllroomHistory(USER):#>>>>>>>>>>>>>>>>>>>12
     newWindow = Toplevel(root)
     newWindow.attributes('-fullscreen', True)
     newWindow.configure(background='#E9E9E5')
@@ -90,9 +90,7 @@ def showAllroomHistory(USER):
            bg='#5C715E', fg='white', font=("bold", 12)).place(x=1, y=1)
 
 
-def showAllTodayReservation():
-    # [('(1,2022-01-04,2022-01-05)',), ('(3,2022-01-04,2022-01-05)',),
-    # ('(2,2022-01-05,2022-01-05)',), ('(4,2022-01-05,2022-01-06)',), ('(5,2022-01-03,2022-01-21)',)]
+def showAllTodayReservation():#>>>>>>>>>>>>>>>>>>>>>>11
     newWindow = Toplevel(root)
     newWindow.attributes('-fullscreen', True)
     newWindow.configure(background='#E9E9E5')
@@ -154,7 +152,7 @@ def showAllTodayReservation():
            bg='#5C715E', fg='white', font=("bold", 15)).place(x=1, y=1)
 
 
-def showReservationDetailsByRoomNum():  # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>10
+def showReservationDetailsByRoomNum():  # >>>>>>>>>>>>>>>>>>>>>>>>>>10
     newWindow = Toplevel(root)
     newWindow.attributes('-fullscreen', True)
     newWindow.configure(background='#E9E9E5')
@@ -173,10 +171,7 @@ def showReservationDetailsByRoomNum():  # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>10
     text_room = Entry(newWindow, justify='center', font=('', 20))
     text_room.pack(anchor=N, pady=0)
 
-    def ReservationDetails():
-        # ('(fff,Fish,33911706-c7b9-4451-9201-a1b8a1f5dac0,2,female,1231)',
-        # (2, 'e8c6d15d-b029-4ff2-90cb-b0de8a2ec38c', 'malak', 'bta', '18', 'Male', '3151112128', 'customer'),
-        #  , '2022-01-04', '2022-01-05')
+    def ReservationDetails():#>>>>>>>>>>>>>>>10
         listall = getReservationInfoByRoomNumber(todayDate, text_room.get())
         if(listall):
             pet = list(listall[0].replace('(', '').replace(')', '').split(','))
@@ -277,7 +272,7 @@ def showWorkers():  # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>4
            bg='#5C715E', fg='white', font=("bold", 12)).place(x=1, y=1)
 
 
-def ApproveTask(USER):
+def ApproveTask(USER):#>>>>>>>>>>>>>>>>>>>>>>>>9
     newWindow = Toplevel(root)
     newWindow.attributes('-fullscreen', True)
     newWindow.configure(background='#E9E9E5')
@@ -346,7 +341,7 @@ def ApproveTask(USER):
            bg='#5C715E', fg='white', font=("", 12)).place(x=1, y=1)
 
 
-def AddWorkerPage():
+def AddWorkerPage():#>>>>>>>>>>>>>>>>>>>>>>2
     AddWorker = Toplevel(root)
     AddWorker.title("Add Worker")
     AddWorker.attributes('-fullscreen', True)
@@ -529,7 +524,7 @@ def chooseWorkerRoom():  # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>6
            bg='#5C715E', fg='white', font=("bold", 12)).place(x=1, y=1)
 
 
-def ChangeWorkerRoom():
+def ChangeWorkerRoom():#>>>>>>>>>>>>>>>>>>>8
     newWindow = Toplevel(root)
     newWindow.attributes('-fullscreen', True)
     newWindow.configure(background='#E9E9E5')
