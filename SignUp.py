@@ -110,7 +110,7 @@ def signUp():
             ), text_name.get(), text_lastName.get(), entry_age.get(), gender, text_id.get(), rank='customer')
             popupmsg('You have been successfuly registered :)')
 
-    x = Button(tktk, command=buttonClick, text='Submit', width=20,bg='#E9E9E5',fg='black', font=("bold", 12))
+    Button(tktk, command=buttonClick, text='Submit', width=20,bg='#E9E9E5',fg='black', font=("bold", 12)).place(x=650, y=600)
 
     # it is use for display the registration form on the window
     tktk.mainloop()

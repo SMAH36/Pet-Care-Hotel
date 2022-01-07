@@ -130,8 +130,7 @@ def ShowMePetByRoom(USER):  # >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             popupmsg('No pet in this room')
     Button(PetByRoom, command=PetsDetailsPopUp, text='Submit',
            width=20, bg='#5C715E', fg='white', font=('', 18)).pack(side=TOP, pady=20)
-    Button(PetByRoom, command=PetByRoom.destroy, text="<-Back", width=10,
-           bg='#5C715E', fg='white', font=("bold", 12)).place(x=1, y=1)
+    Button(PetByRoom, command=PetByRoom.destroy, text="<-Back", width=10,bg='#5C715E', fg='white', font=("bold", 12)).place(x=1, y=1)
 
 
 def homepageWORKER(USER):  # task 6************************************************
