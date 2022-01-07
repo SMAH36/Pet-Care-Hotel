@@ -11,6 +11,7 @@ ttk.Button(frm, text="Quit", command=functions.root.destroy).grid(
 if(functions.USER.checkRank() == "None"):
     ttk.Button(frm, text="Sign Up", command=lambda: signUp()
                ).grid(column=0, row=1)
-    ttk.Button(frm, text="Sign In", command=login()).grid(column=0, row=0)
+    ttk.Button(frm, text="Sign In", command=lambda: login()
+               ).grid(column=0, row=0)
 
 functions.root.mainloop()
