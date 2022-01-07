@@ -16,26 +16,27 @@ import datetime
 def ReservationHistory(USER):
     #{'room_number': '2', 'start_date': '2021-10-10', 'end_date': '2021-10-12'}
     Reserevations = getCustomerHistory(USER.userID)
-    print(Reserevations)
 
     newWindow = Toplevel(root)
-    newWindow.state('zoomed')
+    newWindow.attributes('-fullscreen', True)
     newWindow.configure(background='#E9E9E5')
-    topLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    topLabel = Label(newWindow, text='', width=90, bg='#D4D6C8',
+                     fg='black', font=('Verdana Pro Black', 30))
     topLabel.pack(side=TOP)
-    bottomLabel = Label(newWindow,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    table_frame = Frame(newWindow, bg='#5C715E', pady=20, padx=20)
+    table_frame.pack(side=TOP, pady=40)
+    bottomLabel = Label(newWindow, text='', width=90, bg='#D4D6C8',
+                        fg='black', font=('Verdana Pro Black', 30))
     bottomLabel.pack(side=BOTTOM)
 
-    game_frame = Frame(newWindow)
-    game_frame.pack()
-    Pets_scroll = Scrollbar(game_frame, orient='vertical')
+    Pets_scroll = Scrollbar(table_frame, orient='vertical')
     Pets_scroll.pack(side=RIGHT, fill=Y)
 
-    Pets_scroll = Scrollbar(game_frame, orient='horizontal')
+    Pets_scroll = Scrollbar(table_frame, orient='horizontal')
     Pets_scroll.pack(side=BOTTOM, fill=X)
 
     my_game = ttk.Treeview(
-        game_frame, yscrollcommand=Pets_scroll.set, xscrollcommand=Pets_scroll.set)
+        table_frame, yscrollcommand=Pets_scroll.set, xscrollcommand=Pets_scroll.set)
     my_game.pack()
 
     Pets_scroll.config(command=my_game.yview)
@@ -47,11 +48,12 @@ def ReservationHistory(USER):
                           'Checkout date', 'Total amount')
 
     # format our column
+    wid = 180
     my_game.column("#0", width=0,  stretch=NO)
-    my_game.column("Room number", anchor=CENTER, width=80)
-    my_game.column("Checkin date", anchor=CENTER, width=80)
-    my_game.column("Checkout date", anchor=CENTER, width=80)
-    my_game.column("Total amount", anchor=CENTER, width=80)
+    my_game.column("Room number", anchor=CENTER, width=wid)
+    my_game.column("Checkin date", anchor=CENTER, width=wid)
+    my_game.column("Checkout date", anchor=CENTER, width=wid)
+    my_game.column("Total amount", anchor=CENTER, width=wid)
 
     # Create Headings
     my_game.heading("#0", text="", anchor=CENTER)
@@ -62,7 +64,8 @@ def ReservationHistory(USER):
 
     iidd = 0
     Button(newWindow, command=newWindow.destroy, text='<-Back',
-          width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
+           width=10, bg='#5C715E', fg='white', font=("bold", 12)).place(x=1, y=1)
+
     def addData(RoomNumber, Firstdate, Lastdate, TotalAmount):
         nonlocal iidd
         my_game.insert(parent='', index='end', iid=iidd, text='',
@@ -138,26 +141,32 @@ def ShowmeMyPets(USER):
     Pets = getPetsByUSERid(USER.userID)
     PetsList = []
     if(len(Pets) == 0):
-        popupmsg('You have no pets ,please add one ')
+        popupmsg('You have no pets ,please add one')
     else:
         tktk = Toplevel(root)
-        tktk.title("AddPetPage")
-        tktk.state("zoomed")
+        tktk.title("Add Pet Page")
+        tktk.attributes('-fullscreen', True)
         tktk.configure(background='#E9E9E5')
-        Label(tktk, text="My Pets",width=20,bg='#E9E9E5',fg='black', font=("Elephant", 20)).place(x=50, y=120)
-        topLabel = Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+        topLabel = Label(tktk, text='', width=90, bg='#D4D6C8',
+                         fg='black', font=('Verdana Pro Black', 30))
         topLabel.pack(side=TOP)
-        bottomLabel = Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+        Label(tktk, text="My Pets", width=20, bg='#E9E9E5', fg='black',
+              font=("Elephant", 20)).pack(side=TOP, pady=20)
+        table_frame = Frame(tktk, bg='#5C715E', pady=20, padx=20)
+        table_frame.pack(side=TOP, padx=20)
+        bottomLabel = Label(tktk, text='', width=90, bg='#D4D6C8',
+                            fg='black', font=('Verdana Pro Black', 30))
         bottomLabel.pack(side=BOTTOM)
+
         # scrollbar
-        Pets_scroll = Scrollbar(tktk)
+        Pets_scroll = Scrollbar(table_frame)
         Pets_scroll.pack(side=RIGHT, fill=Y)
 
-        Pets_scroll = Scrollbar(tktk, orient='horizontal')
+        Pets_scroll = Scrollbar(table_frame, orient='horizontal')
         Pets_scroll.pack(side=BOTTOM, fill=X)
 
         my_game = ttk.Treeview(
-            tktk, yscrollcommand=Pets_scroll.set, xscrollcommand=Pets_scroll.set)
+            table_frame, yscrollcommand=Pets_scroll.set, xscrollcommand=Pets_scroll.set)
 
         my_game.pack()
 
@@ -169,12 +178,13 @@ def ShowmeMyPets(USER):
         my_game['columns'] = ('ID', 'Pet name', 'Type', 'Gender', 'Age')
 
         # format our column
+        wid = 150
         my_game.column("#0", width=0,  stretch=NO)
-        my_game.column("ID", anchor=CENTER, width=80)
-        my_game.column("Pet name", anchor=CENTER, width=80)
-        my_game.column("Type", anchor=CENTER, width=80)
-        my_game.column("Gender", anchor=CENTER, width=80)
-        my_game.column("Age", anchor=CENTER, width=80)
+        my_game.column("ID", anchor=CENTER, width=wid)
+        my_game.column("Pet name", anchor=CENTER, width=wid)
+        my_game.column("Type", anchor=CENTER, width=wid)
+        my_game.column("Gender", anchor=CENTER, width=wid)
+        my_game.column("Age", anchor=CENTER, width=wid)
 
         # Create Headings
         my_game.heading("#0", text="", anchor=CENTER)
@@ -194,13 +204,12 @@ def ShowmeMyPets(USER):
         for p in Pets:
             PetsList.append(p[0].replace('(', '').replace(')', '').split(','))
 
-        print(Pets)
         for i in PetsList:
-            print(i)
             addData(i[5], i[0], i[1], i[4], i[3])
-        Button(tktk, text="<-Back",command=tktk.destroy,width=13,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
-        Button(tktk, text="close", command=tktk.destroy,width=20, bg='#5C715E',fg='white',font=('Elephant',13),).place(x=700, y=520)
+        Button(tktk, text="<-Back", command=tktk.destroy, width=13,
+               bg='#5C715E', fg='white', font=("bold", 12)).place(x=1, y=1)
         tktk.mainloop()
+
 
 def popupPricemsg(f, date1, date2, tkvar, USER):
     if tkvar == 'None':
@@ -248,13 +257,18 @@ def PetAgeVaildetor(x):
 def Reservation(USER):
     tktk = Toplevel(root)
     tktk.title("Reservation")
-    tktk.state("zoomed")
+    tktk.attributes('-fullscreen', True)
     tktk.configure(background='#E9E9E5')
-    Label(tktk, text="My Reservation",width=20,bg='#E9E9E5',fg='black', font=("Elephant", 20)).place(x=50, y=120)
-    topLabel = Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    topLabel = Label(tktk, text='', width=90, bg='#D4D6C8',
+                     fg='black', font=('Verdana Pro Black', 30))
     topLabel.pack(side=TOP)
-    bottomLabel = Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    Label(tktk, text="My Reservation", width=20, bg='#E9E9E5',
+          fg='black', font=("Elephant", 20)).pack(side=TOP, pady=20)
+    bottomLabel = Label(tktk, text='', width=90, bg='#D4D6C8',
+                        fg='black', font=('Verdana Pro Black', 30))
     bottomLabel.pack(side=BOTTOM)
+    Button(tktk, command=lambda: popupPricemsg(ReservePage, cal1.get_date(), cal2.get_date(
+    ), tkvar.get(), USER), text='Submit', width=20, bg='#5C715E', fg='white', font=("bold", 18)).pack(side=BOTTOM, pady=20)
 
     Pets = database_connection.getPetsByUSERid(USER.userID)
     PetsList = []
@@ -266,42 +280,31 @@ def Reservation(USER):
     dec = {}
     for p in PetsList:
         dec[p[0]+'('+p[1]+')'] = p[2]
-        print(p[0]+'('+p[1]+')')
-        print(p[2])
     Pets = {}
     Pets = dec.keys()
-    print(Pets)
-    tkvar = StringVar(root)
-    tkvar.set('None')  # set the default option
     # on change dropdown value
-    Button(tktk, text="<-Back",command=tktk.destroy,width=13,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
-    #Button(tktk,command=tktk.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
+    tkvar = StringVar(root)
+    tkvar.set('Choose Pet')
+
     def change_dropdown(*args):
-        print(tkvar.get())
-    label_Type = Label(tktk, text="Pet-('Name'('Type'))",
-                       width=20, font=("bold", 10))
-    # label_Type.place(x=80, y=160)
-    label_Type.pack(pady=20)
+        tkvar.get()
+    tkvar.trace('w', change_dropdown)
 
     text_Type = OptionMenu(tktk, tkvar, *Pets)
-    # text_Type.place(x=240, y=160)
     text_Type.pack(pady=20)
+    text_Type.config(width=20, font=("", 18))
+    text_Type.pack(side=BOTTOM, pady=100)
+
+    menu = root.nametowidget(text_Type.menuname)
+    menu.config(font=20)
+
     date_object = datetime.date.today()
-    print(date_object.day)
     cal1 = Calendar(tktk, selectmode='day', year=date_object.year,
                     month=date_object.month, day=date_object.day)
     cal1.pack(pady=20)
     cal2 = Calendar(tktk, selectmode='day', year=date_object.year,
                     month=date_object.month, day=date_object.day)
     cal2.pack(pady=20)
-
-    def grad_date(x):
-        date.config(text="Selected Date is: " + x.get_date())
-    # Add Button and Label
-    Button(tktk, text="Get ChekIn Date",
-           command=lambda: grad_date(cal1)).pack(pady=20)
-    Button(tktk, text="Get CheckOut Date",
-           command=lambda: grad_date(cal2)).pack(pady=20)
 
     date = Label(tktk, text="")
     date.pack(pady=20)
@@ -322,8 +325,8 @@ def Reservation(USER):
         if flag == False:
             popupmsg("Your reservation has been failed please select another date")
 
-    Button(tktk, command=lambda: popupPricemsg(ReservePage, cal1.get_date(), cal2.get_date(
-    ), tkvar.get(), USER), text='<-Back', width=20,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
+    Button(tktk, command=tktk.destroy, text="<-Back", width=10,
+           bg='#5C715E', fg='white', font=("bold", 12)).place(x=1, y=1)
 
 
 def AddPetPage(USER):
@@ -341,47 +344,55 @@ def AddPetPage(USER):
     # on change dropdown value
 
     def change_dropdown(*args):
-        print(tkvar.get())
+        tkvar.get()
 
     # link function to change dropdown
     tkvar.trace('w', change_dropdown)
     tktk = Toplevel(root)
     tktk.title("AddPetPage")
-    tktk.state("zoomed")
+    tktk.attributes('-fullscreen', True)
     tktk.configure(background='#E9E9E5')
-    Label(tktk,text="Add Pet",width=20,bg='#E9E9E5',fg='black',font=("Elephant",17)).place(x=450, y=90)
-    topLabel = Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    Label(tktk, text="Add Pet", width=20, bg='#E9E9E5',
+          fg='black', font=("Elephant", 17)).place(x=450, y=90)
+    topLabel = Label(tktk, text='', width=90, bg='#D4D6C8',
+                     fg='black', font=('Verdana Pro Black', 30))
     topLabel.pack(side=TOP)
-    bottomLabel = Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    bottomLabel = Label(tktk, text='', width=90, bg='#D4D6C8',
+                        fg='black', font=('Verdana Pro Black', 30))
     bottomLabel.pack(side=BOTTOM)
 
-    label_name = Label(tktk, text="Name", width=20,bg='#E9E9E5',fg='black', font=("bold", 15))
+    label_name = Label(tktk, text="Name", width=20,
+                       bg='#E9E9E5', fg='black', font=("bold", 15))
     label_name.place(x=473, y=180)
 
     text_name = Entry(tktk)
     text_name.place(x=650, y=180)
 
-    label_Type = Label(tktk, text="Type", width=20,bg='#E9E9E5',fg='black', font=("bold", 15))
+    label_Type = Label(tktk, text="Type", width=20,
+                       bg='#E9E9E5', fg='black', font=("bold", 15))
     label_Type.place(x=471, y=220)
 
     text_Type = OptionMenu(tktk, tkvar, *PetsTypes)
     text_Type.place(x=650, y=220)
 
-    label_id = Label(tktk, text="Id",width=20,bg='#E9E9E5',fg='black', font=("bold", 15))
+    label_id = Label(tktk, text="Id", width=20, bg='#E9E9E5',
+                     fg='black', font=("bold", 15))
     label_id.place(x=457, y=260)
 
     text_id = Entry(tktk, width=20)
     text_id.place(x=650, y=260)
 
-    label_gender = Label(tktk, text="Gender", width=20,bg='#E9E9E5',fg='black', font=("bold", 15))
+    label_gender = Label(tktk, text="Gender", width=20,
+                         bg='#E9E9E5', fg='black', font=("bold", 15))
     label_gender.place(x=480, y=300)
     var = IntVar()
-    Radiobutton(tktk, text="Male", padx=5, variable=var,bg='#E9E9E5',fg='black',
+    Radiobutton(tktk, text="Male", padx=5, variable=var, bg='#E9E9E5', fg='black',
                 value=1).place(x=650, y=300)
-    Radiobutton(tktk, text="Female", padx=20,bg='#E9E9E5',fg='black',
+    Radiobutton(tktk, text="Female", padx=20, bg='#E9E9E5', fg='black',
                 variable=var, value=2).place(x=730, y=300)
 
-    label_age = Label(tktk, text="Age", width=20,bg='#E9E9E5',fg='black', font=("bold", 15))
+    label_age = Label(tktk, text="Age", width=20,
+                      bg='#E9E9E5', fg='black', font=("bold", 15))
     label_age.place(x=473, y=340)
 
     entry_age = Entry(tktk)
@@ -412,31 +423,35 @@ def AddPetPage(USER):
             else:
                 popupmsg('Pet"s ID already exist')
 
-    Button(tktk, command=buttonClick, text='Submit', width=15,bg='#5C715E',fg='white', font=("", 12)).place(x=570, y=500)
-    Button(tktk,command=tktk.destroy, text="<-Back",width=10,bg='#5C715E',fg='white', font=("bold", 12)).place(x=1, y=1)
+    Button(tktk, command=buttonClick, text='Submit', width=15,
+           bg='#5C715E', fg='white', font=("", 12)).place(x=570, y=500)
+    Button(tktk, command=tktk.destroy, text="<-Back", width=10,
+           bg='#5C715E', fg='white', font=("bold", 12)).place(x=1, y=1)
  # it is use for display the registration form on the window
     tktk.mainloop()
-    print("registration form  seccussfully created...")
 
 
 def homepageCUSTOMER(USER):
     CustomerHomePage = Toplevel(root)
     CustomerHomePage.title("Home Page")
-    CustomerHomePage.state("zoomed")
+    CustomerHomePage.attributes('-fullscreen', True)
     CustomerHomePage.configure(background='#E9E9E5')
-    Label(CustomerHomePage, text="Customer Homepage:",width=20,bg='#E9E9E5',fg='black', font=("Elephant", 20)).place(x=50, y=120)
-    topLabel = Label(CustomerHomePage,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    Label(CustomerHomePage, text="Customer Homepage:", width=20,
+          bg='#E9E9E5', fg='black', font=("Elephant", 20)).place(x=50, y=120)
+    topLabel = Label(CustomerHomePage, text='', width=90,
+                     bg='#D4D6C8', fg='black', font=('Verdana Pro Black', 30))
     topLabel.pack(side=TOP)
-    bottomLabel = Label(CustomerHomePage,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    bottomLabel = Label(CustomerHomePage, text='', width=90,
+                        bg='#D4D6C8', fg='black', font=('Verdana Pro Black', 30))
     bottomLabel.pack(side=BOTTOM)
-    Button(CustomerHomePage, text="My pets",width=20, bg='#D4D6C8',fg='black',font=('Elephant',15),
+    Button(CustomerHomePage, text="My pets", width=20, bg='#D4D6C8', fg='black', font=('Elephant', 15),
            command=lambda: ShowmeMyPets(USER)).place(x=250, y=200)
-    Button(CustomerHomePage, text="Reservation",width=20, bg='#D4D6C8',fg='black',font=('Elephant',15),
+    Button(CustomerHomePage, text="Reservation", width=20, bg='#D4D6C8', fg='black', font=('Elephant', 15),
            command=lambda: Reservation(USER)).place(x=250, y=270)
-    Button(CustomerHomePage, text="AddPet",width=20, bg='#D4D6C8',fg='black',font=('Elephant',15),
+    Button(CustomerHomePage, text="AddPet", width=20, bg='#D4D6C8', fg='black', font=('Elephant', 15),
            command=lambda: AddPetPage(USER)).place(x=550, y=200)
-    Button(CustomerHomePage, text="Quit",width=20, bg='#D4D6C8',fg='black',font=('Elephant',15),
+    Button(CustomerHomePage, text="Quit", width=20, bg='#D4D6C8', fg='black', font=('Elephant', 15),
            command=root.destroy).place(x=450, y=400)
-    Button(CustomerHomePage, text="Riservation history",width=20, bg='#D4D6C8',fg='black',font=('Elephant',15),
+    Button(CustomerHomePage, text="Reservation history", width=20, bg='#D4D6C8', fg='black', font=('Elephant', 15),
            command=lambda: ReservationHistory(USER)).place(x=550, y=270)
     signOut(CustomerHomePage)
