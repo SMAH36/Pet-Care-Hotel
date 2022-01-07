@@ -34,9 +34,11 @@ def signUp():
     text_id = Entry(tktk, textvariable=var)
     text_id.pack()
     text_id.place(x=650, y=250)
-    label_titl = Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=0)
+    topLabel = Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    topLabel.pack(side=TOP)
+    bottomLabel = Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30))
+    bottomLabel.pack(side=BOTTOM)
     label_titl = Label(tktk,text='Register',width=11, bg='#E9E9E5',fg='black',font=('Elephant',17)).place(x=570, y=60)
-    label_titl = Label(tktk,text='',width=90, bg='#D4D6C8',fg='black',font=('Verdana Pro Black',30)).place(x=-30, y=600)
     label_email = Label(tktk, text="Email", width=20,bg='#E9E9E5',fg='black', font=("bold", 12))
     label_email.place(x=467, y=290)
 
@@ -108,8 +110,7 @@ def signUp():
             ), text_name.get(), text_lastName.get(), entry_age.get(), gender, text_id.get(), rank='customer')
             popupmsg('You have been successfuly registered :)')
 
-    x = Button(tktk, command=buttonClick, text='Submit', width=20, bg='#5C715E',
-               fg='white').place(x=850, y=550)
+    x = Button(tktk, command=buttonClick, text='Submit', width=20,bg='#E9E9E5',fg='black', font=("bold", 12))
 
     # it is use for display the registration form on the window
     tktk.mainloop()
